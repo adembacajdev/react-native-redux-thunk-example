@@ -10,8 +10,11 @@ import Home from '../screens/home/Home';
 import Favourites from '../screens/favourites/Favourites';
 import Search from '../screens/search/Search';
 import Profile from '../screens/profile/Profile';
+import Add from '../screens/add/Add';
 
 const Tab = createMaterialBottomTabNavigator();
+
+const NullComponent = () => null;
 
 function BottomTabs() {
     return (
@@ -21,50 +24,55 @@ function BottomTabs() {
             activeColor="#ffffff"
         >
             <Tab.Screen
-                name="ballina"
+                name="Home"
                 component={Home}
                 options={{
                     tabBarIcon: ({ focused }) => focused ?
                         <OnHome />
                         :
-                        <OffHome />
+                        <OffHome />,
+                        tabBarLabel: 'ballina'
                 }}
             />
             <Tab.Screen
-                name="kërko"
+                name="Search"
                 component={Search}
                 options={{
                     tabBarIcon: ({ focused }) => focused ?
                         <OnSearch />
                         :
-                        <OffSearch />
+                        <OffSearch />,
+                        tabBarLabel: 'kërko'
                 }}
             />
             <Tab.Screen
-                name="shto"
-                component={Search}
+                name="Add"
+                component={Add}
                 options={{
                     tabBarIcon: () => <AddIcon />,
+                    tabBarLabel: "shto"
                 }}
             />
             <Tab.Screen
-                name="preferuar"
+                name="Favourites"
                 component={Favourites}
                 options={{
                     tabBarIcon: ({ focused }) => focused ?
                         <OnFavourites />
                         :
-                        <OffFavourites />
+                        <OffFavourites />,
+                        tabBarLabel: 'preferuar'
                 }}
             />
             <Tab.Screen
-                name="profili"
+                name="Profile"
                 component={Profile}
                 options={{
                     tabBarIcon: ({ focused }) => focused ?
                         <OnProfile />
                         :
-                        <OffProfile />
+                        <OffProfile />,
+                        tabBarLabel: 'profili'
                 }}
             />
         </Tab.Navigator>
