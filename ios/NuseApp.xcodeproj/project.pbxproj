@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* NuseAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* NuseAppTests.m */; };
+		04C4A47CF16F4A41B6BE142F /* Cairo-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AC35E73EF81B4143AF4467C5 /* Cairo-Bold.ttf */; };
+		122224A934BD4874BAFDC6E5 /* Cairo-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D13F0B71E9CC4CA0AD6E5B8E /* Cairo-Black.ttf */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -15,9 +17,13 @@
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* NuseAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* NuseAppTests.m */; };
+		4EBB7ACFB0ED479B98C2DFC2 /* Cairo-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5B23E6D4679B410FAD8B6E79 /* Cairo-SemiBold.ttf */; };
 		7144C81D647C449E8CD3EE0D /* libPods-NuseApp-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EFDE0DF8DA158BC02905A6C /* libPods-NuseApp-tvOSTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		8FBD850A8FF3E56EDF8D5083 /* libPods-NuseApp-NuseAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FAFD2D494D6A3B66D5871966 /* libPods-NuseApp-NuseAppTests.a */; };
+		9A12631E8E184B10A051BECD /* Cairo-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1EBDCC42E68F4E2998C6F3D0 /* Cairo-Light.ttf */; };
+		B2ED2247B7594BAF862201F5 /* Cairo-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1B2696B7A23444969098F1D1 /* Cairo-ExtraLight.ttf */; };
+		D39705A05C9C4F37AFEAD0C7 /* Cairo-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD0023A9637940A7813EEC0D /* Cairo-Regular.ttf */; };
 		E44EC6389283DB3F0AF08AE3 /* libPods-NuseApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FED8EC531606641135033027 /* libPods-NuseApp.a */; };
 		FA8671815389DEBBBD5A5BFF /* libPods-NuseApp-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A4DED7B688ECC7FC4CAFB1F3 /* libPods-NuseApp-tvOS.a */; };
 /* End PBXBuildFile section */
@@ -44,28 +50,50 @@
 		00E356EE1AD99517003FC87E /* NuseAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NuseAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* NuseAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NuseAppTests.m; sourceTree = "<group>"; };
+		0546BB84AF3C4A909043FE55 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
+		0AD30F3485DE405E89203BF9 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
+		127F50529A964CEEBD178469 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* NuseApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NuseApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = NuseApp/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = NuseApp/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = NuseApp/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = NuseApp/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = NuseApp/main.m; sourceTree = "<group>"; };
+		142EA4C9DF87495F8CA39827 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
+		16EC967A338048D4BDAFE9F5 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
+		1721572E05CA455C9BBDE8FB /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
+		1B2696B7A23444969098F1D1 /* Cairo-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Cairo-ExtraLight.ttf"; path = "../app/assets/fonts/Cairo-ExtraLight.ttf"; sourceTree = "<group>"; };
+		1EBDCC42E68F4E2998C6F3D0 /* Cairo-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Cairo-Light.ttf"; path = "../app/assets/fonts/Cairo-Light.ttf"; sourceTree = "<group>"; };
 		2A1AEBCA90342CEE8A7824B4 /* Pods-NuseApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NuseApp.release.xcconfig"; path = "Target Support Files/Pods-NuseApp/Pods-NuseApp.release.xcconfig"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* NuseApp-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "NuseApp-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* NuseApp-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "NuseApp-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		353FAF06527E402987C3349F /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 		4D7108C6425142A274AFFB66 /* Pods-NuseApp-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NuseApp-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-NuseApp-tvOS/Pods-NuseApp-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		5B23E6D4679B410FAD8B6E79 /* Cairo-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Cairo-SemiBold.ttf"; path = "../app/assets/fonts/Cairo-SemiBold.ttf"; sourceTree = "<group>"; };
+		6083E307829846828A18F135 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		6923F56A3EAA26FAA6ADAAE0 /* Pods-NuseApp-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NuseApp-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-NuseApp-tvOSTests/Pods-NuseApp-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		7EFDE0DF8DA158BC02905A6C /* libPods-NuseApp-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NuseApp-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = NuseApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9767BC7E2E8BA0BAEBC1E8BA /* Pods-NuseApp-NuseAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NuseApp-NuseAppTests.release.xcconfig"; path = "Target Support Files/Pods-NuseApp-NuseAppTests/Pods-NuseApp-NuseAppTests.release.xcconfig"; sourceTree = "<group>"; };
+		9E523AF8BDA54332AF970EB3 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
+		A173EBA2F69148A6911595DD /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		A4DED7B688ECC7FC4CAFB1F3 /* libPods-NuseApp-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NuseApp-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AC35E73EF81B4143AF4467C5 /* Cairo-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Cairo-Bold.ttf"; path = "../app/assets/fonts/Cairo-Bold.ttf"; sourceTree = "<group>"; };
 		ADDBB414FB1356C526C3CA56 /* Pods-NuseApp-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NuseApp-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-NuseApp-tvOSTests/Pods-NuseApp-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B92FA727A864EDB7F53476CF /* Pods-NuseApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NuseApp.debug.xcconfig"; path = "Target Support Files/Pods-NuseApp/Pods-NuseApp.debug.xcconfig"; sourceTree = "<group>"; };
+		BC4AFB7257A24A4D907DACFF /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
+		BD9455F5152440B9AF646D67 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
+		BDD7315E0246432FBF71E147 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
+		C32BC6D2B9A64B439890FB40 /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
 		CA907D4918CBA33263A59B46 /* Pods-NuseApp-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NuseApp-tvOS.release.xcconfig"; path = "Target Support Files/Pods-NuseApp-tvOS/Pods-NuseApp-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		D13F0B71E9CC4CA0AD6E5B8E /* Cairo-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Cairo-Black.ttf"; path = "../app/assets/fonts/Cairo-Black.ttf"; sourceTree = "<group>"; };
+		D3F78469ED024F1493476DAA /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
+		DD0023A9637940A7813EEC0D /* Cairo-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Cairo-Regular.ttf"; path = "../app/assets/fonts/Cairo-Regular.ttf"; sourceTree = "<group>"; };
 		E42E85477E1E008A81B4D15D /* Pods-NuseApp-NuseAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NuseApp-NuseAppTests.debug.xcconfig"; path = "Target Support Files/Pods-NuseApp-NuseAppTests/Pods-NuseApp-NuseAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		FAFD2D494D6A3B66D5871966 /* libPods-NuseApp-NuseAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NuseApp-NuseAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FCDA7A54D6DE444EA0ECFBA5 /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
 		FED8EC531606641135033027 /* libPods-NuseApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NuseApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -161,8 +189,36 @@
 				ADDBB414FB1356C526C3CA56 /* Pods-NuseApp-tvOSTests.debug.xcconfig */,
 				6923F56A3EAA26FAA6ADAAE0 /* Pods-NuseApp-tvOSTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		72A6332AE7CF4BFA89B361B8 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D13F0B71E9CC4CA0AD6E5B8E /* Cairo-Black.ttf */,
+				AC35E73EF81B4143AF4467C5 /* Cairo-Bold.ttf */,
+				1B2696B7A23444969098F1D1 /* Cairo-ExtraLight.ttf */,
+				1EBDCC42E68F4E2998C6F3D0 /* Cairo-Light.ttf */,
+				DD0023A9637940A7813EEC0D /* Cairo-Regular.ttf */,
+				5B23E6D4679B410FAD8B6E79 /* Cairo-SemiBold.ttf */,
+				FCDA7A54D6DE444EA0ECFBA5 /* AntDesign.ttf */,
+				BC4AFB7257A24A4D907DACFF /* Entypo.ttf */,
+				1721572E05CA455C9BBDE8FB /* EvilIcons.ttf */,
+				16EC967A338048D4BDAFE9F5 /* Feather.ttf */,
+				127F50529A964CEEBD178469 /* FontAwesome.ttf */,
+				353FAF06527E402987C3349F /* FontAwesome5_Brands.ttf */,
+				142EA4C9DF87495F8CA39827 /* FontAwesome5_Regular.ttf */,
+				D3F78469ED024F1493476DAA /* FontAwesome5_Solid.ttf */,
+				C32BC6D2B9A64B439890FB40 /* Fontisto.ttf */,
+				6083E307829846828A18F135 /* Foundation.ttf */,
+				9E523AF8BDA54332AF970EB3 /* Ionicons.ttf */,
+				BD9455F5152440B9AF646D67 /* MaterialCommunityIcons.ttf */,
+				BDD7315E0246432FBF71E147 /* MaterialIcons.ttf */,
+				0546BB84AF3C4A909043FE55 /* Octicons.ttf */,
+				A173EBA2F69148A6911595DD /* SimpleLineIcons.ttf */,
+				0AD30F3485DE405E89203BF9 /* Zocial.ttf */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -181,6 +237,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				4E575C8AA937E51E5108BC66 /* Pods */,
+				72A6332AE7CF4BFA89B361B8 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -342,6 +399,12 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				122224A934BD4874BAFDC6E5 /* Cairo-Black.ttf in Resources */,
+				04C4A47CF16F4A41B6BE142F /* Cairo-Bold.ttf in Resources */,
+				B2ED2247B7594BAF862201F5 /* Cairo-ExtraLight.ttf in Resources */,
+				9A12631E8E184B10A051BECD /* Cairo-Light.ttf in Resources */,
+				D39705A05C9C4F37AFEAD0C7 /* Cairo-Regular.ttf in Resources */,
+				4EBB7ACFB0ED479B98C2DFC2 /* Cairo-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

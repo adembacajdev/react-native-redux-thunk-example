@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 
 //
 import LeftDrawer from './LeftDrawer';
+import Messages from '../screens/messages/Messages';
 
 
 const Stack = createNativeStackNavigator();
@@ -13,10 +14,9 @@ const Stack = createNativeStackNavigator();
 function AppNavigator() {
     return (
         <NavigationContainer>
-            <Stack.Navigator screenOptions={{
-                headerShown: false
-            }}>
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
                 <Stack.Screen name="LeftDrawer" component={LeftDrawer} />
+                <Stack.Screen name="Messages" component={Messages} />
             </Stack.Navigator>
         </NavigationContainer>
     );

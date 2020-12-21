@@ -1,27 +1,22 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { MenuIcon, HeaderDress, MessagesIcon } from '../../assets/images';
+import { BackIcon } from '../../assets/images';
 import { fonts } from '../../constants';
-import { useNavigation } from '@react-navigation/drawer';
 
-export const MainHeader = ({ openDrawer, openMessages }) => {
+export const BackHeader = ({ goBack, title }) => {
     return (
         <View style={styles.container}>
             <View style={styles.left}>
-                <TouchableOpacity onPress={openDrawer}>
-                    <MenuIcon />
+                <TouchableOpacity onPress={goBack}>
+                    <BackIcon />
                 </TouchableOpacity>
-                <HeaderDress style={{ marginLeft: 15 }} />
             </View>
             <View style={styles.middle}>
                 <Text style={styles.title}>
-                    Ballina
+                    {title}
                 </Text>
             </View>
             <View style={styles.right}>
-                <TouchableOpacity onPress={openMessages}>
-                    <MessagesIcon />
-                </TouchableOpacity>
             </View>
         </View>
     )
