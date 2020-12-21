@@ -6,3 +6,6 @@ export * from './headers/BackHeader';
 
 //Modals
 export * from './modals/AddPost';
+
+//Sliders
+export * from './sliders/HomeSlider';
