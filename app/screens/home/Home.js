@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { MainHeader, HomeSlider } from '../../components';
+import { MainHeader, HomeSlider, HomeCardSlider } from '../../components';
 import styles from './style';
 
 const Home = ({ navigation }) => {
@@ -11,6 +11,7 @@ const Home = ({ navigation }) => {
             <MainHeader openDrawer={_openDrawer} openMessages={_openMessages} />
             <View style={styles.container}>
                 <HomeSlider />
+                <HomeCardSlider />
             </View>
         </>
     )

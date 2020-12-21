@@ -9,3 +9,4 @@ export * from './modals/AddPost';
 
 //Sliders
 export * from './sliders/HomeSlider';
+export * from './sliders/HomeCardSlider';
