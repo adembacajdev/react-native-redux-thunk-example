@@ -1,10 +1,12 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { Image } from 'react-native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import {
     OnHome, OffHome, OffFavourites, OnFavourites, OffProfile, OnProfile, OffSearch, OnSearch, AddIcon
 } from '../assets/images';
 import { useIsDrawerOpen } from '@react-navigation/drawer';
+import { useDispatch } from 'react-redux';
+import { IS_DRAWER_OPEN } from '../store/actionTypes';
 
 //screens
 import Home from '../screens/home/Home';
@@ -16,9 +18,10 @@ import Add from '../screens/add/Add';
 const Tab = createMaterialBottomTabNavigator();
 
 function BottomTabs() {
+    const dispatch = useDispatch();
     const isDrawerOpen = useIsDrawerOpen();
     useEffect(() => {
-        console.log('isDrawerOpen', isDrawerOpen)
+        dispatch({ type: IS_DRAWER_OPEN, data: isDrawerOpen })
     }, [isDrawerOpen])
     return (
         <Tab.Navigator

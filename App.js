@@ -9,17 +9,21 @@
 import React from 'react';
 import { SafeAreaView, StatusBar } from 'react-native';
 import AppNavigator from './app/navigator/Stack';
+import { connect } from 'react-redux';
 
-const App = () => {
+const App = ({ drawerStatus }) => {
   return (
     <>
       <StatusBar barStyle="dark-content" backgroundColor="white" />
       <SafeAreaView style={{ flex: 0 }} />
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#D0808F' }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: drawerStatus ? 'white' : '#D0808F' }}>
         <AppNavigator />
       </SafeAreaView>
     </>
   );
 };
 
-export default App;
+const mapStateToProps = ({ drawerStatus }) => ({ drawerStatus });
+const mapDispatchToProps = null;
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

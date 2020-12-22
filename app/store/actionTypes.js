@@ -1,0 +1,1 @@
+export const IS_DRAWER_OPEN = 'IS_DRAWER_OPEN';

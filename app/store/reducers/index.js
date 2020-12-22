@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
+import { drawerStatus } from './routeActions';
 
-const nullValue = () => null;
 export default combineReducers({
-    nullValue
+    //Route State
+    drawerStatus,
 });
