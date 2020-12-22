@@ -16,3 +16,4 @@ export * from './grids/LastPosts';
 
 //lists
 export * from './lists/Discounts';
+export * from './lists/SearchItems';

@@ -2,33 +2,30 @@ import React from 'react';
 import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity } from 'react-native';
 import { fonts } from '../../constants';
 import DummyDressImage from '../../assets/images/dummyDressImage.png';
-import { OffHeart, OnHeart } from '../../assets/images';
+import { SearchArrow } from '../../assets/images';
 
-export const LastPosts = () => {
+export const SearchItems = () => {
     return (
         <View style={styles.container}>
             <FlatList
-                columnWrapperStyle={{ justifyContent: 'space-between' }}
-                contentContainerStyle={{ paddingVertical: 10 }}
-                data={[0, 2]}
+                contentContainerStyle={{ paddingVertical: 10, paddingHorizontal: 5 }}
+                data={[0, 2, 3]}
                 renderItem={({ item }) => (
                     <View style={styles.card}>
-                        <Image source={DummyDressImage} style={{ width: '100%' }} />
-                        <View style={styles.bottomCard}>
-                            <View style={styles.leftBottomCard}>
+                        <View style={styles.left}>
+                            <Image source={DummyDressImage} style={{ width: 70, height: 65, marginRight: 10 }} />
+                            <View style={styles.texts}>
                                 <Text style={styles.title}>Short Wedding Dress</Text>
                                 <Text style={styles.price}>$149.99</Text>
                             </View>
-                            <View style={styles.rightBottomCard}>
-                                <TouchableOpacity style={styles.circle}>
-                                    <OffHeart />
-                                </TouchableOpacity>
-                            </View>
+                        </View>
+                        <View style={styles.right}>
+                            <TouchableOpacity>
+                                <SearchArrow />
+                            </TouchableOpacity>
                         </View>
                     </View>
                 )}
-                horizontal={false}
-                numColumns={2}
                 keyExtractor={(item, index) => String(item)}
             />
         </View>
@@ -38,15 +35,16 @@ export const LastPosts = () => {
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        marginTop: 10
     },
     card: {
-        width: 183,
-        height: 223.5,
+        width: '100%',
+        height: 75,
         borderRadius: 10,
         padding: 5,
+        paddingRight: 15,
         backgroundColor: 'white',
-
+        flexDirection: 'row',
+        alignItems: 'center',
         shadowColor: "#000",
         shadowOffset: { width: 0, height: 0 },
         shadowOpacity: 0.25,
@@ -55,17 +53,12 @@ const styles = StyleSheet.create({
         zIndex: 999999,
         marginBottom: 20
     },
-    bottomCard: {
+    left: {
+        flex: 3,
         flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: 5
+        alignItems: 'center'
     },
-    leftBottomCard: {
-        flex: 2,
-        flexDirection: 'column',
-        justifyContent: 'center',
-    },
-    rightBottomCard: {
+    right: {
         flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
@@ -88,5 +81,10 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontFamily: fonts.LIGHT,
         color: '#625261'
+    },
+    texts: {
+        flexDirection: 'column',
+        justifyContent: 'space-around',
+        height: '100%'
     }
 })
