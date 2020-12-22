@@ -3,10 +3,8 @@ import { fonts } from '../../constants';
 
 const styles = StyleSheet.create({
     container: {
-        flexGrow: 1,
+        flex: 1,
         backgroundColor: 'white',
-        paddingHorizontal: 10,
-        paddingVertical: 20
     },
     focusedSearch: {
         width: '100%',

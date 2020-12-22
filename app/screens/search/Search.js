@@ -20,23 +20,28 @@ const Search = ({ navigation }) => {
     return (
         <>
             <MainHeader openDrawer={_openDrawer} openMessages={_openMessages} title="Search" />
-            <ScrollView contentContainerStyle={styles.container}>
-                <View style={styles[isFocused ? 'focusedSearch' : 'unfocusedSearch']}>
-                    <SearchIcon />
-                    <TextInput
-                        onBlur={() => toggleFocused(false)}
-                        onFocus={() => toggleFocused(true)}
-                        ref={textinputRef}
-                        style={styles.textinput}
-                        placeholder="Search accessories"
-                        placeholderTextColor="#C0C0C0"
-                    />
-                </View>
-                <View style={styles.resultsContainer}>
-                    <Text style={styles.resultsText}>2 rezultate</Text>
-                </View>
-                <SearchItems />
-            </ScrollView>
+            <View style={styles.container}>
+                <SearchItems
+                    _headerComponent={() => (
+                        <>
+                            <View style={styles[isFocused ? 'focusedSearch' : 'unfocusedSearch']}>
+                                <SearchIcon />
+                                <TextInput
+                                    onBlur={() => toggleFocused(false)}
+                                    onFocus={() => toggleFocused(true)}
+                                    ref={textinputRef}
+                                    style={styles.textinput}
+                                    placeholder="Search accessories"
+                                    placeholderTextColor="#C0C0C0"
+                                />
+                            </View>
+                            <View style={styles.resultsContainer}>
+                                <Text style={styles.resultsText}>2 rezultate</Text>
+                            </View>
+                        </>
+                    )}
+                />
+            </View>
         </>
     )
 }

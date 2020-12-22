@@ -4,10 +4,11 @@ import { fonts } from '../../constants';
 import DummyDressImage from '../../assets/images/dummyDressImage.png';
 import { SearchArrow } from '../../assets/images';
 
-export const SearchItems = () => {
+export const SearchItems = ({ _headerComponent }) => {
     return (
-        <View style={styles.container}>
             <FlatList
+                style={styles.flatlist}
+                ListHeaderComponent={_headerComponent}
                 contentContainerStyle={{ paddingVertical: 10, paddingHorizontal: 5 }}
                 data={[0, 2, 3]}
                 renderItem={({ item }) => (
@@ -28,13 +29,17 @@ export const SearchItems = () => {
                 )}
                 keyExtractor={(item, index) => String(item)}
             />
-        </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
         width: '100%',
+    },
+    flatlist: {
+        flex: 1,
+        paddingHorizontal: 10,
+        paddingVertical: 20
     },
     card: {
         width: '100%',
