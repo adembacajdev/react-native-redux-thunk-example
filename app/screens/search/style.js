@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 0 },
         shadowOpacity: 0.55,
         shadowRadius: 2,
-        elevation: 5,
+        elevation: 1,
         zIndex: 999999,
     },
     unfocusedSearch: {

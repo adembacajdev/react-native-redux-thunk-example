@@ -19,9 +19,9 @@ const Add = ({ navigation, isLoggedIn, setIsLoggedIn }) => {
         }
     }, []))
 
-    useEffect(() => {
-        if (!isOpen && !isLoggedIn && !isLogin && !isSignup) navigation.navigate('Home');
-    }, [isOpen, isLoggedIn, isLogin, isSignup])
+    // useEffect(() => {
+    //     if (!isOpen && !isLoggedIn && !isLogin && !isSignup) navigation.navigate('Home');
+    // }, [isOpen, isLoggedIn, isLogin, isSignup])
 
     const _toggleModal = () => toggleModal(!isOpen);
     const _toggleLogin = () => toggleLogin(!isLogin);
