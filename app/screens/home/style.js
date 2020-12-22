@@ -1,12 +1,19 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
+import { fonts } from '../../constants';
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flexGrow: 1,
         backgroundColor: 'white',
         paddingHorizontal: 10,
         paddingVertical: 20,
         backgroundColor: 'white'
+    },
+    sectionTitle: {
+        fontSize: 20,
+        fontFamily: fonts.BOLD,
+        color: 'black',
+        marginTop: 30
     }
 })
 

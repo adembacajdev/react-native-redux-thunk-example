@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text } from 'react-native';
-import { MainHeader, HomeSlider, HomeCardSlider } from '../../components';
+import { View, Text, ScrollView } from 'react-native';
+import { MainHeader, HomeSlider, HomeCardSlider, LastPosts, Discounts } from '../../components';
 import styles from './style';
 
 const Home = ({ navigation }) => {
@@ -9,10 +9,14 @@ const Home = ({ navigation }) => {
     return (
         <>
             <MainHeader openDrawer={_openDrawer} openMessages={_openMessages} />
-            <View style={styles.container}>
+            <ScrollView contentContainerStyle={styles.container}>
                 <HomeSlider />
                 <HomeCardSlider />
-            </View>
+                <Text style={styles.sectionTitle}>Të fundit</Text>
+                <LastPosts />
+                <Text style={[styles.sectionTitle, { marginTop: 10 }]}>Në zbritje</Text>
+                <Discounts />
+            </ScrollView>
         </>
     )
 }

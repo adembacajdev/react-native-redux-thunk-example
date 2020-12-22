@@ -10,3 +10,9 @@ export * from './modals/AddPost';
 //Sliders
 export * from './sliders/HomeSlider';
 export * from './sliders/HomeCardSlider';
+
+//grids
+export * from './grids/LastPosts';
+
+//lists
+export * from './lists/Discounts';
