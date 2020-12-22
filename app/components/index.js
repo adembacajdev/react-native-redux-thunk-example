@@ -13,8 +13,10 @@ export * from './sliders/HomeCardSlider';
 
 //grids
 export * from './grids/LastPosts';
+export * from './grids/CategoryGridList';
 
 //lists
 export * from './lists/Discounts';
 export * from './lists/SearchItems';
 export * from './lists/MessagesList';
+export * from './lists/CategoryList'

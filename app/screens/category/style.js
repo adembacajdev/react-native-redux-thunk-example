@@ -4,7 +4,6 @@ import { fonts } from '../../constants';
 const styles = StyleSheet.create({
     container: {
         flexGrow: 1,
-        padding: 15,
         backgroundColor: 'white'
     },
     topRow: {
@@ -14,7 +13,7 @@ const styles = StyleSheet.create({
         marginBottom: 30
     },
     topLeftRow: {
-        flex: 1,
+        flex: 3,
         flexDirection: 'row',
         alignItems: 'center',
     },
@@ -28,6 +27,9 @@ const styles = StyleSheet.create({
         fontSize: 25,
         fontFamily: fonts.BOLD,
         color: 'rgba(0, 0, 0, 0.9)'
+    },
+    flatlist: {
+        flex: 1
     }
 })
 
