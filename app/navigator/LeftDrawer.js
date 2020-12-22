@@ -17,6 +17,7 @@ function LeftDrawer() {
             hideStatusBar={true}
             statusBarAnimation="fade"
             keyboardDismissMode="on-drag"
+            drawerStyle={{ width: '100%' }}
         >
             <Drawer.Screen name="Drawer" component={BottomTabs} />
         </Drawer.Navigator>

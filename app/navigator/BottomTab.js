@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Image } from 'react-native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import {
-    OnHome, OffHome, OffFavourites, OnFavourites, OffMessages, OnMessages, OffProfile, OnProfile, OffSearch, OnSearch, AddIcon
+    OnHome, OffHome, OffFavourites, OnFavourites, OffProfile, OnProfile, OffSearch, OnSearch, AddIcon
 } from '../assets/images';
+import { useIsDrawerOpen } from '@react-navigation/drawer';
 
 //screens
 import Home from '../screens/home/Home';
@@ -14,9 +15,11 @@ import Add from '../screens/add/Add';
 
 const Tab = createMaterialBottomTabNavigator();
 
-const NullComponent = () => null;
-
 function BottomTabs() {
+    const isDrawerOpen = useIsDrawerOpen();
+    useEffect(() => {
+        console.log('isDrawerOpen', isDrawerOpen)
+    }, [isDrawerOpen])
     return (
         <Tab.Navigator
             barStyle={{ backgroundColor: '#D0808F', height: 50 }}
@@ -31,7 +34,7 @@ function BottomTabs() {
                         <OnHome />
                         :
                         <OffHome />,
-                        tabBarLabel: 'ballina'
+                    tabBarLabel: 'ballina'
                 }}
             />
             <Tab.Screen
@@ -42,7 +45,7 @@ function BottomTabs() {
                         <OnSearch />
                         :
                         <OffSearch />,
-                        tabBarLabel: 'kërko'
+                    tabBarLabel: 'kërko'
                 }}
             />
             <Tab.Screen
@@ -61,7 +64,7 @@ function BottomTabs() {
                         <OnFavourites />
                         :
                         <OffFavourites />,
-                        tabBarLabel: 'preferuar'
+                    tabBarLabel: 'preferuar'
                 }}
             />
             <Tab.Screen
@@ -72,7 +75,7 @@ function BottomTabs() {
                         <OnProfile />
                         :
                         <OffProfile />,
-                        tabBarLabel: 'profili'
+                    tabBarLabel: 'profili'
                 }}
             />
         </Tab.Navigator>

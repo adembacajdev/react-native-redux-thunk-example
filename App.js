@@ -8,7 +8,6 @@
 
 import React from 'react';
 import { SafeAreaView, StatusBar } from 'react-native';
-
 import AppNavigator from './app/navigator/Stack';
 
 const App = () => {
