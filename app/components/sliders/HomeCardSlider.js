@@ -1,37 +1,52 @@
 import React from 'react';
+import { useRef } from 'react';
 import { View, ScrollView, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { useCallback } from 'react/cjs/react.development';
 import {
     OnCardArrow, OffCardArrow, OnDyqanet, OffDyqanet, OnNew, OffNew, OnRent, OffRent, OnDiscount, OffDiscount
 } from '../../assets/images';
 import { fonts } from '../../constants';
 
-export const HomeCardSlider = () => {
+export const HomeCardSlider = ({ category, setCategory }) => {
+    const scrollviewRef = useRef(null);
+
+    const _openDyqanet = useCallback(() => {
+        scrollviewRef.current.scrollTo({ x: 0, y: 0, animated: true })
+        setCategory('dyqanet');
+    }, [category]);
+    const _openNew = useCallback(() => { setCategory('new') }, [category]);
+    const _openRent = useCallback(() => { setCategory('rent') }, [category]);
+    const _openDiscount = useCallback(() => {
+        scrollviewRef.current.scrollToEnd({ animated: true });
+        setCategory('discount')
+    }, [category]);
+
     return (
         <View style={styles.container}>
-            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+            <ScrollView ref={scrollviewRef} horizontal={true} showsHorizontalScrollIndicator={false}>
                 {/* Dyqanet */}
-                <TouchableOpacity style={[styles.card, styles.active, { marginLeft: 0 }]}>
-                    <OnDyqanet />
-                    <Text style={styles.activeText}>Dyqanet</Text>
-                    <OnCardArrow />
+                <TouchableOpacity onPress={_openDyqanet} style={[styles.card, styles[category === 'dyqanet' ? 'active' : 'inactive'], { marginLeft: 0 }]}>
+                    {category === 'dyqanet' ? <OnDyqanet /> : <OffDyqanet />}
+                    <Text style={styles[category === 'dyqanet' ? 'activeText' : 'inactiveText']}>Dyqanet</Text>
+                    {category === 'dyqanet' ? <OnCardArrow /> : <OffCardArrow />}
                 </TouchableOpacity>
                 {/* New */}
-                <TouchableOpacity style={[styles.card, styles.inactive]}>
-                    <OffNew />
-                    <Text style={styles.inactiveText}>Arritjet e reja</Text>
-                    <OffCardArrow />
+                <TouchableOpacity onPress={_openNew} style={[styles.card, styles[category === 'new' ? 'active' : 'inactive']]}>
+                    {category === 'new' ? <OnNew /> : <OffNew />}
+                    <Text style={styles[category === 'new' ? 'activeText' : 'inactiveText']}>Arritjet e reja</Text>
+                    {category === 'new' ? <OnCardArrow /> : <OffCardArrow />}
                 </TouchableOpacity>
                 {/* Rent */}
-                <TouchableOpacity style={[styles.card, styles.inactive]}>
-                    <OffRent />
-                    <Text style={styles.inactiveText}>Me qera</Text>
-                    <OnCardArrow />
+                <TouchableOpacity onPress={_openRent} style={[styles.card, styles[category === 'rent' ? 'active' : 'inactive']]}>
+                    {category === 'rent' ? <OnRent /> : <OffRent />}
+                    <Text style={styles[category === 'rent' ? 'activeText' : 'inactiveText']}>Me qera</Text>
+                    {category === 'rent' ? <OnCardArrow /> : <OffCardArrow />}
                 </TouchableOpacity>
                 {/* Discount */}
-                <TouchableOpacity style={[styles.card, styles.inactive]}>
-                    <OffDiscount />
-                    <Text style={styles.inactiveText}>Me zbritje</Text>
-                    <OnCardArrow />
+                <TouchableOpacity onPress={_openDiscount} style={[styles.card, styles[category === 'discount' ? 'active' : 'inactive']]}>
+                    {category === 'discount' ? <OnDiscount /> : <OffDiscount />}
+                    <Text style={styles[category === 'discount' ? 'activeText' : 'inactiveText']}>Me zbritje</Text>
+                    {category === 'discount' ? <OnCardArrow /> : <OffCardArrow />}
                 </TouchableOpacity>
             </ScrollView>
         </View>
