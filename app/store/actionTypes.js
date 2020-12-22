@@ -1,1 +1,2 @@
 export const IS_DRAWER_OPEN = 'IS_DRAWER_OPEN';
+export const SET_CURRENT_ROUTE = 'SET_CURRENT_ROUTE';

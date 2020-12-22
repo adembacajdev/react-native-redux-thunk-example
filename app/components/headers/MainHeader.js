@@ -14,9 +14,6 @@ export const MainHeader = ({ openDrawer, openMessages }) => {
                 <HeaderDress style={{ marginLeft: 15 }} />
             </View>
             <View style={styles.middle}>
-                <Text style={styles.title}>
-                    Ballina
-                </Text>
             </View>
             <View style={styles.right}>
                 <TouchableOpacity onPress={openMessages}>
