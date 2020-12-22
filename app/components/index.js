@@ -20,3 +20,4 @@ export * from './lists/Discounts';
 export * from './lists/SearchItems';
 export * from './lists/MessagesList';
 export * from './lists/CategoryList'
+export * from './lists/FavouritesList';
