@@ -7,15 +7,27 @@ import {
 import { useIsDrawerOpen } from '@react-navigation/drawer';
 import { useDispatch } from 'react-redux';
 import { IS_DRAWER_OPEN } from '../store/actionTypes';
+import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 
 //screens
 import Home from '../screens/home/Home';
+import Category from '../screens/category/Category';
 import Favourites from '../screens/favourites/Favourites';
 import Search from '../screens/search/Search';
 import Profile from '../screens/profile/Profile';
 import Add from '../screens/add/Add';
 
 const Tab = createMaterialBottomTabNavigator();
+const Stack = createNativeStackNavigator();
+
+function HomeStacks() {
+    return (
+        <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="Category" component={Category} />
+        </Stack.Navigator>
+    )
+}
 
 function BottomTabs() {
     const dispatch = useDispatch();
@@ -31,7 +43,7 @@ function BottomTabs() {
         >
             <Tab.Screen
                 name="Home"
-                component={Home}
+                component={HomeStacks}
                 options={{
                     tabBarIcon: ({ focused }) => focused ?
                         <OnHome />
@@ -78,7 +90,7 @@ function BottomTabs() {
                         <OnProfile />
                         :
                         <OffProfile />,
-                    tabBarLabel: 'profili'
+                    tabBarLabel: 'profili',
                 }}
             />
         </Tab.Navigator>

@@ -8,7 +8,42 @@ import { fonts } from '../../constants';
 
 export const LeftDrawerComponent = ({ navigation }) => {
     const _closeDrawer = () => navigation.closeDrawer();
-
+    const _goToBrideDresses = () => {
+        navigation.navigate('Category', { title: 'Fustane nusërie' });
+        navigation.closeDrawer();
+    }
+    const _goToEveningDresses = () => {
+        navigation.navigate('Category', { title: 'Fustane mbrëmjesh' });
+        navigation.closeDrawer();
+    }
+    const _goToTraditionalDresses = () => {
+        navigation.navigate('Category', { title: 'Veshje tradicionale' });
+        navigation.closeDrawer();
+    }
+    const _goToWeddingAccessories = () => {
+        navigation.navigate('Category', { title: 'Aksesorë dasmash' });
+        navigation.closeDrawer();
+    }
+    const _goToOtherAccessories = () => {
+        navigation.navigate('Category', { title: 'Aksesorë tjerë' });
+        navigation.closeDrawer();
+    }
+    const _goToJeweleries = () => {
+        navigation.navigate('Category', { title: 'Stoli' });
+        navigation.closeDrawer();
+    }
+    const _goToBags = () => {
+        navigation.navigate('Category', { title: 'Çanta' });
+        navigation.closeDrawer();
+    }
+    const _goToShoes = () => {
+        navigation.navigate('Category', { title: 'Këpucë' });
+        navigation.closeDrawer();
+    }
+    const _goToBeautyAndHairs = () => {
+        navigation.navigate('Category', { title: 'Bukuri & flokë' });
+        navigation.closeDrawer();
+    }
     return (
         <ScrollView contentContainerStyle={styles.container}>
             <View style={styles.header}>
@@ -18,7 +53,7 @@ export const LeftDrawerComponent = ({ navigation }) => {
             </View>
             <Text style={styles.title}>Kategoritë</Text>
             {/* Fustan Nusërie */}
-            <TouchableOpacity onPress={_closeDrawer} style={styles.item}>
+            <TouchableOpacity onPress={_goToBrideDresses} style={styles.item}>
                 <View style={styles.leftItem}>
                     <BrideDress />
                     <Text style={styles.itemText}>Fustane nusërie</Text>
@@ -28,7 +63,7 @@ export const LeftDrawerComponent = ({ navigation }) => {
                 </View>
             </TouchableOpacity>
             {/* Fustane mbremjesh */}
-            <TouchableOpacity onPress={_closeDrawer} style={styles.item}>
+            <TouchableOpacity onPress={_goToEveningDresses} style={styles.item}>
                 <View style={styles.leftItem}>
                     <EveningDress />
                     <Text style={styles.itemText}>Fustane mbrëmjesh</Text>
@@ -38,7 +73,7 @@ export const LeftDrawerComponent = ({ navigation }) => {
                 </View>
             </TouchableOpacity>
             {/* Veshje tradicionale */}
-            <TouchableOpacity onPress={_closeDrawer} style={styles.item}>
+            <TouchableOpacity onPress={_goToTraditionalDresses} style={styles.item}>
                 <View style={styles.leftItem}>
                     <TraditionalDress />
                     <Text style={styles.itemText}>Veshje tradicionale</Text>
@@ -48,27 +83,27 @@ export const LeftDrawerComponent = ({ navigation }) => {
                 </View>
             </TouchableOpacity>
             {/* Aksesorë dasmash */}
-            <TouchableOpacity onPress={_closeDrawer} style={styles.item}>
+            <TouchableOpacity onPress={_goToWeddingAccessories} style={styles.item}>
                 <View style={styles.leftItem}>
                     <WeddingAccessories />
-                    <Text style={styles.itemText}>Asesorë dasmash</Text>
+                    <Text style={styles.itemText}>Aksesorë dasmash</Text>
                 </View>
                 <View style={styles.rightItem}>
                     <DrawerItemArrow />
                 </View>
             </TouchableOpacity>
             {/* Aksesorë të tjerë */}
-            <TouchableOpacity onPress={_closeDrawer} style={styles.item}>
+            <TouchableOpacity onPress={_goToOtherAccessories} style={styles.item}>
                 <View style={styles.leftItem}>
                     <OtherAccessories />
-                    <Text style={styles.itemText}>Asesorë të tjerë</Text>
+                    <Text style={styles.itemText}>Aksesorë të tjerë</Text>
                 </View>
                 <View style={styles.rightItem}>
                     <DrawerItemArrow />
                 </View>
             </TouchableOpacity>
             {/* Stoli */}
-            <TouchableOpacity onPress={_closeDrawer} style={styles.item}>
+            <TouchableOpacity onPress={_goToJeweleries} style={styles.item}>
                 <View style={styles.leftItem}>
                     <Jeweleery />
                     <Text style={styles.itemText}>Stoli</Text>
@@ -78,7 +113,7 @@ export const LeftDrawerComponent = ({ navigation }) => {
                 </View>
             </TouchableOpacity>
             {/* Canta */}
-            <TouchableOpacity onPress={_closeDrawer} style={styles.item}>
+            <TouchableOpacity onPress={_goToBags} style={styles.item}>
                 <View style={styles.leftItem}>
                     <Bags />
                     <Text style={styles.itemText}>Çanta</Text>
@@ -88,7 +123,7 @@ export const LeftDrawerComponent = ({ navigation }) => {
                 </View>
             </TouchableOpacity>
             {/* Këpucë */}
-            <TouchableOpacity onPress={_closeDrawer} style={styles.item}>
+            <TouchableOpacity onPress={_goToShoes} style={styles.item}>
                 <View style={styles.leftItem}>
                     <Shoes />
                     <Text style={styles.itemText}>Këpucë</Text>
@@ -98,7 +133,7 @@ export const LeftDrawerComponent = ({ navigation }) => {
                 </View>
             </TouchableOpacity>
             {/* Bukuri dhe flokë */}
-            <TouchableOpacity onPress={_closeDrawer} style={styles.item}>
+            <TouchableOpacity onPress={_goToBeautyAndHairs} style={styles.item}>
                 <View style={styles.leftItem}>
                     <BeautyAndHair />
                     <Text style={styles.itemText}>Bukuri & flokë</Text>

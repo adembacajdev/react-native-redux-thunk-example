@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Zara } from '../../assets/images';
 import { fonts } from '../../constants';
 import ViewPager from '@react-native-community/viewpager';
-import { useCallback } from 'react/cjs/react.development';
-import { useRef } from 'react';
 
 export const HomeSlider = () => {
     const [currentPage, setCurrentPage] = useState(0);
