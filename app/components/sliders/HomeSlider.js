@@ -1,22 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Zara } from '../../assets/images';
 import { fonts } from '../../constants';
+import ViewPager from '@react-native-community/viewpager';
 
 export const HomeSlider = () => {
+    const [currentPage, setCurrentPage] = useState(0);
+
     return (
         <View style={styles.container}>
-            <View style={styles.card}>
-                <Zara style={{ marginRight: 15 }} />
-                <View style={styles.texts}>
-                    <Text style={styles.title}>Zara</Text>
-                    <Text style={styles.description}>{'Lorem ipsum Dolores wedding dress. Lorem ipsum Dolores wedding dress.\bLorem ipsum Lorem ipsum Dolores wedding dress. Lorem ipsum Dolores.'}</Text>
-                </View>
-            </View>
+            <ViewPager onPageSelected={(e) => setCurrentPage(e.nativeEvent.position)} initialPage={0} style={{ width: '100%', height: 100 }}>
+                {sliders.map((item, index) => {
+                    return (
+                        <View key={item.key} style={styles.card}>
+                            <Zara style={{ marginRight: 15 }} />
+                            <View style={styles.texts}>
+                                <Text style={styles.title}>Zara</Text>
+                                <Text style={styles.description}>{'Lorem ipsum Dolores wedding dress. Lorem ipsum Dolores wedding dress.\bLorem ipsum Lorem ipsum Dolores wedding dress. Lorem ipsum Dolores.'}</Text>
+                            </View>
+                        </View>
+                    )
+                })}
+            </ViewPager>
             <View style={styles.lines}>
-                <View style={styles.inactiveLine} />
-                <View style={styles.activeLine} />
-                <View style={styles.inactiveLine} />
+                {sliders.map((item, index) => {
+                    return <View style={styles[index === currentPage ? 'activeLine' : 'inactiveLine']} />
+                })}
             </View>
         </View>
     )
@@ -60,7 +69,8 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%',
         height: 2,
-        backgroundColor: 'rgba(121, 163, 177, 0.2)'
+        backgroundColor: 'rgba(121, 163, 177, 0.2)',
+        marginRight: 5
     },
     activeLine: {
         flex: 1,
@@ -69,3 +79,11 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(121, 163, 177, 1)'
     }
 })
+
+const sliders = [
+    { id: 1, key: "1", title: 'Zara', description: 'Lorem ipsum Dolores wedding dress. Lorem ipsum Dolores wedding dress.\bLorem ipsum Lorem ipsum Dolores wedding dress. Lorem ipsum Dolores.' },
+    { id: 2, key: "2", title: 'Zara', description: 'Lorem ipsum Dolores wedding dress. Lorem ipsum Dolores wedding dress.\bLorem ipsum Lorem ipsum Dolores wedding dress. Lorem ipsum Dolores.' },
+    { id: 3, key: "3", title: 'Zara', description: 'Lorem ipsum Dolores wedding dress. Lorem ipsum Dolores wedding dress.\bLorem ipsum Lorem ipsum Dolores wedding dress. Lorem ipsum Dolores.' },
+    { id: 4, key: "4", title: 'Zara', description: 'Lorem ipsum Dolores wedding dress. Lorem ipsum Dolores wedding dress.\bLorem ipsum Lorem ipsum Dolores wedding dress. Lorem ipsum Dolores.' },
+    { id: 5, key: "5", title: 'Zara', description: 'Lorem ipsum Dolores wedding dress. Lorem ipsum Dolores wedding dress.\bLorem ipsum Lorem ipsum Dolores wedding dress. Lorem ipsum Dolores.' },
+]
