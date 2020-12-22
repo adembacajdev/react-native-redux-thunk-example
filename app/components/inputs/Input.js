@@ -2,9 +2,9 @@ import React from 'react';
 import { View, TouchableOpacity, Text, TextInput, StyleSheet } from 'react-native';
 import { fonts } from '../../constants';
 
-export const Input = ({ label, isNumeric, isEmail, isTextarea, placeholder }) => {
+export const Input = ({ label, isNumeric, isEmail, isTextarea, placeholder, width, flex }) => {
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { width: width ? width : '100%', flex }]}>
             <Text style={styles.label}>{label}</Text>
             <View style={
                 [

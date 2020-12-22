@@ -3,6 +3,7 @@ import { View, Text, Modal, SafeAreaView, StyleSheet, ScrollView, TouchableOpaci
 import { AuthHeader } from '../index';
 import { fonts } from '../../constants';
 import { Input, PasswordInput, NativeButton } from '../../components';
+import { Facebook, Instagram } from '../../assets/images';
 
 export const SignupModal = ({ isOpen, toggle, _goToSignUp }) => {
     const [topTab, setTopTab] = useState(0);
@@ -52,6 +53,14 @@ export const SignupModal = ({ isOpen, toggle, _goToSignUp }) => {
                                 <Input label="Emri i dyqanit" placeholder="Emri dyqanit tuaj këtu" />
                                 <Input label="Email adresa" isEmail placeholder="Email adresa e dyqanit tuaj këtu" />
                                 <Input label="Numri kontaktues" isNumeric placeholder="Numri kontaktues i dyqanit tuaj këtu" />
+                                <View style={styles.socialRow}>
+                                    <Input flex={1} label="Facebook" isNumeric placeholder="Linku i dyqanit në Facebook" />
+                                    <Facebook style={{ marginLeft: 10, marginBottom: -12 }} />
+                                </View>
+                                <View style={styles.socialRow}>
+                                    <Input flex={1} label="Instagram" isNumeric placeholder="Linku i dyqanit në Instagram" />
+                                    <Instagram style={{ marginLeft: 10, marginBottom: -12 }} />
+                                </View>
                                 <Input label="Qyteti ku gjindet dyqani" placeholder="Qyteti i dyqanit tuaj këtu" />
                                 <Input label="Adresa" placeholder="Adresa e dyqanit tuaj këtu" />
                                 <Input isTextarea label="Përshkrimi i dyqanit" placeholder="Përshkrimi i dyqanit tuaj këtu" />
@@ -131,5 +140,10 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontFamily: fonts.BOLD,
         color: '#F3DBE0'
+    },
+    socialRow: {
+        width: '100%',
+        alignItems: 'center',
+        flexDirection: 'row'
     }
 })
