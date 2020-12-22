@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity } from 'react-native';
 import { fonts } from '../../constants';
 import DummyDressImage from '../../assets/images/dummyDressImage.png';
@@ -11,20 +11,7 @@ export const Discounts = () => {
                 contentContainerStyle={{ paddingVertical: 10, paddingHorizontal: 5 }}
                 data={[0, 2, 3]}
                 renderItem={({ item }) => (
-                    <View style={styles.card}>
-                        <View style={styles.left}>
-                            <Image source={DummyDressImage} style={{ width: 70, height: 65, marginRight: 10 }} />
-                            <View style={styles.texts}>
-                                <Text style={styles.title}>Short Wedding Dress</Text>
-                                <Text style={styles.price}>$149.99</Text>
-                            </View>
-                        </View>
-                        <View style={styles.right}>
-                            <TouchableOpacity style={styles.circle}>
-                                <OffHeart />
-                            </TouchableOpacity>
-                        </View>
-                    </View>
+                    <Item {...item} />
                 )}
                 keyExtractor={(item, index) => String(item)}
             />
@@ -89,3 +76,23 @@ const styles = StyleSheet.create({
         height: '100%'
     }
 })
+
+function Item() {
+    const [isFavourite, toggleFavourite] = useState(false);
+    return (
+        <View style={styles.card}>
+            <View style={styles.left}>
+                <Image source={DummyDressImage} style={{ width: 70, height: 65, marginRight: 10 }} />
+                <View style={styles.texts}>
+                    <Text style={styles.title}>Short Wedding Dress</Text>
+                    <Text style={styles.price}>$149.99</Text>
+                </View>
+            </View>
+            <View style={styles.right}>
+                <TouchableOpacity onPress={() => toggleFavourite(!isFavourite)} style={styles.circle}>
+                    {isFavourite ? <OnHeart /> : <OffHeart />}
+                </TouchableOpacity>
+            </View>
+        </View>
+    )
+}
