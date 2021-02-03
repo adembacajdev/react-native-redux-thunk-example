@@ -4,6 +4,7 @@ export const SET_CURRENT_ROUTE = 'SET_CURRENT_ROUTE';
 
 //Auth
 export const SET_IS_LOGGED_IN = 'SET_IS_LOGGED_IN';
+export const SET_ACCOUNT_TYPE = 'SET_ACCOUNT_TYPE';
 
 //Home
 export const ALL_SLIDERS = 'ALL_SLIDERS';
