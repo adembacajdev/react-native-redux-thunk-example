@@ -10,9 +10,9 @@ export const MessagesList = () => {
                 data={messages}
                 renderItem={({ item }) => {
                     return (
-                        <TouchableOpacity style={styles.card}>
+                        <TouchableOpacity style={item.read ? styles.readCard : styles.unreadCard}>
                             <View style={styles.leftCard}>
-                                <Text style={styles.title}>Dyqani: {item?.store}</Text>
+                                <Text style={item.read ? styles.readTitle : styles.unreadTitle}>Dyqani: {item?.store}</Text>
                                 <Text style={styles.subtitle}>Emri i produktit: {item?.productName}</Text>
                             </View>
                             <View style={styles.rightCard}>
@@ -29,10 +29,10 @@ export const MessagesList = () => {
 }
 
 const messages = [
-    { id: 1, store: 'Zara', productName: 'Fustan Nusërie', time: '2 hours ago' },
-    { id: 2, store: 'Springfield', productName: 'Fustan Nusërie', time: '2 hours ago' },
-    { id: 3, store: 'Pull&Bear', productName: 'Fustan Nusërie', time: '2 hours ago' },
-    { id: 4, store: 'LC Waikiki', productName: 'Fustan Nusërie', time: '2 hours ago' },
+    { id: 1, store: 'Zara', productName: 'Fustan Nusërie', time: '2 hours ago', read: false },
+    { id: 2, store: 'Springfield', productName: 'Fustan Nusërie', time: '2 hours ago', read: true },
+    { id: 3, store: 'Pull&Bear', productName: 'Fustan Nusërie', time: '2 hours ago', read: true },
+    { id: 4, store: 'LC Waikiki', productName: 'Fustan Nusërie', time: '2 hours ago', read: true },
 ]
 
 const styles = StyleSheet.create({
@@ -42,13 +42,23 @@ const styles = StyleSheet.create({
         paddingVertical: 20,
         paddingHorizontal: 10
     },
-    card: {
+    readCard: {
         width: '100%',
         paddingVertical: 5,
         paddingHorizontal: 15,
         borderRadius: 5,
         borderWidth: 0.5,
         borderColor: 'rgba(0, 0, 0, 0.25)',
+        marginBottom: 10,
+        flexDirection: 'row'
+    },
+    unreadCard: {
+        borderColor: '#F98B9C',
+        width: '100%',
+        paddingVertical: 5,
+        paddingHorizontal: 15,
+        borderRadius: 5,
+        borderWidth: 0.5,
         marginBottom: 10,
         flexDirection: 'row'
     },
@@ -63,10 +73,15 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end',
         justifyContent: 'flex-end',
     },
-    title: {
+    readTitle: {
         fontSize: 18,
         fontFamily: fonts.BOLD,
         color: 'rgba(0, 0, 0, 0.7)'
+    },
+    unreadTitle: {
+        fontSize: 18,
+        fontFamily: fonts.BOLD,
+        color: '#F98B9C',
     },
     subtitle: {
         fontSize: 14,

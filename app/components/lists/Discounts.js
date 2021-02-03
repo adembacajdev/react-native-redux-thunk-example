@@ -3,13 +3,15 @@ import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity } from 'react
 import { fonts } from '../../constants';
 import DummyDressImage from '../../assets/images/dummyDressImage.png';
 import { OffHeart, OnHeart } from '../../assets/images';
+import { useSelector } from 'react-redux';
 
 export const Discounts = () => {
+    const discountPosts = useSelector(state => state.discountPosts);
     return (
         <View style={styles.container}>
             <FlatList
                 contentContainerStyle={{ paddingVertical: 10, paddingHorizontal: 5 }}
-                data={[0, 2, 3]}
+                data={discountPosts}
                 renderItem={({ item }) => (
                     <Item {...item} />
                 )}
@@ -77,15 +79,15 @@ const styles = StyleSheet.create({
     }
 })
 
-function Item() {
+function Item({ title, price, icon, liked }) {
     const [isFavourite, toggleFavourite] = useState(false);
     return (
         <View style={styles.card}>
             <View style={styles.left}>
-                <Image source={DummyDressImage} style={{ width: 70, height: 65, marginRight: 10 }} />
+                <Image source={icon} style={{ width: 70, height: 65, marginRight: 10 }} />
                 <View style={styles.texts}>
-                    <Text style={styles.title}>Short Wedding Dress</Text>
-                    <Text style={styles.price}>$149.99</Text>
+                    <Text style={styles.title}>{title}</Text>
+                    <Text style={styles.price}>${price}</Text>
                 </View>
             </View>
             <View style={styles.right}>

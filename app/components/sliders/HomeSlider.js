@@ -3,17 +3,19 @@ import { View, Text, StyleSheet } from 'react-native';
 import { Zara } from '../../assets/images';
 import { fonts } from '../../constants';
 import ViewPager from '@react-native-community/viewpager';
+import { useSelector } from 'react-redux';
 
 export const HomeSlider = () => {
     const [currentPage, setCurrentPage] = useState(0);
+    const allSliders = useSelector(state => state.allSliders);
 
     return (
         <View style={styles.container}>
             <ViewPager onPageSelected={(e) => setCurrentPage(e.nativeEvent.position)} initialPage={currentPage} style={{ width: '100%', height: 100 }}>
-                {sliders.map((item, index) => {
+                {allSliders.map((item, index) => {
                     return (
                         <View key={item.key} style={styles.card}>
-                            <Zara style={{ marginRight: 15 }} />
+                            {item.icon}
                             <View style={styles.texts}>
                                 <Text style={styles.title}>Zara</Text>
                                 <Text style={styles.description}>{'Lorem ipsum Dolores wedding dress. Lorem ipsum Dolores wedding dress.\bLorem ipsum Lorem ipsum Dolores wedding dress. Lorem ipsum Dolores.'}</Text>
@@ -23,7 +25,7 @@ export const HomeSlider = () => {
                 })}
             </ViewPager>
             <View style={styles.lines}>
-                {sliders.map((item, index) => {
+                {allSliders.map((item, index) => {
                     return <View style={styles[index === currentPage ? 'activeLine' : 'inactiveLine']} />
                 })}
             </View>

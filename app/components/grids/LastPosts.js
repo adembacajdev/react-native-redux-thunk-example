@@ -3,14 +3,16 @@ import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity } from 'react
 import { fonts } from '../../constants';
 import DummyDressImage from '../../assets/images/dummyDressImage.png';
 import { OffHeart, OnHeart } from '../../assets/images';
+import { useSelector } from 'react-redux';
 
 export const LastPosts = () => {
+    const lastPosts = useSelector(state => state.lastPosts);
     return (
         <View style={styles.container}>
             <FlatList
                 columnWrapperStyle={{ justifyContent: 'space-between' }}
                 contentContainerStyle={{ paddingVertical: 10 }}
-                data={[0, 2]}
+                data={lastPosts}
                 renderItem={({ item }) => (
                     <Item {...item} />
                 )}
@@ -78,15 +80,15 @@ const styles = StyleSheet.create({
     }
 })
 
-function Item() {
+function Item({ title, price, liked, icon }) {
     const [isFavourite, toggleFavoruite] = useState(false);
     return (
         <View style={styles.card}>
-            <Image source={DummyDressImage} style={{ width: '100%' }} />
+            <Image source={icon} style={{ width: '100%' }} />
             <View style={styles.bottomCard}>
                 <View style={styles.leftBottomCard}>
-                    <Text style={styles.title}>Short Wedding Dress</Text>
-                    <Text style={styles.price}>$149.99</Text>
+                    <Text style={styles.title}>{title}</Text>
+                    <Text style={styles.price}>${price}</Text>
                 </View>
                 <View style={styles.rightBottomCard}>
                     <TouchableOpacity onPress={() => toggleFavoruite(!isFavourite)} style={styles.circle}>
