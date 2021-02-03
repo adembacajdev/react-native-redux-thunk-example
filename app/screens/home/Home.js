@@ -7,7 +7,7 @@ const Home = ({ navigation }) => {
     const [category, setCategory] = useState('none');
 
     const _openDrawer = () => navigation.toggleDrawer();
-    const _openMessages = () => navigation.navigate('Messages')
+    const _openMessages = () => navigation.navigate('Messages');
     return (
         <>
             <MainHeader openDrawer={_openDrawer} openMessages={_openMessages} />

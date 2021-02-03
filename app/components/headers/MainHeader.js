@@ -2,9 +2,11 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { MenuIcon, HeaderDress, MessagesIcon } from '../../assets/images';
 import { fonts } from '../../constants';
-import { useNavigation } from '@react-navigation/drawer';
+import { useNavigation } from '@react-navigation/native';
 
 export const MainHeader = ({ openDrawer, openMessages }) => {
+    const navigation = useNavigation();
+    const _openMessages = () => navigation.navigate('Messages');
     return (
         <View style={styles.container}>
             <View style={styles.left}>
@@ -16,7 +18,7 @@ export const MainHeader = ({ openDrawer, openMessages }) => {
             <View style={styles.middle}>
             </View>
             <View style={styles.right}>
-                <TouchableOpacity onPress={openMessages}>
+                <TouchableOpacity onPress={_openMessages}>
                     <MessagesIcon />
                 </TouchableOpacity>
             </View>

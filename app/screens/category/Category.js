@@ -3,7 +3,8 @@ import { View, ScrollView, Text, TouchableOpacity } from 'react-native';
 import styles from './style';
 import { MainHeader, CategoryGridList, CategoryList } from '../../components';
 import { CategoryGridIcon, CategoryMenuIcon } from '../../assets/images';
-import { useCallback } from 'react/cjs/react.development';
+import { useCallback, useEffect } from 'react/cjs/react.development';
+import { leftDrawerMenu as menu } from '../../constants';
 
 const Category = ({ navigation, route }) => {
     const [listView, setListView] = useState(false);
@@ -22,6 +23,7 @@ const Category = ({ navigation, route }) => {
                             _headerComponent={() => (
                                 <View style={styles.topRow}>
                                     <View style={styles.topLeftRow}>
+                                        {menu.filter(item => item.title === route?.params?.title)[0].icon}
                                         <Text style={styles.rowTitle}>{route?.params?.title}</Text>
                                     </View>
                                     <View style={styles.topRightRow}>
@@ -37,6 +39,7 @@ const Category = ({ navigation, route }) => {
                             _headerComponent={() => (
                                 <View style={styles.topRow}>
                                     <View style={styles.topLeftRow}>
+                                        {menu.filter(item => item.title === route?.params?.title)[0].icon}
                                         <Text style={styles.rowTitle}>{route?.params?.title}</Text>
                                     </View>
                                     <View style={styles.topRightRow}>

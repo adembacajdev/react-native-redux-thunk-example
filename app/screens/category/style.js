@@ -26,7 +26,8 @@ const styles = StyleSheet.create({
     rowTitle: {
         fontSize: 25,
         fontFamily: fonts.BOLD,
-        color: 'rgba(0, 0, 0, 0.9)'
+        color: 'rgba(0, 0, 0, 0.9)',
+        marginLeft: 10
     },
     flatlist: {
         flex: 1
