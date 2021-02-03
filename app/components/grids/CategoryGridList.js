@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity } from 'react-native';
 import { fonts } from '../../constants';
-import DummyDressImage from '../../assets/images/dummyDressImage.png';
 import { OffHeart, OnHeart } from '../../assets/images';
+import { useSelector } from 'react-redux';
 
 export const CategoryGridList = ({ _headerComponent }) => {
+    const allCategoryPosts = useSelector(state => state.allCategoryPosts);
     return (
         <View style={styles.container}>
             <FlatList
@@ -12,13 +13,13 @@ export const CategoryGridList = ({ _headerComponent }) => {
                 showsVerticalScrollIndicator={false}
                 ListHeaderComponent={_headerComponent}
                 columnWrapperStyle={{ justifyContent: 'space-between' }}
-                data={[0, 2, 3, 4, 5, 6, 7, 8]}
+                data={allCategoryPosts?.data}
                 renderItem={({ item }) => (
                     <Item {...item} />
                 )}
                 horizontal={false}
                 numColumns={2}
-                keyExtractor={(item, index) => String(item)}
+                keyExtractor={(item, index) => String(index)}
             />
         </View>
     )
@@ -82,15 +83,15 @@ const styles = StyleSheet.create({
     }
 })
 
-function Item() {
+function Item({ title, price, icon, liked }) {
     const [isFavourite, toggleFavoruite] = useState(false);
     return (
         <View style={styles.card}>
-            <Image source={DummyDressImage} style={{ width: '100%' }} />
+            <Image source={icon} style={{ width: '100%' }} />
             <View style={styles.bottomCard}>
                 <View style={styles.leftBottomCard}>
-                    <Text style={styles.title}>Short Wedding Dress</Text>
-                    <Text style={styles.price}>$149.99</Text>
+                    <Text style={styles.title}>{title}</Text>
+                    <Text style={styles.price}>${price}</Text>
                 </View>
                 <View style={styles.rightBottomCard}>
                     <TouchableOpacity onPress={() => toggleFavoruite(!isFavourite)} style={styles.circle}>

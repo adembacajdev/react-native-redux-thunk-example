@@ -3,32 +3,34 @@ import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity } from 'react
 import { fonts } from '../../constants';
 import DummyDressImage from '../../assets/images/dummyDressImage.png';
 import { SearchArrow } from '../../assets/images';
+import { useSelector } from 'react-redux';
 
 export const SearchItems = ({ _headerComponent }) => {
+    const searchPosts = useSelector(state => state.searchPosts);
     return (
-            <FlatList
-                style={styles.flatlist}
-                ListHeaderComponent={_headerComponent}
-                contentContainerStyle={{ paddingVertical: 10, paddingHorizontal: 5 }}
-                data={[0, 2, 3]}
-                renderItem={({ item }) => (
-                    <View style={styles.card}>
-                        <View style={styles.left}>
-                            <Image source={DummyDressImage} style={{ width: 70, height: 65, marginRight: 10 }} />
-                            <View style={styles.texts}>
-                                <Text style={styles.title}>Short Wedding Dress</Text>
-                                <Text style={styles.price}>$149.99</Text>
-                            </View>
-                        </View>
-                        <View style={styles.right}>
-                            <TouchableOpacity>
-                                <SearchArrow />
-                            </TouchableOpacity>
+        <FlatList
+            style={styles.flatlist}
+            ListHeaderComponent={_headerComponent}
+            contentContainerStyle={{ paddingVertical: 10, paddingHorizontal: 5 }}
+            data={searchPosts?.data}
+            renderItem={({ item }) => (
+                <View style={styles.card}>
+                    <View style={styles.left}>
+                        <Image source={item.icon} style={{ width: 70, height: 65, marginRight: 10 }} />
+                        <View style={styles.texts}>
+                            <Text style={styles.title}>{item.title}</Text>
+                            <Text style={styles.price}>${item.price}</Text>
                         </View>
                     </View>
-                )}
-                keyExtractor={(item, index) => String(item)}
-            />
+                    <View style={styles.right}>
+                        <TouchableOpacity>
+                            <SearchArrow />
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            )}
+            keyExtractor={(item, index) => String(index)}
+        />
     )
 }
 

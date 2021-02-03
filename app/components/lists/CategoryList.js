@@ -1,21 +1,22 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity } from 'react-native';
 import { fonts } from '../../constants';
-import DummyDressImage from '../../assets/images/dummyDressImage.png';
 import { OffHeart, OnHeart } from '../../assets/images';
+import {useSelector} from 'react-redux';
 
 export const CategoryList = ({ _headerComponent }) => {
+    const allCategoryPosts = useSelector(state => state.allCategoryPosts);
     return (
         <View style={styles.container}>
             <FlatList
                 style={styles.flatlist}
                 showsVerticalScrollIndicator={false}
                 ListHeaderComponent={_headerComponent}
-                data={[0, 2, 3, 4, 5, 6, 7, 8]}
+                data={allCategoryPosts?.data}
                 renderItem={({ item }) => (
                     <Item {...item} />
                 )}
-                keyExtractor={(item, index) => String(item)}
+                keyExtractor={(item, index) => String(index)}
             />
         </View>
     )
@@ -81,15 +82,15 @@ const styles = StyleSheet.create({
     }
 })
 
-function Item() {
+function Item({title, price, icon, liked}) {
     const [isFavourite, toggleFavourite] = useState(false);
     return (
         <View style={styles.card}>
             <View style={styles.left}>
-                <Image source={DummyDressImage} style={{ width: 70, height: 65, marginRight: 10 }} />
+                <Image source={icon} style={{ width: 70, height: 65, marginRight: 10 }} />
                 <View style={styles.texts}>
-                    <Text style={styles.title}>Short Wedding Dress</Text>
-                    <Text style={styles.price}>$149.99</Text>
+                    <Text style={styles.title}>{title}</Text>
+                    <Text style={styles.price}>${price}</Text>
                 </View>
             </View>
             <View style={styles.right}>

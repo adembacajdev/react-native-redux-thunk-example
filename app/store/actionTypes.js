@@ -9,3 +9,9 @@ export const SET_IS_LOGGED_IN = 'SET_IS_LOGGED_IN';
 export const ALL_SLIDERS = 'ALL_SLIDERS';
 export const LAST_POSTS = 'LAST_POSTS';
 export const DISCOUNT_POSTS = 'DISCOUNT_POSTS';
+
+//Search
+export const SEARCH_POSTS = 'SEARCH_POSTS';
+
+//Category
+export const GET_ALL_CATEGORY_POSTS = 'GET_ALL_CATEGORY_POSTS'
