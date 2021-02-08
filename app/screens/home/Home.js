@@ -4,10 +4,10 @@ import { MainHeader, HomeSlider, HomeCardSlider, LastPosts, Discounts } from '..
 import styles from './style';
 import { useFocusEffect } from '@react-navigation/native';
 import { connect } from 'react-redux';
-import { getAllSliders, getDiscountPosts, getLastPosts } from '../../store/actions/home';
+import { getAllSliders} from '../../store/actions/sliders';
 
 const Home = (props) => {
-    const { navigation, allSliders, getAllSliders, getLastPosts, getDiscountPosts } = props;
+    const { navigation, allSliders, getAllSliders } = props;
     const [category, setCategory] = useState('none');
 
     // useFocusEffect(useCallback(() => {
@@ -39,6 +39,6 @@ const mapStateToProps = (state) => ({
     discountPosts: state.discountPosts
 })
 
-const mapDispatchToProps = { getAllSliders, getDiscountPosts, getLastPosts }
+const mapDispatchToProps = { getAllSliders }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

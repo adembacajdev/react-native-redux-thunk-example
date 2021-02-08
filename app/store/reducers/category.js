@@ -36,7 +36,7 @@ const _categoryPostsState = {
 export function allCategories(state = _categoryPostsState, { type, payload }) {
     switch (type) {
         case CATEGORIES_LOADING: return { ...state, isLoading: payload }
-        case GET_ALL_CATEGORY_POSTS: return { ...payload, isLoading: false };
+        case GET_ALL_CATEGORY_POSTS: return { data: payload, isLoading: false };
         default: return state;
     }
 }
@@ -49,7 +49,7 @@ const _oneCategoryState = {
 export function oneCategory(state = _oneCategoryState, { type, payload }) {
     switch (type) {
         case CATEGORIES_LOADING: return { ...state, isLoading: payload }
-        case GET_ALL_CATEGORY_POSTS: return { ...payload, isLoading: false };
+        case GET_ALL_CATEGORY_POSTS: return { data: { ...payload }, isLoading: false };
         default: return state;
     }
 }
