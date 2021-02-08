@@ -15,7 +15,7 @@ export const FavouritesList = ({ _headerComponent }) => {
                 renderItem={({ item }) => (
                     <Item {...item} />
                 )}
-                keyExtractor={(item, index) => String(item)}
+                keyExtractor={(item, index) => String(index)}
             />
         </View>
     )

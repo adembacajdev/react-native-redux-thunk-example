@@ -6,19 +6,20 @@ import { OffHeart, OnHeart } from '../../assets/images';
 import { useSelector } from 'react-redux';
 
 export const LastPosts = () => {
-    const lastPosts = useSelector(state => state.lastPosts);
+    const {data, isLoading} = useSelector(state => state.lastPosts);
+    console.log('data', data)
     return (
         <View style={styles.container}>
             <FlatList
                 columnWrapperStyle={{ justifyContent: 'space-between' }}
                 contentContainerStyle={{ paddingVertical: 10 }}
-                data={lastPosts}
+                data={data}
                 renderItem={({ item }) => (
                     <Item {...item} />
                 )}
                 horizontal={false}
                 numColumns={2}
-                keyExtractor={(item, index) => String(item)}
+                keyExtractor={(item, index) => String(index)}
             />
         </View>
     )

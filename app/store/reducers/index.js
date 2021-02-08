@@ -2,8 +2,8 @@ import { combineReducers } from 'redux';
 import { drawerStatus, currentRoute } from './routeActions';
 import { isLoggedIn, accountType } from './authorization';
 import { allSliders, lastPosts, discountPosts } from './home';
-import {searchPosts} from './search';
-import {allCategoryPosts} from './category';
+import { searchPosts } from './search';
+import { allCategories, oneCategory } from './category';
 
 export default combineReducers({
     //Route State
@@ -15,5 +15,5 @@ export default combineReducers({
     //Search
     searchPosts,
     //Category
-    allCategoryPosts,
+    allCategories, oneCategory,
 });

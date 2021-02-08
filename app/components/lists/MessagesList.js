@@ -22,7 +22,7 @@ export const MessagesList = () => {
                         </TouchableOpacity>
                     )
                 }}
-                keyExtractor={(item, index) => String(item.id)}
+                keyExtractor={(item, index) => String(index)}
             />
         </View>
     )

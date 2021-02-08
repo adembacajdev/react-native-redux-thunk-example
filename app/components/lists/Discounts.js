@@ -6,16 +6,16 @@ import { OffHeart, OnHeart } from '../../assets/images';
 import { useSelector } from 'react-redux';
 
 export const Discounts = () => {
-    const discountPosts = useSelector(state => state.discountPosts);
+    const { data, isLoading } = useSelector(state => state.discountPosts);
     return (
         <View style={styles.container}>
             <FlatList
                 contentContainerStyle={{ paddingVertical: 10, paddingHorizontal: 5 }}
-                data={discountPosts}
+                data={data}
                 renderItem={({ item }) => (
                     <Item {...item} />
                 )}
-                keyExtractor={(item, index) => String(item)}
+                keyExtractor={(item, index) => String(index)}
             />
         </View>
     )
