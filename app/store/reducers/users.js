@@ -10,7 +10,8 @@ const _allUsersState = {
 export function allUsers(state = _allUsersState, { type, payload }) {
     switch (type) {
         case USERS_LOADING: return { ...state, isLoading: payload };
-        case GET_ALL_USERS: return { isLoading: false, data: payload }
+        case GET_ALL_USERS: return { isLoading: false, data: payload };
+        default: return state;
     }
 }
 
@@ -22,6 +23,7 @@ const _oneUserState = {
 export function oneUser(state = _oneUserState, { type, payload }) {
     switch (type) {
         case USERS_LOADING: return { ...state, isLoading: payload };
-        case GET_ONE_USER: return { isLoading: false, data: { ...payload } }
+        case GET_ONE_USER: return { isLoading: false, data: { ...payload } };
+        default: return state;
     }
 }
