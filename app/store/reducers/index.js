@@ -5,9 +5,9 @@ import { allSliders, oneSlider } from './sliders';
 import { searchPosts } from './search';
 import { allCategories, oneCategory } from './category';
 import { allCities, oneCity } from './cities';
-import { allComments, oneComment } from './comments';
+import { allPostComments, allUserComments, oneComment } from './comments';
 import { allFavourites, oneFavourite } from './favourites';
-import { allPosts, onePost, discountPosts, lastPosts, rentPosts } from './posts';
+import { allPosts, allMyPosts, onePost, discountPosts, lastPosts, rentPosts } from './posts';
 import { allSizes, oneSize } from './sizes';
 import { allUsers, oneUser } from './users';
 
@@ -25,11 +25,11 @@ export default combineReducers({
     //Cities
     allCities, oneCity,
     //Comments
-    allComments, oneComment,
+    allPostComments, allUserComments, oneComment,
     //Favourites
     allFavourites, oneFavourite,
     //Posts
-    allPosts, onePost, discountPosts, lastPosts, rentPosts,
+    allPosts, allMyPosts, onePost, discountPosts, lastPosts, rentPosts,
     //Sizes
     allSizes, oneSize,
     //Users

@@ -1,14 +1,26 @@
 import {
-    COMMENTS_LOADING, GET_ALL_COMMENTS, GET_ONE_COMMENTS, POST_ONE_COMMENTS, UPDATE_ONE_COMMENTS, DELETE_ONE_COMMENTS
+    COMMENTS_LOADING, GET_ALL_COMMENTS_PER_POST, GET_ALL_COMMENTS_PER_USER, GET_ONE_COMMENTS, POST_ONE_COMMENTS, UPDATE_ONE_COMMENTS, DELETE_ONE_COMMENTS
 } from '../actionTypes';
 import axios from 'axios';
 
-export const getAllComments = () => async (dispatch) => {
+export const getAllCommentsPerPosts = (postId) => async (dispatch) => {
     dispatch({ type: COMMENTS_LOADING, payload: true })
     try {
-        const { data } = await axios.get(`/comments`);
+        const { data } = await axios.get(`/comments/post/${postId}`);
         if (data.success) {
-            dispatch({ type: GET_ALL_COMMENTS, payload: data.data })
+            dispatch({ type: GET_ALL_COMMENTS_PER_POST, payload: data.data })
+        }
+    } catch (e) {
+        dispatch({ type: COMMENTS_LOADING, payload: false })
+    }
+}
+
+export const getAllCommentsPerUser = (userId) => async (dispatch) => {
+    dispatch({ type: COMMENTS_LOADING, payload: true })
+    try {
+        const { data } = await axios.get(`/comments/user/${userId}`);
+        if (data.success) {
+            dispatch({ type: GET_ALL_COMMENTS_PER_USER, payload: data.data })
         }
     } catch (e) {
         dispatch({ type: COMMENTS_LOADING, payload: false })

@@ -3,10 +3,10 @@ import {
 } from '../actionTypes';
 import axios from 'axios';
 
-export const getAllFavourites = () => async (dispatch) => {
+export const getAllFavourites = (userId) => async (dispatch) => {
     dispatch({ type: FAVOURITES_LOADING, payload: true })
     try {
-        const { data } = await axios.get(`/favourites`);
+        const { data } = await axios.get(`/favourites/user/${userId}`);
         if (data.success) {
             dispatch({ type: GET_ALL_FAVOURITES, payload: data.data })
         }
