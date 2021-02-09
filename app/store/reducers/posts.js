@@ -1,7 +1,7 @@
 import React from 'react';
 import {
     POSTS_LOADING, GET_ALL_POSTS, GET_ONE_POST, GET_DISCOUNT_POSTS, GET_LAST_POSTS, GET_RENT_POSTS, UPDATE_ONE_POST,
-    POST_ONE_POST, DELETE_ONE_POST, GET_ALL_MY_POSTS
+    POST_ONE_POST, DELETE_ONE_POST, GET_ALL_MY_POSTS, GET_ALL_POSTS_BY_CATEGORY
 } from '../actionTypes';
 import { Zara } from '../../assets/images';
 import DummyDressImage from '../../assets/images/dummyDressImage.png';
@@ -15,6 +15,19 @@ export function allPosts(state = _allPostsState, { type, payload }) {
     switch (type) {
         case POSTS_LOADING: return { ...state, isLoading: payload };
         case GET_ALL_POSTS: return { isLoading: false, data: payload };
+        default: return state;
+    }
+}
+
+const _allPostsByCategoryState = {
+    isLoading: false,
+    data: []
+}
+
+export function allPostsByCategory(state = _allPostsByCategoryState, { type, payload }) {
+    switch (type) {
+        case POSTS_LOADING: return { ...state, isLoading: payload };
+        case GET_ALL_POSTS_BY_CATEGORY: return { isLoading: false, data: payload };
         default: return state;
     }
 }

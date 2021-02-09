@@ -60,6 +60,7 @@ export const GET_RENT_POSTS = 'GET_RENT_POSTS';
 export const UPDATE_ONE_POST = 'UPDATE_ONE_POST';
 export const DELETE_ONE_POST = 'DELETE_ONE_POST';
 export const POST_ONE_POST = 'POST_ONE_POST';
+export const GET_ALL_POSTS_BY_CATEGORY = 'GET_ALL_POSTS_BY_CATEGORY';
 
 //Sizes
 export const SIZES_LOADING = 'SIZES_LOADING';

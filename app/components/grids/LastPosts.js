@@ -4,24 +4,28 @@ import { fonts } from '../../constants';
 import DummyDressImage from '../../assets/images/dummyDressImage.png';
 import { OffHeart, OnHeart } from '../../assets/images';
 import { useSelector } from 'react-redux';
+import { ComponentLoading } from '../index';
 
 export const LastPosts = () => {
-    const {data, isLoading} = useSelector(state => state.lastPosts);
-    console.log('data', data)
+    const { data, isLoading } = useSelector(state => state.lastPosts);
     return (
-        <View style={styles.container}>
-            <FlatList
-                columnWrapperStyle={{ justifyContent: 'space-between' }}
-                contentContainerStyle={{ paddingVertical: 10 }}
-                data={data}
-                renderItem={({ item }) => (
-                    <Item {...item} />
-                )}
-                horizontal={false}
-                numColumns={2}
-                keyExtractor={(item, index) => String(index)}
-            />
-        </View>
+        isLoading
+            ?
+            <ComponentLoading width={"100%"} height={253.5} />
+            :
+            <View style={styles.container}>
+                <FlatList
+                    columnWrapperStyle={{ justifyContent: 'space-between' }}
+                    contentContainerStyle={{ paddingVertical: 10 }}
+                    data={data}
+                    renderItem={({ item }) => (
+                        <Item {...item} />
+                    )}
+                    horizontal={false}
+                    numColumns={2}
+                    keyExtractor={(item, index) => String(index)}
+                />
+            </View>
     )
 }
 

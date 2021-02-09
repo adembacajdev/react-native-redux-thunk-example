@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useRef } from 'react';
 import { View, ScrollView, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { useCallback } from 'react/cjs/react.development';
 import {
     OnCardArrow, OffCardArrow, OnDyqanet, OffDyqanet, OnNew, OffNew, OnRent, OffRent, OnDiscount, OffDiscount
 } from '../../assets/images';

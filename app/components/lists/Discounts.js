@@ -4,20 +4,25 @@ import { fonts } from '../../constants';
 import DummyDressImage from '../../assets/images/dummyDressImage.png';
 import { OffHeart, OnHeart } from '../../assets/images';
 import { useSelector } from 'react-redux';
+import { ComponentLoading } from '../index';
 
 export const Discounts = () => {
     const { data, isLoading } = useSelector(state => state.discountPosts);
     return (
-        <View style={styles.container}>
-            <FlatList
-                contentContainerStyle={{ paddingVertical: 10, paddingHorizontal: 5 }}
-                data={data}
-                renderItem={({ item }) => (
-                    <Item {...item} />
-                )}
-                keyExtractor={(item, index) => String(index)}
-            />
-        </View>
+        isLoading
+            ?
+            <ComponentLoading width="100%" height={105} />
+            :
+            <View style={styles.container}>
+                <FlatList
+                    contentContainerStyle={{ paddingVertical: 10, paddingHorizontal: 5 }}
+                    data={data}
+                    renderItem={({ item }) => (
+                        <Item {...item} />
+                    )}
+                    keyExtractor={(item, index) => String(index)}
+                />
+            </View>
     )
 }
 

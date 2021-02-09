@@ -31,3 +31,7 @@ export * from './inputs/PasswordInput';
 
 //buttons
 export * from './buttons/NativeButton';
+
+//Loading
+export * from './loading/Loading';
+export * from './loading/ComponentLoading';

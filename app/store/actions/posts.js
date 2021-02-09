@@ -1,6 +1,6 @@
 import {
     POSTS_LOADING, GET_ALL_POSTS, GET_ONE_POST, GET_DISCOUNT_POSTS, GET_LAST_POSTS, GET_RENT_POSTS, UPDATE_ONE_POST,
-    POST_ONE_POST, DELETE_ONE_POST, GET_ALL_MY_POSTS
+    POST_ONE_POST, DELETE_ONE_POST, GET_ALL_MY_POSTS, GET_ALL_POSTS_BY_CATEGORY
 } from '../actionTypes';
 import axios from 'axios';
 
@@ -22,6 +22,18 @@ export const getAllMyPosts = (userId) => async (dispatch) => {
         const { data } = await axios.get(`/posts/user/${userId}`);
         if (data.success) {
             dispatch({ type: GET_ALL_MY_POSTS, payload: data.data })
+        }
+    } catch (e) {
+        dispatch({ type: POSTS_LOADING, payload: false })
+    }
+}
+
+export const getAllPostsByCategory = (categoryId) => async (dispatch) => {
+    dispatch({ type: POSTS_LOADING, payload: true })
+    try {
+        const { data } = await axios.get(`/posts/category/${categoryId}`);
+        if (data.success) {
+            dispatch({ type: GET_ALL_POSTS_BY_CATEGORY, payload: data.data })
         }
     } catch (e) {
         dispatch({ type: POSTS_LOADING, payload: false })

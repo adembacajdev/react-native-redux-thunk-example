@@ -4,7 +4,8 @@ import { MainHeader, HomeSlider, HomeCardSlider, LastPosts, Discounts } from '..
 import styles from './style';
 import { useFocusEffect } from '@react-navigation/native';
 import { connect } from 'react-redux';
-import { getAllSliders} from '../../store/actions/sliders';
+import { getAllSliders } from '../../store/actions/sliders';
+import { Loading } from '../../components';
 
 const Home = (props) => {
     const { navigation, allSliders, getAllSliders } = props;
@@ -22,7 +23,7 @@ const Home = (props) => {
         <>
             <MainHeader openDrawer={_openDrawer} openMessages={_openMessages} />
             <ScrollView contentContainerStyle={styles.container}>
-                {allSliders.length > 0 && <HomeSlider />}
+                <HomeSlider />
                 <HomeCardSlider category={category} setCategory={setCategory} />
                 <Text style={styles.sectionTitle}>Të fundit</Text>
                 <LastPosts />

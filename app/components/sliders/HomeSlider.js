@@ -1,35 +1,44 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Zara } from '../../assets/images';
 import { fonts } from '../../constants';
 import ViewPager from '@react-native-community/viewpager';
 import { useSelector } from 'react-redux';
+import { ComponentLoading } from '../index';
 
 export const HomeSlider = () => {
     const [currentPage, setCurrentPage] = useState(0);
     const { data, isLoading } = useSelector(state => state.allSliders);
 
     return (
-        <View style={styles.container}>
-            <ViewPager onPageSelected={(e) => setCurrentPage(e.nativeEvent.position)} initialPage={currentPage} style={{ width: '100%', height: 100 }}>
-                {data.map((item, index) => {
-                    return (
-                        <View key={index} style={styles.card}>
-                            {item?.icon}
-                            <View style={styles.texts}>
-                                <Text style={styles.title}>Zara</Text>
-                                <Text style={styles.description}>{'Lorem ipsum Dolores wedding dress. Lorem ipsum Dolores wedding dress.\bLorem ipsum Lorem ipsum Dolores wedding dress. Lorem ipsum Dolores.'}</Text>
-                            </View>
-                        </View>
-                    )
-                })}
-            </ViewPager>
-            <View style={styles.lines}>
-                {data.map((item, index) => {
-                    return <View key={index} style={styles[index === currentPage ? 'activeLine' : 'inactiveLine']} />
-                })}
-            </View>
-        </View>
+        isLoading
+            ?
+            <ComponentLoading width="100%" height={112} />
+            :
+            data.length > 0
+                ?
+                <View style={styles.container}>
+                    <ViewPager onPageSelected={(e) => setCurrentPage(e.nativeEvent.position)} initialPage={currentPage} style={{ width: '100%', height: 100 }}>
+                        {data.map((item, index) => {
+                            return (
+                                <View key={index} style={styles.card}>
+                                    {item?.icon}
+                                    <View style={styles.texts}>
+                                        <Text style={styles.title}>Zara</Text>
+                                        <Text style={styles.description}>{'Lorem ipsum Dolores wedding dress. Lorem ipsum Dolores wedding dress.\bLorem ipsum Lorem ipsum Dolores wedding dress. Lorem ipsum Dolores.'}</Text>
+                                    </View>
+                                </View>
+                            )
+                        })}
+                    </ViewPager>
+                    <View style={styles.lines}>
+                        {data.map((item, index) => {
+                            return <View key={index} style={styles[index === currentPage ? 'activeLine' : 'inactiveLine']} />
+                        })}
+                    </View>
+                </View>
+                :
+                null
     )
 }
 
