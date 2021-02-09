@@ -3,21 +3,28 @@ import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity } from 'react
 import { fonts } from '../../constants';
 import DummyDressImage from '../../assets/images/dummyDressImage.png';
 import { OffHeart, OnHeart } from '../../assets/images';
+import { useSelector } from 'react-redux';
+import { Loading } from '../index';
 
 export const FavouritesList = ({ _headerComponent }) => {
+    const { isLoading, data } = useSelector(state => state.allFavourites)
     return (
-        <View style={styles.container}>
-            <FlatList
-                style={styles.flatlist}
-                showsVerticalScrollIndicator={false}
-                ListHeaderComponent={_headerComponent}
-                data={[0, 2, 3, 4, 5, 6, 7, 8]}
-                renderItem={({ item }) => (
-                    <Item {...item} />
-                )}
-                keyExtractor={(item, index) => String(index)}
-            />
-        </View>
+        isLoading
+            ?
+            <Loading />
+            :
+            <View style={styles.container}>
+                <FlatList
+                    style={styles.flatlist}
+                    showsVerticalScrollIndicator={false}
+                    ListHeaderComponent={_headerComponent}
+                    data={data}
+                    renderItem={({ item }) => (
+                        <Item {...item} />
+                    )}
+                    keyExtractor={(item, index) => String(index)}
+                />
+            </View>
     )
 }
 

@@ -1,29 +1,32 @@
-import React, { useEffect } from 'react';
-import { View, Text } from 'react-native';
+import React from 'react';
+import { View } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useCallback, useState } from 'react';
 import { AddPostModal, LoginModal, SignupModal } from '../../components';
 import { connect } from 'react-redux';
-import { setIsLoggedIn } from '../../store/actions/authorization';
+import { login } from '../../store/actions/authorization';
 
-const Add = ({ navigation, isLoggedIn, setIsLoggedIn }) => {
+const Add = ({ navigation, isLoggedIn, login }) => {
+    const { status, isLoading } = isLoggedIn;
     const [isOpen, toggleModal] = useState(false);
     const [isLogin, toggleLogin] = useState(false);
     const [isSignup, toggleSignup] = useState(false);
 
     useFocusEffect(useCallback(() => {
-        if (isLoggedIn) {
-            _toggleModal();
+        console.log({ isOpen, isLogin, isSignup })
+        if (status) {
+            toggleModal(true);
         } else {
-            _toggleLogin();
+            toggleLogin(true);
         }
-    }, []))
+    }, [status, isLoading]));
 
-    // useEffect(() => {
-    //     if (!isOpen && !isLoggedIn && !isLogin && !isSignup) navigation.navigate('Home');
-    // }, [isOpen, isLoggedIn, isLogin, isSignup])
-
-    const _toggleModal = () => toggleModal(!isOpen);
+    const _toggleModal = () => {
+        toggleModal(!isOpen);
+        toggleLogin(false);
+        toggleSignup(false)
+        navigation.navigate('Home');
+    }
     const _toggleLogin = () => toggleLogin(!isLogin);
     const _toggleSignup = () => toggleSignup(!isSignup);
 
@@ -32,23 +35,25 @@ const Add = ({ navigation, isLoggedIn, setIsLoggedIn }) => {
         _toggleSignup();
     }
 
-    const _login = () => {
-        setIsLoggedIn(true);
+    const _isLoggedIn = () => {
+        _toggleLogin();
         toggleModal(true);
-        toggleLogin(false);
-        toggleSignup(false);
     }
+
+    const _login = (body) => login(body);
 
     return (
         <View>
             <AddPostModal isOpen={isOpen} toggle={_toggleModal} />
-            <LoginModal _login={_login} _goToSignUp={_toggleBoth} isOpen={isLogin} toggle={_toggleLogin} />
+            <LoginModal _isLoggedIn={_isLoggedIn} _login={_login} _goToSignUp={_toggleBoth} isOpen={isLogin} toggle={_toggleLogin} />
             <SignupModal isOpen={isSignup} toggle={_toggleSignup} />
         </View>
     )
 }
 
-const mapStateToProps = ({ isLoggedIn }) => ({ isLoggedIn });
-const mapDispatchToProps = { setIsLoggedIn };
+const mapStateToProps = (state) => ({
+    isLoggedIn: state.isLoggedIn,
+});
+const mapDispatchToProps = { login };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Add);

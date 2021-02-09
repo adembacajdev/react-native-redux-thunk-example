@@ -3,25 +3,30 @@ import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity } from 'react
 import { fonts } from '../../constants';
 import { OffHeart, OnHeart } from '../../assets/images';
 import { useSelector } from 'react-redux';
+import { Loading } from '../index';
 
 export const CategoryGridList = ({ _headerComponent }) => {
-    const allCategoryPosts = useSelector(state => state.allCategoryPosts);
+    const { data, isLoading } = useSelector(state => state.allPostsByCategory);
     return (
-        <View style={styles.container}>
-            <FlatList
-                style={styles.flatlist}
-                showsVerticalScrollIndicator={false}
-                ListHeaderComponent={_headerComponent}
-                columnWrapperStyle={{ justifyContent: 'space-between' }}
-                data={allCategoryPosts?.data}
-                renderItem={({ item }) => (
-                    <Item {...item} />
-                )}
-                horizontal={false}
-                numColumns={2}
-                keyExtractor={(item, index) => String(index)}
-            />
-        </View>
+        isLoading
+            ?
+            <Loading />
+            :
+            <View style={styles.container}>
+                <FlatList
+                    style={styles.flatlist}
+                    showsVerticalScrollIndicator={false}
+                    ListHeaderComponent={_headerComponent}
+                    columnWrapperStyle={{ justifyContent: 'space-between' }}
+                    data={data}
+                    renderItem={({ item }) => (
+                        <Item {...item} />
+                    )}
+                    horizontal={false}
+                    numColumns={2}
+                    keyExtractor={(item, index) => String(index)}
+                />
+            </View>
     )
 }
 

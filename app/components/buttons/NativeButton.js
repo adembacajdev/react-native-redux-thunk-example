@@ -1,18 +1,22 @@
 import React from 'react';
-import { View, Text, Platform, TouchableOpacity, TouchableNativeFeedback, StyleSheet } from 'react-native';
+import { View, Text, Platform, TouchableOpacity, TouchableNativeFeedback, StyleSheet, ActivityIndicator } from 'react-native';
 import { fonts } from '../../constants';
 
-export const NativeButton = ({ width, color, icon, label, marginBottom, onPress }) => {
+export const NativeButton = ({ width, color, icon, label, marginBottom, onPress, isLoading }) => {
     return (
         Platform.select({
             ios: (
                 <TouchableOpacity onPress={onPress} style={[styles.container, styles[color], { width: width ? width : '100%', marginBottom }]}>
                     {
-                        icon
+                        isLoading
                             ?
-                            icon
+                            <ActivityIndicator size={30} color="#FFFFFF" />
                             :
-                            <Text style={styles.labelStyle}>{label}</Text>
+                            icon
+                                ?
+                                icon
+                                :
+                                <Text style={styles.labelStyle}>{label}</Text>
                     }
                 </TouchableOpacity>
             ),
@@ -20,11 +24,15 @@ export const NativeButton = ({ width, color, icon, label, marginBottom, onPress 
                 <TouchableNativeFeedback onPress={onPress}>
                     <View style={[styles.container, styles[color], { width: width ? width : '100%', marginBottom }]}>
                         {
-                            icon
+                            isLoading
                                 ?
-                                icon
+                                <ActivityIndicator size={30} color="#FFFFFF" />
                                 :
-                                <Text style={styles.labelStyle}>{label}</Text>
+                                icon
+                                    ?
+                                    icon
+                                    :
+                                    <Text style={styles.labelStyle}>{label}</Text>
                         }
                     </View>
                 </TouchableNativeFeedback>

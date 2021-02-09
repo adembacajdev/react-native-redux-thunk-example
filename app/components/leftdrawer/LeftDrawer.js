@@ -6,6 +6,8 @@ import {
 } from '../../assets/images';
 import { fonts } from '../../constants';
 import { leftDrawerMenu as menu } from '../../constants';
+import { NativeButton } from '../index';
+import Auth from '../../services/Auth';
 
 export const LeftDrawerComponent = ({ navigation }) => {
     const _closeDrawer = () => navigation.closeDrawer();
@@ -35,6 +37,12 @@ export const LeftDrawerComponent = ({ navigation }) => {
                     )
                 })
             }
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 30 }}>
+                <NativeButton onPress={() => {
+                    Auth.logout();
+                    _closeDrawer();
+                }} label="Ç'Kyçu" color="pink" />
+            </View>
         </ScrollView>
     )
 }

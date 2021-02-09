@@ -2,7 +2,9 @@ import React from 'react';
 import { View, TouchableOpacity, Text, TextInput, StyleSheet } from 'react-native';
 import { fonts } from '../../constants';
 
-export const Input = ({ label, isNumeric, isEmail, isTextarea, placeholder, width, flex }) => {
+export const Input = ({
+    label, isNumeric, isEmail, isTextarea, placeholder, width, flex, onBlur, ref, value, onChangeText, isPassword
+}) => {
     return (
         <View style={[styles.container, { width: width ? width : '100%', flex }]}>
             <Text style={styles.label}>{label}</Text>
@@ -24,6 +26,13 @@ export const Input = ({ label, isNumeric, isEmail, isTextarea, placeholder, widt
                     style={styles.textinput}
                     placeholder={placeholder}
                     multiline={isTextarea}
+                    value={value}
+                    onChangeText={onChangeText}
+                    ref={ref}
+                    onBlur={onBlur}
+                    secureTextEntry={isPassword}
+                    autoCapitalize="none"
+                    textContentType={'oneTimeCode'}
                 />
             </View>
         </View>

@@ -2,23 +2,28 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity } from 'react-native';
 import { fonts } from '../../constants';
 import { OffHeart, OnHeart } from '../../assets/images';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
+import { Loading } from '../index';
 
 export const CategoryList = ({ _headerComponent }) => {
-    const allCategoryPosts = useSelector(state => state.allCategoryPosts);
+    const { data, isLoading } = useSelector(state => state.allPostsByCategory);
     return (
-        <View style={styles.container}>
-            <FlatList
-                style={styles.flatlist}
-                showsVerticalScrollIndicator={false}
-                ListHeaderComponent={_headerComponent}
-                data={allCategoryPosts?.data}
-                renderItem={({ item }) => (
-                    <Item {...item} />
-                )}
-                keyExtractor={(item, index) => String(index)}
-            />
-        </View>
+        isLoading
+            ?
+            <Loading />
+            :
+            <View style={styles.container}>
+                <FlatList
+                    style={styles.flatlist}
+                    showsVerticalScrollIndicator={false}
+                    ListHeaderComponent={_headerComponent}
+                    data={data}
+                    renderItem={({ item }) => (
+                        <Item {...item} />
+                    )}
+                    keyExtractor={(item, index) => String(index)}
+                />
+            </View>
     )
 }
 
@@ -82,7 +87,7 @@ const styles = StyleSheet.create({
     }
 })
 
-function Item({title, price, icon, liked}) {
+function Item({ title, price, icon, liked }) {
     const [isFavourite, toggleFavourite] = useState(false);
     return (
         <View style={styles.card}>

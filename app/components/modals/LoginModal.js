@@ -1,10 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, Modal, SafeAreaView, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { AuthHeader } from '../index';
 import { fonts } from '../../constants';
 import { Input, PasswordInput, NativeButton } from '../../components';
+import { useForm, Controller } from "react-hook-form";
+import { useSelector } from 'react-redux';
 
-export const LoginModal = ({ isOpen, toggle, _goToSignUp, _login }) => {
+export const LoginModal = ({ isOpen, toggle, _goToSignUp, _login, _isLoggedIn }) => {
+    const { isLoading, status } = useSelector(state => state.isLoggedIn);
+    const { control, handleSubmit, errors, setError, reset } = useForm();
+    const onSubmit = (body) => _login(body);
+    useEffect(() => {
+        if (!isLoading && status) {
+            _isLoggedIn();
+        }
+    }, [status, isLoading])
     return (
         <Modal
             animationType="slide"
@@ -20,12 +30,45 @@ export const LoginModal = ({ isOpen, toggle, _goToSignUp, _login }) => {
                     <View style={styles.titleRow}>
                         <Text style={styles.titleText}>Kyçu</Text>
                     </View>
-                    <Input label="Email adresa" placeholder="Email adresa juaj këtu" />
-                    <PasswordInput label="Fjalëkalimi" placeholder="Fjalëkalimi juaj këtu" />
+                    <Controller
+                        control={control}
+                        render={({ onChange, onBlur, value }) => (
+                            <Input
+                                label="Email adresa"
+                                placeholder="Email adresa juaj këtu"
+                                onBlur={onBlur}
+                                onChangeText={(value) => onChange(value)}
+                                hasError={errors.email}
+                                errorText="This field is required*"
+                                value={value}
+                            />
+                        )}
+                        name="email"
+                        rules={{ required: true }}
+                        defaultValue=""
+                    />
+                    <Controller
+                        control={control}
+                        render={({ onChange, onBlur, value }) => (
+                            <Input
+                                label="Fjalëkalimi"
+                                placeholder="Fjalëkalimi juaj këtu"
+                                onBlur={onBlur}
+                                onChangeText={(value) => onChange(value)}
+                                hasError={errors.email}
+                                errorText="This field is required*"
+                                value={value}
+                                isPassword
+                            />
+                        )}
+                        name="password"
+                        rules={{ required: true }}
+                        defaultValue=""
+                    />
                     <TouchableOpacity>
                         <Text style={styles.forgotText}>Keni harruar fjalëkalimin?</Text>
                     </TouchableOpacity>
-                    <NativeButton onPress={_login} label="Kyçu" color="pink" marginBottom={100} />
+                    <NativeButton isLoading={isLoading} onPress={handleSubmit(onSubmit)} label="Kyçu" color="pink" marginBottom={100} />
                 </View>
                 <View style={styles.bottomPart}>
                     <NativeButton onPress={_goToSignUp} label="Nuk keni llogari? Regjistrohuni" color="green" />

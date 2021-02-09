@@ -1,5 +1,5 @@
 import {
-    USERS_LOADING, GET_ALL_USERS, GET_ONE_USER, POST_ONE_USER, UPDATE_ONE_USER, DELETE_ONE_USER
+    USERS_LOADING, GET_ALL_USERS, GET_ONE_USER, POST_ONE_USER, UPDATE_ONE_USER, DELETE_ONE_USER, GET_MY_PROFILE
 } from '../actionTypes';
 import axios from 'axios';
 
@@ -21,6 +21,18 @@ export const getOneUser = (userId) => async (dispatch) => {
         const { data } = await axios.get(`/users/${userId}`);
         if (data.success) {
             dispatch({ type: GET_ONE_USER, payload: data.data })
+        }
+    } catch (e) {
+        dispatch({ type: USERS_LOADING, payload: false });
+    }
+}
+
+export const getMyprofile = (userId) => async (dispatch) => {
+    dispatch({ type: USERS_LOADING, payload: true });
+    try {
+        const { data } = await axios.get(`/users/${userId}`);
+        if (data.success) {
+            dispatch({ type: GET_MY_PROFILE, payload: data.data })
         }
     } catch (e) {
         dispatch({ type: USERS_LOADING, payload: false });

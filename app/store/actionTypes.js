@@ -5,6 +5,8 @@ export const SET_CURRENT_ROUTE = 'SET_CURRENT_ROUTE';
 //Auth
 export const SET_IS_LOGGED_IN = 'SET_IS_LOGGED_IN';
 export const SET_ACCOUNT_TYPE = 'SET_ACCOUNT_TYPE';
+export const LOGIN = 'LOGIN';
+export const LOGOUT = 'LOGOUT';
 
 //Sliders
 export const SLIDERS_LOADING = 'SLIDERS_LOADING';
@@ -77,3 +79,4 @@ export const GET_ONE_USER = 'GET_ONE_USER';
 export const POST_ONE_USER = 'POST_ONE_USER';
 export const UPDATE_ONE_USER = 'UPDATE_ONE_USER';
 export const DELETE_ONE_USER = 'DELETE_ONE_USER';
+export const GET_MY_PROFILE = 'GET_MY_PROFILE'

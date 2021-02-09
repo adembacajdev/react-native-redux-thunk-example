@@ -9,9 +9,29 @@
 import React from 'react';
 import { SafeAreaView, StatusBar } from 'react-native';
 import AppNavigator from './app/navigator/Stack';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
+import Storage from './app/services/Storage';
+import { useEffect } from 'react/cjs/react.development';
+import { LOGIN } from './app/store/actionTypes';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 const App = ({ drawerStatus, currentRoute }) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    checkAuth();
+  }, []);
+
+  async function checkAuth() {
+    const token = await Storage.getToken();
+    if (token) {
+      dispatch({ type: LOGIN, payload: { isLoading: false, status: true } });
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    } else {
+      dispatch({ type: LOGIN, payload: { isLoading: false, status: false } });
+      AsyncStorage.clear()
+    }
+  }
   return (
     <>
       <StatusBar barStyle="dark-content" backgroundColor="white" />

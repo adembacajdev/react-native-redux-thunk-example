@@ -1,8 +1,16 @@
-import { SET_IS_LOGGED_IN, SET_ACCOUNT_TYPE } from '../actionTypes';
+import { SET_IS_LOGGED_IN, SET_ACCOUNT_TYPE, LOGIN, LOGOUT } from '../actionTypes';
 
-export function isLoggedIn(state = false, { type, payload }) {
+const _isLoggedInState = {
+    isLoading: false,
+    status: false
+}
+
+export function isLoggedIn(state = _isLoggedInState, { type, payload }) {
     switch (type) {
-        case SET_IS_LOGGED_IN: return payload;
+        case LOGIN: return payload;
+        case LOGOUT:
+        console.log('hini logout')
+        return { isLoading: false, status: false };
         default: return state;
     }
 }
