@@ -7,3 +7,4 @@ export * from './MessagesIcons';
 export * from './CategoryIcons';
 export * from './AuthIcons';
 export * from './Profile';
+export * from './MyComments';

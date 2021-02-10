@@ -57,7 +57,7 @@ const Profile = (props) => {
                                 <ItemRightArrow />
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.itemCard}>
+                        <TouchableOpacity onPress={() => props.navigation.navigate('MyComments')} style={styles.itemCard}>
                             <View style={styles.leftItemCard}>
                                 <Text style={styles.titleItem}>Komentet e mia</Text>
                                 <Text style={styles.subtitleItem}>4 komente</Text>

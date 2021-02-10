@@ -84,10 +84,6 @@ const PersonalDetails = (props) => {
         showMode('date');
     };
 
-    const showTimepicker = () => {
-        showMode('time');
-    };
-
     const CalendarView = () => {
         return show ?
             <DateTimePicker
@@ -106,7 +102,7 @@ const PersonalDetails = (props) => {
             <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
                 <TouchableOpacity style={styles.topRow}>
                     <View style={styles.circle}>
-                        <Text style={styles.circleText}>FF</Text>
+                        <Text style={styles.circleText}>{props.myProfile?.data?.name[0]?.toUpperCase()}{props.myProfile?.data?.surname[0]?.toUpperCase()}</Text>
                     </View>
                     <Text style={styles.editImageText}>Edito foton e profilit</Text>
                 </TouchableOpacity>
