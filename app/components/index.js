@@ -25,6 +25,7 @@ export * from './lists/MessagesList';
 export * from './lists/CategoryList'
 export * from './lists/FavouritesList';
 export * from './lists/MyComments';
+export * from './lists/MyProductsList'
 
 //inputs
 export * from './inputs/Input';
@@ -43,3 +44,4 @@ export * from './loading/ComponentLoading';
 //BottomSheets
 export * from './bottomsheets/PickCity';
 export * from './bottomsheets/PickDate';
+export * from './bottomsheets/EditProductSheet';

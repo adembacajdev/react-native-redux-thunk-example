@@ -72,29 +72,29 @@ const Profile = (props) => {
                         <View style={styles.topRow}>
                             <Image source={dummyAvatar} style={styles.avatar} />
                             <View style={styles.topRowRight}>
-                                <Text style={styles.name}>Zara</Text>
+                                <Text style={styles.name}>{data?.shop_name}</Text>
                                 <Text style={styles.accountDescription}>Llogari biznesore</Text>
                             </View>
                         </View>
-                        <TouchableOpacity style={styles.itemCard}>
+                        <TouchableOpacity onPress={() => props.navigation.navigate('ShopDetails')} style={styles.itemCard}>
                             <View style={styles.leftItemCard}>
                                 <Text style={styles.titleItem}>Detajet e dyqanit</Text>
-                                <Text style={styles.subtitleItem}>info@zara.com</Text>
+                                <Text style={styles.subtitleItem}>{data?.email}</Text>
                             </View>
                             <View style={styles.rightItemCard}>
                                 <ItemRightArrow />
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.itemCard}>
+                        <TouchableOpacity onPress={() => props.navigation.navigate('ShopAddress')} style={styles.itemCard}>
                             <View style={styles.leftItemCard}>
                                 <Text style={styles.titleItem}>Adresa e dyqanit</Text>
-                                <Text style={styles.subtitleItem}>Veternik, Prishtine</Text>
+                                <Text style={styles.subtitleItem}>{data?.shop_address}</Text>
                             </View>
                             <View style={styles.rightItemCard}>
                                 <ItemRightArrow />
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.itemCard}>
+                        <TouchableOpacity onPress={() => props.navigation.navigate('MyProducts')} style={styles.itemCard}>
                             <View style={styles.leftItemCard}>
                                 <Text style={styles.titleItem}>Produktet</Text>
                                 <Text style={styles.subtitleItem}>27 produkte të regjistruara</Text>

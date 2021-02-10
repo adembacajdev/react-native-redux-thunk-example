@@ -4,7 +4,7 @@ import { BackIcon } from '../../assets/images';
 import { fonts } from '../../constants';
 import { NativeHeaderButton } from '../index';
 
-export const BackHeader = ({ goBack, title, rightButton, rightPress }) => {
+export const BackHeader = ({ goBack, title, rightButton, rightPress, rightLabel }) => {
     return (
         <View style={styles.container}>
             <View style={styles.left}>
@@ -18,7 +18,7 @@ export const BackHeader = ({ goBack, title, rightButton, rightPress }) => {
                 </Text>
             </View>
             <View style={styles.right}>
-                {rightButton && <NativeHeaderButton onPress={rightPress} width={50} color="lightGreen" label="Ruaj" />}
+                {rightButton && <NativeHeaderButton onPress={rightPress} width={50} color="lightGreen" label={rightLabel ?? 'Ruaj'} />}
             </View>
         </View>
     )

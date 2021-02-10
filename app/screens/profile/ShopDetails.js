@@ -6,28 +6,19 @@ import { setCurrentRoute } from '../../store/actions/routeActions';
 import { useFocusEffect } from '@react-navigation/native';
 import { fonts } from '../../constants';
 import { useForm, Controller } from "react-hook-form";
-import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
 import { updateOneUser } from '../../store/actions/users';
 import Storage from '../../services/Storage';
+import { Facebook, Instagram } from '../../assets/images';
 
-const PersonalDetails = (props) => {
-    //City
-    const [cityModal, toggleCityModal] = useState(false);
-    const [selectedCity, selectCity] = useState([]);
-    //Birthday
-    const [dateModal, toggleDateModal] = useState(false);
-    const [date, setDate] = useState(new Date());
-    const [selectedDate, selectDate] = useState(null);
-    const [mode, setMode] = useState('date');
-    const [show, setShow] = useState(false);
+const ShopDetails = (props) => {
+
     const { control, handleSubmit, errors, setError, reset } = useForm();
     const onSubmit = (body) => {
         const _body = {
             ...body,
             user_type: props.myProfile?.data?.user_type,
-            city: selectedCity?._id,
-            birthday: date,
+            phone_number: parseInt(body?.phone_number)
         }
         updateMyProfile(_body);
     }
@@ -47,62 +38,25 @@ const PersonalDetails = (props) => {
     useFocusEffect(useCallback(() => {
         props.setCurrentRoute('Messages');
         reset({
-            name: props.myProfile?.data?.name,
-            surname: props.myProfile?.data?.surname,
-            email: props.myProfile?.data?.email
+            shop_name: props.myProfile?.data?.shop_name,
+            email: props.myProfile?.data?.email,
+            phone_number: props.myProfile?.data?.phone_number.toString(),
+            facebook: props.myProfile?.data?.facebook,
+            instagram: props.myProfile?.data?.instagram,
+            shop_description: props.myProfile?.data?.shop_description,
         })
-        setDate(props.myProfile?.data?.birthday);
-        selectDate(moment(props.myProfile?.data?.birthday).format('DD/MM/YYYY'));
-        const city = props.myProfile?.data?.city ? props.allCities?.data.filter(item => item?._id === props.myProfile?.data?.city) : false
-        city && selectCity(city[0])
         return () => {
             props.setCurrentRoute('')
         }
     }, []))
 
-    const _toggleCityModal = useCallback(() => { toggleCityModal(!cityModal) }, [cityModal]);
-    const _toggleDateModal = useCallback(() => {
-        toggleDateModal(!dateModal);
-        showDatepicker();
-    }, [dateModal]);
-
-    //Birthday
-    const onChange = (event, selectedDate) => {
-        const currentDate = selectedDate || date;
-        setShow(Platform.OS === 'ios');
-        setDate(currentDate);
-        selectDate(moment(currentDate).format('DD/MM/YYYY'));
-        toggleDateModal(Platform.OS === 'ios');
-    };
-
-    const showMode = (currentMode) => {
-        setShow(true);
-        setMode(currentMode);
-    };
-
-    const showDatepicker = () => {
-        showMode('date');
-    };
-
-    const CalendarView = () => {
-        return show ?
-            <DateTimePicker
-                testID="dateTimePicker"
-                value={date}
-                mode={mode}
-                is24Hour={true}
-                display={Platform.OS === 'ios' ? 'inline' : 'default'}
-                onChange={onChange}
-            /> : null
-    }
-    //
     return (
         <>
-            <BackHeader goBack={_goBack} title="Detajet personale" rightButton rightPress={handleSubmit(onSubmit)} />
+            <BackHeader goBack={_goBack} title="Detajet  e dyqanit" rightButton rightPress={handleSubmit(onSubmit)} />
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.container}>
                 <TouchableOpacity style={styles.topRow}>
                     <View style={styles.circle}>
-                        <Text style={styles.circleText}>{props.myProfile?.data?.name[0]?.toUpperCase()}{props.myProfile?.data?.surname[0]?.toUpperCase()}</Text>
+                        <Text style={styles.circleText}>{props.myProfile?.data?.shop_name[0]?.toUpperCase()}{props.myProfile?.data?.shop_name[1]?.toUpperCase()}</Text>
                     </View>
                     <Text style={styles.editImageText}>Edito foton e profilit</Text>
                 </TouchableOpacity>
@@ -111,33 +65,16 @@ const PersonalDetails = (props) => {
                         control={control}
                         render={({ onChange, onBlur, value }) => (
                             <Input
-                                label="Emri"
-                                placeholder="Emri juaj këtu"
+                                label="Emri i dyqanit"
+                                placeholder="Emri i dyqanit tuaj këtu"
                                 onBlur={onBlur}
                                 onChangeText={(value) => onChange(value)}
-                                hasError={errors.name}
+                                hasError={errors.shop_name}
                                 errorText="This field is required*"
                                 value={value}
                             />
                         )}
-                        name="name"
-                        rules={{ required: true }}
-                        defaultValue=""
-                    />
-                    <Controller
-                        control={control}
-                        render={({ onChange, onBlur, value }) => (
-                            <Input
-                                label="Mbiemri"
-                                placeholder="Mbiemri juaj këtu"
-                                onBlur={onBlur}
-                                onChangeText={(value) => onChange(value)}
-                                hasError={errors.surname}
-                                errorText="This field is required*"
-                                value={value}
-                            />
-                        )}
-                        name="surname"
+                        name="shop_name"
                         rules={{ required: true }}
                         defaultValue=""
                     />
@@ -158,36 +95,97 @@ const PersonalDetails = (props) => {
                         rules={{ required: true }}
                         defaultValue=""
                     />
-                    <PickerInput
-                        value={selectedCity?.city_name ?? false}
-                        onPress={_toggleCityModal}
-                        label="Qyteti"
-                        placeholder="Qyteti juaj këtu"
+                    <Controller
+                        control={control}
+                        render={({ onChange, onBlur, value }) => (
+                            <Input
+                                label="Numri kontaktues"
+                                placeholder="Numri kontaktues i dyqanit tuaj këtu"
+                                onBlur={onBlur}
+                                onChangeText={(value) => onChange(value)}
+                                hasError={errors.phone_number}
+                                errorText="This field is required*"
+                                value={value}
+                                isNumeric
+                            />
+                        )}
+                        name="phone_number"
+                        rules={{ required: true }}
+                        defaultValue=""
                     />
-                    <PickerInput
-                        value={selectedDate ?? false}
-                        onPress={_toggleDateModal}
-                        label="Data e lindjes"
-                        placeholder="Data e linjdes tuaj këtu"
+                    <View style={styles.socialRow}>
+                        <Controller
+                            control={control}
+                            render={({ onChange, onBlur, value }) => (
+                                <Input
+                                    flex={1}
+                                    label="Facebook"
+                                    placeholder="Linku i dyqanit tuaj në Facebook"
+                                    onBlur={onBlur}
+                                    onChangeText={(value) => onChange(value)}
+                                    hasError={errors.facebook}
+                                    errorText="This field is required*"
+                                    value={value}
+                                />
+                            )}
+                            name="facebook"
+                            rules={{ required: false }}
+                            defaultValue=""
+                        />
+                        <Facebook style={{ marginLeft: 10, marginBottom: -12 }} />
+                    </View>
+                    <View style={styles.socialRow}>
+                        <Controller
+                            control={control}
+                            render={({ onChange, onBlur, value }) => (
+                                <Input
+                                    flex={1}
+                                    label="Instagram"
+                                    placeholder="Linku i dyqanit tuaj në Instagram"
+                                    onBlur={onBlur}
+                                    onChangeText={(value) => onChange(value)}
+                                    hasError={errors.instagram}
+                                    errorText="This field is required*"
+                                    value={value}
+                                />
+                            )}
+                            name="instagram"
+                            rules={{ required: false }}
+                            defaultValue=""
+                        />
+                        <Instagram style={{ marginLeft: 10, marginBottom: -12 }} />
+                    </View>
+                    <Controller
+                        control={control}
+                        render={({ onChange, onBlur, value }) => (
+                            <Input
+                                isTextarea
+                                label="Përshkrimi i dyqanit"
+                                placeholder="Përshkrimi i dyqanit tuaj këtu"
+                                onBlur={onBlur}
+                                onChangeText={(value) => onChange(value)}
+                                hasError={errors.shop_description}
+                                errorText="This field is required*"
+                                value={value}
+                            />
+                        )}
+                        name="shop_description"
+                        rules={{ required: false }}
+                        defaultValue=""
                     />
                 </>
             </ScrollView>
-            {cityModal && <View onTouchStart={_toggleCityModal} style={styles.overLayer} />}
-            <PickCity isOpen={cityModal} toggle={_toggleCityModal} selectedCity={selectedCity} selectCity={selectCity} />
-            {dateModal && <View onTouchStart={_toggleDateModal} style={styles.overLayer} />}
-            <PickDate children={<CalendarView />} isOpen={dateModal} toggle={_toggleCityModal} selectedDate={selectedDate} selectDate={selectDate} />
         </>
     )
 }
 
 const mapStateToProps = (state) => ({
     myProfile: state.myProfile,
-    allCities: state.allCities
 });
 
 const mapDispatchToProps = { setCurrentRoute, updateOneUser };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PersonalDetails);
+export default connect(mapStateToProps, mapDispatchToProps)(ShopDetails);
 
 const styles = StyleSheet.create({
     container: {
@@ -231,5 +229,10 @@ const styles = StyleSheet.create({
         bottom: 0,
         height: '100%',
         backgroundColor: 'rgba(0, 0, 0, 0.2)'
-    }
+    },
+    socialRow: {
+        width: '100%',
+        alignItems: 'center',
+        flexDirection: 'row'
+    },
 })
