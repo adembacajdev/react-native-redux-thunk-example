@@ -5,8 +5,9 @@ import { useCallback, useState } from 'react';
 import { AddPostModal, LoginModal, SignupModal } from '../../components';
 import { connect } from 'react-redux';
 import { login } from '../../store/actions/authorization';
+import { postOneUser } from '../../store/actions/users';
 
-const Add = ({ navigation, isLoggedIn, login }) => {
+const Add = ({ navigation, isLoggedIn, login, postOneUser }) => {
     const { status, isLoading } = isLoggedIn;
     const [isOpen, toggleModal] = useState(false);
     const [isLogin, toggleLogin] = useState(false);
@@ -40,13 +41,19 @@ const Add = ({ navigation, isLoggedIn, login }) => {
         toggleModal(true);
     }
 
+    const _goToLogin = () => {
+        toggleSignup(false);
+        toggleLogin(true);
+    }
+
     const _login = (body) => login(body);
+    const _postOneUser = (body) => postOneUser(body);
 
     return (
         <View>
             <AddPostModal isOpen={isOpen} toggle={_toggleModal} />
             <LoginModal _isLoggedIn={_isLoggedIn} _login={_login} _goToSignUp={_toggleBoth} isOpen={isLogin} toggle={_toggleLogin} />
-            <SignupModal isOpen={isSignup} toggle={_toggleSignup} />
+            <SignupModal isOpen={isSignup} toggle={_toggleSignup} _goToLogin={_goToLogin} _postOneUser={_postOneUser} />
         </View>
     )
 }
@@ -54,6 +61,6 @@ const Add = ({ navigation, isLoggedIn, login }) => {
 const mapStateToProps = (state) => ({
     isLoggedIn: state.isLoggedIn,
 });
-const mapDispatchToProps = { login };
+const mapDispatchToProps = { login, postOneUser };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Add);

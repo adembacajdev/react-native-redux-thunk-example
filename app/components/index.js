@@ -28,10 +28,16 @@ export * from './lists/FavouritesList';
 //inputs
 export * from './inputs/Input';
 export * from './inputs/PasswordInput';
+export * from './inputs/PickerInput';
 
 //buttons
 export * from './buttons/NativeButton';
+export * from './buttons/PickerButton';
 
 //Loading
 export * from './loading/Loading';
 export * from './loading/ComponentLoading';
+
+//BottomSheets
+export * from './bottomsheets/PickCity';
+export * from './bottomsheets/PickDate';

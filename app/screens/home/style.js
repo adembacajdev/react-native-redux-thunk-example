@@ -6,8 +6,7 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         backgroundColor: 'white',
         paddingHorizontal: 10,
-        paddingVertical: 20,
-        backgroundColor: 'white'
+        paddingVertical: 20
     },
     sectionTitle: {
         fontSize: 20,

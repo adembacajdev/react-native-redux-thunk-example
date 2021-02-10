@@ -50,7 +50,7 @@ export const LoginModal = ({ isOpen, toggle, _goToSignUp, _login, _isLoggedIn })
                     <Controller
                         control={control}
                         render={({ onChange, onBlur, value }) => (
-                            <Input
+                            <PasswordInput
                                 label="Fjalëkalimi"
                                 placeholder="Fjalëkalimi juaj këtu"
                                 onBlur={onBlur}
