@@ -37,6 +37,7 @@ export function myProfile(state = _myProfileState, { type, payload }) {
     switch (type) {
         case USERS_LOADING: return { ...state, isLoading: payload };
         case GET_MY_PROFILE: return { isLoading: false, data: { ...payload } };
+        case UPDATE_ONE_USER: return { isLoading: false, data: { ...payload } }
         default: return state;
     }
 }

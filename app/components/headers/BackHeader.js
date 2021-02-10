@@ -2,8 +2,9 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { BackIcon } from '../../assets/images';
 import { fonts } from '../../constants';
+import { NativeHeaderButton } from '../index';
 
-export const BackHeader = ({ goBack, title }) => {
+export const BackHeader = ({ goBack, title, rightButton, rightPress }) => {
     return (
         <View style={styles.container}>
             <View style={styles.left}>
@@ -17,6 +18,7 @@ export const BackHeader = ({ goBack, title }) => {
                 </Text>
             </View>
             <View style={styles.right}>
+                {rightButton && <NativeHeaderButton onPress={rightPress} width={50} color="lightGreen" label="Ruaj" />}
             </View>
         </View>
     )

@@ -48,7 +48,7 @@ const Profile = (props) => {
                                 <Text style={styles.accountDescription}>Llogari individuale</Text>
                             </View>
                         </View>
-                        <TouchableOpacity style={styles.itemCard}>
+                        <TouchableOpacity onPress={() => props.navigation.navigate('PersonalDetails')} style={styles.itemCard}>
                             <View style={styles.leftItemCard}>
                                 <Text style={styles.titleItem}>Detajet personale</Text>
                                 <Text style={styles.subtitleItem}>{data?.email}</Text>

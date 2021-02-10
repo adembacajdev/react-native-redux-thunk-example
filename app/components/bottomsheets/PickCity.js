@@ -35,7 +35,10 @@ export const PickCity = ({ isOpen, selectedCity, selectCity, toggle }) => {
                 data={cities}
                 renderItem={({ item }) => {
                     let isSelected = item?._id === selectedCity?._id;
-                    const _selectCity = () => selectCity(item) && toggle();
+                    const _selectCity = () => {
+                        selectCity(item);
+                        toggle();
+                    }
                     return (
                         <PickerButton onPress={_selectCity} isSelected={isSelected} color="brown" width="100%" label={item?.city_name} marginBottom={20} />
                     )

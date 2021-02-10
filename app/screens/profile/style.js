@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     },
     accountDescription: {
         fontFamily: fonts.LIGHT,
-        fontSize: 12,
+        fontSize: 16,
         color: 'rgba(0, 0, 0, 0.4)'
     },
     itemCard: {
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     },
     subtitleItem: {
         fontFamily: fonts.LIGHT,
-        fontSize: 12,
+        fontSize: 16,
         color: 'rgba(0, 0, 0, 0.4)'
     }
 })

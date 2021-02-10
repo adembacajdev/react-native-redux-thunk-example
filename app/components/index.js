@@ -33,6 +33,7 @@ export * from './inputs/PickerInput';
 //buttons
 export * from './buttons/NativeButton';
 export * from './buttons/PickerButton';
+export * from './buttons/NativeHeaderButton';
 
 //Loading
 export * from './loading/Loading';

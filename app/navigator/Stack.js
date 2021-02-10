@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 //
 import LeftDrawer from './LeftDrawer';
 import Messages from '../screens/messages/Messages';
+import PersonalDetails from '../screens/profile/PersonalDetails';
 import Login from '../screens/login/Login';
 import Signup from '../screens/signup/Signup';
 
@@ -21,6 +22,7 @@ function AppNavigator() {
             <Stack.Navigator screenOptions={{ headerShown: false }}>
                 <Stack.Screen name="LeftDrawer" component={LeftDrawer} />
                 <Stack.Screen name="Messages" component={Messages} />
+                <Stack.Screen name="PersonalDetails" component={PersonalDetails} />
                 {!status && <Stack.Screen name="Login" component={Login} />}
                 {!status && <Stack.Screen name="Signup" component={Signup} />}
             </Stack.Navigator>

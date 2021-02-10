@@ -8,9 +8,7 @@ const _isLoggedInState = {
 export function isLoggedIn(state = _isLoggedInState, { type, payload }) {
     switch (type) {
         case LOGIN: return payload;
-        case LOGOUT:
-        console.log('hini logout')
-        return { isLoading: false, status: false };
+        case LOGOUT: return { isLoading: false, status: false };
         default: return state;
     }
 }

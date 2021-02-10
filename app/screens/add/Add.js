@@ -14,7 +14,6 @@ const Add = ({ navigation, isLoggedIn, login, postOneUser }) => {
     const [isSignup, toggleSignup] = useState(false);
 
     useFocusEffect(useCallback(() => {
-        console.log({ isOpen, isLogin, isSignup })
         if (status) {
             toggleModal(true);
         } else {
