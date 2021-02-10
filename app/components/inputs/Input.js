@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, TouchableOpacity, Text, TextInput, StyleSheet } from 'react-native';
+import { View, Text, TextInput, StyleSheet } from 'react-native';
 import { fonts } from '../../constants';
 
 export const Input = ({
-    label, isNumeric, isEmail, isTextarea, placeholder, width, flex, onBlur, ref, value, onChangeText, isPassword
+    label, isNumeric, isEmail, isTextarea, placeholder, width, flex, onBlur, ref, value, onChangeText, isPassword, hasError
 }) => {
     return (
         <View style={[styles.container, { width: width ? width : '100%', flex }]}>
@@ -12,6 +12,7 @@ export const Input = ({
                 [
                     styles.inputParent,
                     {
+                        borderColor: hasError ? '#EF3E4A' : 'rgba(0, 0, 0, 0.25)',
                         height: isTextarea ? 'auto' : 50,
                         minHeight: isTextarea ? 100 : 50,
                         alignItems: isTextarea ? 'flex-start' : 'center',
@@ -49,7 +50,6 @@ const styles = StyleSheet.create({
         height: 50,
         borderRadius: 3,
         borderWidth: 0.5,
-        borderColor: 'rgba(0, 0, 0, 0.25)',
         flexDirection: 'row',
         alignItems: 'center',
         paddingHorizontal: 15,

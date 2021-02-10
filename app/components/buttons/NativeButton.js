@@ -6,7 +6,7 @@ export const NativeButton = ({ width, color, icon, label, marginBottom, onPress,
     return (
         Platform.select({
             ios: (
-                <TouchableOpacity onPress={onPress} style={[styles.container, styles[color], { width: width ? width : '100%', marginBottom }]}>
+                <TouchableOpacity disabled={isLoading} onPress={onPress} style={[styles.container, styles[color], { width: width ? width : '100%', marginBottom }]}>
                     {
                         isLoading
                             ?
@@ -21,7 +21,7 @@ export const NativeButton = ({ width, color, icon, label, marginBottom, onPress,
                 </TouchableOpacity>
             ),
             android: (
-                <TouchableNativeFeedback onPress={onPress}>
+                <TouchableNativeFeedback disabled={isLoading} onPress={onPress}>
                     <View style={[styles.container, styles[color], { width: width ? width : '100%', marginBottom }]}>
                         {
                             isLoading
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     pink: {
         backgroundColor: '#FF8B8B'

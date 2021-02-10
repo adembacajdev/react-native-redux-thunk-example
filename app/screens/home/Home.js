@@ -5,17 +5,18 @@ import styles from './style';
 import { useFocusEffect } from '@react-navigation/native';
 import { connect } from 'react-redux';
 import { getAllSliders } from '../../store/actions/sliders';
-import { Loading } from '../../components';
+import {setCurrentRoute} from '../../store/actions/routeActions';
 
 const Home = (props) => {
     const { navigation, allSliders, getAllSliders } = props;
     const [category, setCategory] = useState('none');
 
-    // useFocusEffect(useCallback(() => {
-    //     getAllSliders();
-    //     getLastPosts();
-    //     getDiscountPosts();
-    // }, []))
+    useFocusEffect(useCallback(() => {
+        props.setCurrentRoute('')
+        // getAllSliders();
+        // getLastPosts();
+        // getDiscountPosts();
+    }, []))
 
     const _openDrawer = () => navigation.toggleDrawer();
     const _openMessages = () => navigation.navigate('Messages');
@@ -40,6 +41,6 @@ const mapStateToProps = (state) => ({
     discountPosts: state.discountPosts
 })
 
-const mapDispatchToProps = { getAllSliders }
+const mapDispatchToProps = { getAllSliders, setCurrentRoute }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

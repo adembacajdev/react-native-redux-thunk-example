@@ -40,14 +40,14 @@ export const getMyprofile = (userId) => async (dispatch) => {
 }
 
 export const postOneUser = (body) => async (dispatch) => {
-    dispatch({ type: USERS_LOADING, payload: true });
+    dispatch({ type: USERS_LOADING, payload: { isLoading: true, data: {}, posted: false } });
     try {
         const { data } = await axios.post(`/users`, body);
         if (data.success) {
-            dispatch({ type: POST_ONE_USER, payload: data.data })
+            dispatch({ type: POST_ONE_USER, payload: { isLoading: false, data: data.data, posted: true } })
         }
     } catch (e) {
-        dispatch({ type: USERS_LOADING, payload: false });
+        dispatch({ type: USERS_LOADING, payload: { isLoading: false, data: {}, posted: false } });
     }
 }
 

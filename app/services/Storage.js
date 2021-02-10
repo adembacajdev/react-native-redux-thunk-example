@@ -7,7 +7,7 @@ const Storage = {
     },
     getUserType: async () => {
         const userType = await AsyncStorage.getItem('user_type');
-        return userType ?? false;
+        return JSON.parse(userType) ?? false;
     },
     getUserId: async () => {
         const userId = await AsyncStorage.getItem('user_id');

@@ -15,11 +15,18 @@ import { useEffect } from 'react/cjs/react.development';
 import { LOGIN } from './app/store/actionTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import { getAllCategoryPosts } from './app/store/actions/category';
+import { getAllSizes } from './app/store/actions/sizes';
+import { getAllCities } from './app/store/actions/cities';
 
-const App = ({ drawerStatus, currentRoute }) => {
+const App = ({ drawerStatus, currentRoute, getAllCategoryPosts, getAllSizes, getAllCities }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     checkAuth();
+    //GET categories, sizes and cities
+    getAllCategoryPosts();
+    getAllSizes();
+    getAllCities();
   }, []);
 
   async function checkAuth() {
@@ -43,7 +50,10 @@ const App = ({ drawerStatus, currentRoute }) => {
   );
 };
 
-const mapStateToProps = ({ drawerStatus, currentRoute }) => ({ drawerStatus, currentRoute });
-const mapDispatchToProps = null;
+const mapStateToProps = (state) => ({
+  drawerStatus: state.drawerStatus,
+  currentRoute: state.currentRoute
+});
+const mapDispatchToProps = { getAllCategoryPosts, getAllSizes, getAllCities };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

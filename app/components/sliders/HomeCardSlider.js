@@ -2,17 +2,18 @@ import React, { useCallback } from 'react';
 import { useRef } from 'react';
 import { View, ScrollView, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import {
-    OnCardArrow, OffCardArrow, OnDyqanet, OffDyqanet, OnNew, OffNew, OnRent, OffRent, OnDiscount, OffDiscount
+    OnCardArrow, OffCardArrow, OnDyqanet, OffDyqanet, OnNew, OffNew, OnRent, OffRent, OnDiscount, OffDiscount, OffAll, OnAll
 } from '../../assets/images';
 import { fonts } from '../../constants';
 
 export const HomeCardSlider = ({ category, setCategory }) => {
     const scrollviewRef = useRef(null);
 
-    const _openDyqanet = useCallback(() => {
+    const _openAll = useCallback(() => {
         scrollviewRef.current.scrollTo({ x: 0, y: 0, animated: true })
-        setCategory('dyqanet');
+        setCategory('tegjitha');
     }, [category]);
+    const _openDyqanet = useCallback(() => { setCategory('dyqanet') }, [category]);
     const _openNew = useCallback(() => { setCategory('new') }, [category]);
     const _openRent = useCallback(() => { setCategory('rent') }, [category]);
     const _openDiscount = useCallback(() => {
@@ -23,8 +24,14 @@ export const HomeCardSlider = ({ category, setCategory }) => {
     return (
         <View style={styles.container}>
             <ScrollView ref={scrollviewRef} horizontal={true} showsHorizontalScrollIndicator={false}>
+                {/* Te gjitha */}
+                <TouchableOpacity onPress={_openAll} style={[styles.card, styles[category === 'tegjitha' ? 'active' : 'inactive'], { marginLeft: 0 }]}>
+                    {category === 'tegjitha' ? <OnAll /> : <OffAll />}
+                    <Text style={styles[category === 'tegjitha' ? 'activeText' : 'inactiveText']}>Të Gjitha</Text>
+                    {category === 'tegjitha' ? <OnCardArrow /> : <OffCardArrow />}
+                </TouchableOpacity>
                 {/* Dyqanet */}
-                <TouchableOpacity onPress={_openDyqanet} style={[styles.card, styles[category === 'dyqanet' ? 'active' : 'inactive'], { marginLeft: 0 }]}>
+                <TouchableOpacity onPress={_openDyqanet} style={[styles.card, styles[category === 'dyqanet' ? 'active' : 'inactive']]}>
                     {category === 'dyqanet' ? <OnDyqanet /> : <OffDyqanet />}
                     <Text style={styles[category === 'dyqanet' ? 'activeText' : 'inactiveText']}>Dyqanet</Text>
                     {category === 'dyqanet' ? <OnCardArrow /> : <OffCardArrow />}

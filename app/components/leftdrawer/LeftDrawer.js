@@ -8,9 +8,26 @@ import { fonts } from '../../constants';
 import { leftDrawerMenu as menu } from '../../constants';
 import { NativeButton } from '../index';
 import Auth from '../../services/Auth';
+import Storage from '../../services/Storage';
+import store from '../../store';
 
 export const LeftDrawerComponent = ({ navigation }) => {
     const _closeDrawer = () => navigation.closeDrawer();
+
+    function renderAuthButton() {
+        const { isLoggedIn } = store.getState();
+        if (isLoggedIn?.status) {
+            return <NativeButton onPress={() => {
+                Auth.logout();
+                _closeDrawer();
+            }} label="Ç'Kyçu" color="pink" />
+        } else {
+            return <NativeButton onPress={() => {
+                navigation.closeDrawer();
+                navigation.navigate('Login')
+            }} label="Kyçu" color="pink" />
+        }
+    }
     return (
         <ScrollView contentContainerStyle={styles.container}>
             <View style={styles.header}>
@@ -38,10 +55,7 @@ export const LeftDrawerComponent = ({ navigation }) => {
                 })
             }
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 30 }}>
-                <NativeButton onPress={() => {
-                    Auth.logout();
-                    _closeDrawer();
-                }} label="Ç'Kyçu" color="pink" />
+                {renderAuthButton()}
             </View>
         </ScrollView>
     )

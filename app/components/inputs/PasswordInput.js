@@ -3,16 +3,29 @@ import { View, TouchableOpacity, Text, TextInput, StyleSheet } from 'react-nativ
 import { useCallback } from 'react/cjs/react.development';
 import { fonts } from '../../constants';
 
-export const PasswordInput = ({ label, placeholder }) => {
+export const PasswordInput = ({ label, placeholder, onBlur, ref, value, onChangeText, hasError }) => {
     const [isPassword, togglePassword] = useState(true);
     const _togglePassword = useCallback(() => { togglePassword(!isPassword) }, [isPassword]);
 
     return (
         <View style={styles.container}>
             <Text style={styles.label}>{label}</Text>
-            <View style={styles.inputParent}>
+            <View style={[styles.inputParent, {
+                borderColor: hasError ? '#EF3E4A' : 'rgba(0, 0, 0, 0.25)',
+            }]}>
                 <View style={styles.inputLeft}>
-                    <TextInput secureTextEntry={isPassword} placeholderTextColor="rgba(0, 0, 0, 0.5)" style={styles.textinput} placeholder={isPassword ? '********' : placeholder} />
+                    <TextInput
+                        secureTextEntry={isPassword}
+                        placeholderTextColor="rgba(0, 0, 0, 0.5)"
+                        style={styles.textinput}
+                        placeholder={isPassword ? '********' : placeholder}
+                        value={value}
+                        onChangeText={onChangeText}
+                        ref={ref}
+                        onBlur={onBlur}
+                        autoCapitalize="none"
+                        textContentType={'oneTimeCode'}
+                    />
                 </View>
                 <View style={styles.inputRight}>
                     <TouchableOpacity onPress={_togglePassword}>
@@ -34,7 +47,6 @@ const styles = StyleSheet.create({
         height: 50,
         borderRadius: 3,
         borderWidth: 0.5,
-        borderColor: 'rgba(0, 0, 0, 0.25)',
         flexDirection: 'row',
         alignItems: 'center',
         paddingHorizontal: 15

@@ -40,3 +40,17 @@ export function myProfile(state = _myProfileState, { type, payload }) {
         default: return state;
     }
 }
+
+const _postUserState = {
+    isLoading: false,
+    data: {},
+    posted: false
+}
+
+export function postingUser(state = _postUserState, { type, payload }) {
+    switch (type) {
+        case USERS_LOADING: return payload;
+        case POST_ONE_USER: return payload;
+        default: return state;
+    }
+}
