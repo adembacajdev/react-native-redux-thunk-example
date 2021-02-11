@@ -1,14 +1,14 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { ScrollView, View, Text, Image, TouchableOpacity } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { connect } from 'react-redux';
 import { getMyprofile } from '../../store/actions/users';
 import Storage from '../../services/Storage';
-import { Loading, MainHeader } from '../../components';
+import { Loading, MainHeader, NativeButton } from '../../components';
 import styles from './style';
 import dummyAvatar from '../../assets/images/dummyAvatar.png';
 import { ItemRightArrow } from '../../assets/images';
-import { useEffect } from 'react/cjs/react.development';
+import Auth from '../../services/Auth';
 
 const Profile = (props) => {
     const { isLoading, data } = props.myProfile;
@@ -66,6 +66,15 @@ const Profile = (props) => {
                                 <ItemRightArrow />
                             </View>
                         </TouchableOpacity>
+                        <TouchableOpacity onPress={() => props.navigation.navigate('MyProducts')} style={styles.itemCard}>
+                            <View style={styles.leftItemCard}>
+                                <Text style={styles.titleItem}>Produktet</Text>
+                                <Text style={styles.subtitleItem}>27 produkte të regjistruara</Text>
+                            </View>
+                            <View style={styles.rightItemCard}>
+                                <ItemRightArrow />
+                            </View>
+                        </TouchableOpacity>
                     </>}
                     {data?.user_type === 1 && <>
                         <Text style={styles.title}>Profili i dyqanit</Text>
@@ -104,6 +113,9 @@ const Profile = (props) => {
                             </View>
                         </TouchableOpacity>
                     </>}
+                    {props.isLoggedIn?.status && <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center' }}>
+                        <NativeButton onPress={() => { Auth.logout(); }} label="Ç'Kyçu" color="pink" />
+                    </View>}
                 </ScrollView>
             </>
     )

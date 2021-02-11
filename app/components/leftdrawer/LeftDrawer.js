@@ -1,15 +1,16 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import {
-    DrawerBack, DrawerItemArrow, BrideDress, EveningDress, TraditionalDress, WeddingAccessories, OtherAccessories,
-    Jeweleery, Bags, Shoes, BeautyAndHair
+    DrawerBack, DrawerItemArrow
 } from '../../assets/images';
 import { fonts } from '../../constants';
 import { leftDrawerMenu as menu } from '../../constants';
 import { NativeButton } from '../index';
 import Auth from '../../services/Auth';
-import Storage from '../../services/Storage';
-import store from '../../store';
+import store from '../../store'; import {
+    DrawerContentScrollView,
+    DrawerItemList,
+} from '@react-navigation/drawer';
 
 export const LeftDrawerComponent = ({ navigation }) => {
     const _closeDrawer = () => navigation.closeDrawer();
@@ -64,6 +65,7 @@ export const LeftDrawerComponent = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flexGrow: 1,
+        paddingBottom: 20
     },
     header: {
         width: '100%',
