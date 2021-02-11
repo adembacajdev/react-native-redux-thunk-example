@@ -2,13 +2,13 @@ import React from 'react';
 import { View, Text, Platform, TouchableOpacity, TouchableNativeFeedback, StyleSheet, ActivityIndicator } from 'react-native';
 import { fonts } from '../../constants';
 
-export const PickerButton = ({ width, color, icon, label, marginBottom, onPress, isLoading, isSelected }) => {
+export const PickerButton = ({ width, color, icon, label, marginBottom, onPress, isLoading, isSelected, height, fontSize, marginLeft }) => {
     return (
         isSelected
             ?
             Platform.select({
                 ios: (
-                    <TouchableOpacity disabled={isLoading} onPress={onPress} style={[styles.container, styles[color], { width: width ? width : '100%', marginBottom }]}>
+                    <TouchableOpacity disabled={isLoading} onPress={onPress} style={[styles.container, styles[color], { width: width ? width : '100%', marginBottom, marginLeft, height: height ? height : 50 }]}>
                         {
                             isLoading
                                 ?
@@ -18,13 +18,13 @@ export const PickerButton = ({ width, color, icon, label, marginBottom, onPress,
                                     ?
                                     icon
                                     :
-                                    <Text style={styles.labelStyle}>{label}</Text>
+                                    <Text style={[styles.labelStyle, { fontSize: fontSize ? fontSize : 20 }]}>{label}</Text>
                         }
                     </TouchableOpacity>
                 ),
                 android: (
                     <TouchableNativeFeedback disabled={isLoading} onPress={onPress}>
-                        <View style={[styles.container, styles[color], { width: width ? width : '100%', marginBottom }]}>
+                        <View style={[styles.container, styles[color], { width: width ? width : '100%', marginBottom, marginLeft, height: height ? height : 50 }]}>
                             {
                                 isLoading
                                     ?
@@ -34,7 +34,7 @@ export const PickerButton = ({ width, color, icon, label, marginBottom, onPress,
                                         ?
                                         icon
                                         :
-                                        <Text style={styles.labelStyle}>{label}</Text>
+                                        <Text style={[styles.labelStyle, { fontSize: fontSize ? fontSize : 20 }]}>{label}</Text>
                             }
                         </View>
                     </TouchableNativeFeedback>
@@ -43,7 +43,7 @@ export const PickerButton = ({ width, color, icon, label, marginBottom, onPress,
             :
             Platform.select({
                 ios: (
-                    <TouchableOpacity disabled={isLoading} onPress={onPress} style={[styles.borderContainer, styles[`${color}Border`], { width: width ? width : '100%', marginBottom }]}>
+                    <TouchableOpacity disabled={isLoading} onPress={onPress} style={[styles.borderContainer, styles[`${color}Border`], { width: width ? width : '100%', marginBottom, marginLeft, height: height ? height : 50 }]}>
                         {
                             isLoading
                                 ?
@@ -53,13 +53,13 @@ export const PickerButton = ({ width, color, icon, label, marginBottom, onPress,
                                     ?
                                     icon
                                     :
-                                    <Text style={[styles.labelStyleBorder, styles[`${color}Border`]]}>{label}</Text>
+                                    <Text style={[styles.labelStyleBorder, styles[`${color}Border`], { fontSize: fontSize ? fontSize : 20 }]}>{label}</Text>
                         }
                     </TouchableOpacity>
                 ),
                 android: (
                     <TouchableNativeFeedback disabled={isLoading} onPress={onPress}>
-                        <View style={[styles.borderContainer, styles[`${color}Border`], { width: width ? width : '100%', marginBottom }]}>
+                        <View style={[styles.borderContainer, styles[`${color}Border`], { width: width ? width : '100%', marginBottom, marginLeft, height: height ? height : 50 }]}>
                             {
                                 isLoading
                                     ?
@@ -69,7 +69,7 @@ export const PickerButton = ({ width, color, icon, label, marginBottom, onPress,
                                         ?
                                         icon
                                         :
-                                        <Text style={[styles.labelStyleBorder, styles[`${color}Border`]]}>{label}</Text>
+                                        <Text style={[styles.labelStyleBorder, styles[`${color}Border`], { fontSize: fontSize ? fontSize : 20 }]}>{label}</Text>
                             }
                         </View>
                     </TouchableNativeFeedback>
@@ -80,14 +80,12 @@ export const PickerButton = ({ width, color, icon, label, marginBottom, onPress,
 
 const styles = StyleSheet.create({
     container: {
-        height: 50,
         borderRadius: 5,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
     },
     borderContainer: {
-        height: 50,
         borderRadius: 5,
         flexDirection: 'row',
         alignItems: 'center',
@@ -111,7 +109,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#625261'
     },
     labelStyle: {
-        fontSize: 20,
         fontFamily: fonts.BOLD,
         color: 'white'
     },

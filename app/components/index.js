@@ -45,3 +45,4 @@ export * from './loading/ComponentLoading';
 export * from './bottomsheets/PickCity';
 export * from './bottomsheets/PickDate';
 export * from './bottomsheets/EditProductSheet';
+export * from './bottomsheets/PickCategory';
