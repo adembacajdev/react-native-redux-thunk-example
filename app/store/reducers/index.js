@@ -7,7 +7,7 @@ import { allCategories, oneCategory } from './category';
 import { allCities, oneCity } from './cities';
 import { allPostComments, allUserComments, oneComment } from './comments';
 import { allFavourites, oneFavourite } from './favourites';
-import { allPosts, allMyPosts, onePost, discountPosts, lastPosts, rentPosts, allPostsByCategory } from './posts';
+import { allPosts, allMyPosts, onePost, discountPosts, lastPosts, rentPosts, allPostsByCategory, postingPost } from './posts';
 import { allSizes, oneSize } from './sizes';
 import { allUsers, oneUser, myProfile, postingUser } from './users';
 
@@ -29,7 +29,7 @@ export default combineReducers({
     //Favourites
     allFavourites, oneFavourite,
     //Posts
-    allPosts, allMyPosts, onePost, discountPosts, lastPosts, rentPosts, allPostsByCategory,
+    allPosts, allMyPosts, onePost, discountPosts, lastPosts, rentPosts, allPostsByCategory, postingPost,
     //Sizes
     allSizes, oneSize,
     //Users

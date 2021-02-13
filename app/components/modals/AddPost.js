@@ -1,23 +1,77 @@
 import React, { useState, useCallback } from 'react';
-import { View, Text, Modal, SafeAreaView, StyleSheet, ScrollView, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, Modal, SafeAreaView, StyleSheet, ScrollView, TouchableOpacity, FlatList, Image, Alert, Platform } from 'react-native';
 import { fonts } from '../../constants';
-import { BackHeader, PickerInput, PickCategory } from '../index';
+import { BackHeader, PickerInput, PickCategory, LaunchCameraSheet } from '../index';
 import { NativeButton, Input, PickerButton } from '../index';
 import { useForm, Controller } from "react-hook-form";
 import { useSelector } from 'react-redux';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { Trash } from '../../assets/images';
+import Storage from '../../services/Storage';
+import { useEffect } from 'react/cjs/react.development';
 
-export const AddPostModal = ({ isOpen, toggle }) => {
+export const AddPostModal = ({ isOpen, toggle, _post, _goHome }) => {
+    const [images, setImages] = useState([]);
+    const [imagesFlatlist, refreshImagesFlatlist] = useState([]);
+    const [cameraSheet, toggleCameraSheet] = useState(false);
     const [selectedSizes, selectSizes] = useState([]);
     const [forRent, setForRent] = useState(false);
     //Category
     const [categoryModal, toggleCategoryModal] = useState(false);
-    const [selectedCategory, selectCategory] = useState([]);
+    const [selectedCategory, selectCategory] = useState({});
 
+    //Selectors
     const allSizes = useSelector(state => state.allSizes);
+    const postingPost = useSelector(state => state.postingPost);
+
     const { control, handleSubmit, errors, setError, reset } = useForm();
-    const onSubmit = (body) => console.log('body', body);
+    const onSubmit = async (body) => {
+        let _body = {
+            ...body,
+            for_rent: forRent,
+            category: selectedCategory?._id,
+            sizes: selectedSizes.map(size => size?._id),
+        }
+        let user_id = await Storage.getUserId();
+        if (user_id) {
+            _post(user_id, images, _body);
+        }
+    }
 
     const _toggleCategoryModal = useCallback(() => { toggleCategoryModal(!categoryModal) }, [categoryModal]);
+    const _toggleCameraSheet = useCallback(() => { toggleCameraSheet(!cameraSheet) }, [cameraSheet])
+
+    const _launchCamera = () => {
+        _toggleCameraSheet();
+        launchCamera({ mediaType: 'photo', includeBase64: false, maxWidth: 800, maxHeight: 600, rotation: 360 }, res => {
+            if (!res.didCancel || !res.errorCode) {
+                let file = { name: res.fileName, type: res.type, uri: Platform.OS === 'ios' ? res.uri.replace('file://', '') : res.uri }
+                let newArrayImages = images;
+                newArrayImages.push(file);
+                setImages(newArrayImages);
+                refreshImagesFlatlist(!imagesFlatlist);
+            }
+        });
+    }
+
+    const _launchGallery = () => {
+        _toggleCameraSheet();
+        launchImageLibrary({ mediaType: 'photo', includeBase64: true, maxWidth: 800, maxHeight: 600, rotation: 360 }, res => {
+            if (!res.didCancel || !res.error) {
+                let file = { name: res.fileName, type: res.type, uri: Platform.OS === 'ios' ? res.uri.replace('file://', '') : res.uri }
+                let newArrayImages = images;
+                newArrayImages.push(file);
+                setImages(newArrayImages);
+                refreshImagesFlatlist(!imagesFlatlist);
+            }
+        });
+    }
+
+    useEffect(() => {
+        if(!postingPost?.isLoading && postingPost.posted){
+            _goHome();
+        }
+    }, [postingPost])
 
     return (
         <Modal
@@ -30,9 +84,34 @@ export const AddPostModal = ({ isOpen, toggle }) => {
             <SafeAreaView style={styles.container}>
                 <BackHeader goBack={toggle} title="Shto produkt" />
                 <ScrollView contentContainerStyle={styles.scrollView}>
-                    <TouchableOpacity style={styles.addImage}>
+                    <TouchableOpacity onPress={_toggleCameraSheet} style={styles.addImage}>
                         <Text style={styles.addImageText}>Shto imazhe</Text>
                     </TouchableOpacity>
+                    <FlatList
+                        style={{ marginLeft: -25, paddingTop: 15 }}
+                        showsVerticalScrollIndicator={false}
+                        data={images}
+                        extraData={imagesFlatlist}
+                        renderItem={({ item, index }) => {
+                            const _removeImage = () => {
+                                let allImages = images;
+                                let removedImage = allImages.filter(image => image?.uri !== item?.uri)
+                                setImages(removedImage);
+                                refreshImagesFlatlist(!imagesFlatlist)
+                            }
+                            return (
+                                <View style={styles.imageView}>
+                                    <Image source={{ uri: item?.uri }} style={{ width: '100%', height: '100%', borderRadius: 5 }} />
+                                    <TouchableOpacity onPress={_removeImage} style={styles.trashButton}>
+                                        <Trash />
+                                    </TouchableOpacity>
+                                </View>
+                            )
+                        }}
+                        horizontal={false}
+                        numColumns={4}
+                        keyExtractor={(item, index) => String(index)}
+                    />
                     <Controller
                         control={control}
                         render={({ onChange, onBlur, value }) => (
@@ -175,9 +254,12 @@ export const AddPostModal = ({ isOpen, toggle }) => {
                         rules={{ required: true }}
                         defaultValue=""
                     />
+                    <NativeButton isLoading={postingPost?.isLoading} onPress={handleSubmit(onSubmit)} label="Shto" color="green" />
                 </ScrollView>
                 {categoryModal && <View onTouchStart={_toggleCategoryModal} style={styles.overLayer} />}
                 <PickCategory isOpen={categoryModal} toggle={_toggleCategoryModal} selectedCategory={selectedCategory} selectCategory={selectCategory} />
+                {cameraSheet && <View onTouchStart={_toggleCameraSheet} style={styles.overLayer} />}
+                <LaunchCameraSheet _openCamera={_launchCamera} _openGallery={_launchGallery} isOpen={cameraSheet} toggle={_toggleCameraSheet} />
             </SafeAreaView>
         </Modal>
     )
@@ -230,5 +312,23 @@ const styles = StyleSheet.create({
         bottom: 0,
         height: '100%',
         backgroundColor: 'rgba(0, 0, 0, 0.2)'
+    },
+    imageView: {
+        width: 70,
+        height: 70,
+        borderRadius: 5,
+        marginLeft: 25,
+        marginBottom: 20
+    },
+    trashButton: {
+        position: 'absolute',
+        width: 30,
+        height: 30,
+        borderRadius: 30 / 2,
+        top: -30 / 2,
+        right: -30 / 2,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#CE7082',
     }
 })

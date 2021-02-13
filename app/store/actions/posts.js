@@ -88,15 +88,26 @@ export const getRentPosts = () => async (dispatch) => {
     }
 }
 
-export const postOnePost = (body) => async (dispatch) => {
-    dispatch({ type: POSTS_LOADING, payload: true })
+export const postOnePost = (user_id, images, _body) => async (dispatch) => {
+    dispatch({ type: POST_ONE_POST, payload: { isLoading: true, posted: false } })
     try {
-        const { data } = await axios.post(`/posts`, body);
+        const { data } = await axios.post(`/posts`, { ..._body, user_id });
         if (data.success) {
-            dispatch({ type: POST_ONE_POST, payload: data.data })
+            let newBody = new FormData();
+            newBody.append('post_id', data?.data?._id)
+            images.forEach(image => {
+                newBody.append('images', image)
+            })
+            const postImage = await axios.patch(`/posts/upload`, newBody, { headers: { 'Content-Type': 'multipart/formdata' } })
+            if (postImage.data.success) {
+                dispatch({ type: POST_ONE_POST, payload: { isLoading: false, posted: true } })
+                setTimeout(() => {
+                    dispatch({ type: POST_ONE_POST, payload: { isLoading: false, posted: false } })
+                }, 1000)
+            }
         }
     } catch (e) {
-        dispatch({ type: POSTS_LOADING, payload: false })
+        dispatch({ type: POST_ONE_POST, payload: { isLoading: true, posted: false } })
     }
 }
 

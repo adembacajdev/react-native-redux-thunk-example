@@ -6,8 +6,9 @@ import { AddPostModal, LoginModal, SignupModal } from '../../components';
 import { connect } from 'react-redux';
 import { login } from '../../store/actions/authorization';
 import { postOneUser } from '../../store/actions/users';
+import { postOnePost } from '../../store/actions/posts';
 
-const Add = ({ navigation, isLoggedIn, login, postOneUser }) => {
+const Add = ({ navigation, isLoggedIn, login, postOneUser, postOnePost }) => {
     const { status, isLoading } = isLoggedIn;
     const [isOpen, toggleModal] = useState(false);
     const [isLogin, toggleLogin] = useState(false);
@@ -50,7 +51,7 @@ const Add = ({ navigation, isLoggedIn, login, postOneUser }) => {
 
     return (
         <View>
-            <AddPostModal isOpen={isOpen} toggle={_toggleModal} />
+            <AddPostModal _goHome={_toggleModal} _post={postOnePost} isOpen={isOpen} toggle={_toggleModal} />
             <LoginModal _isLoggedIn={_isLoggedIn} _login={_login} _goToSignUp={_toggleBoth} isOpen={isLogin} toggle={_toggleLogin} />
             <SignupModal isOpen={isSignup} toggle={_toggleSignup} _goToLogin={_goToLogin} _postOneUser={_postOneUser} />
         </View>
@@ -60,6 +61,6 @@ const Add = ({ navigation, isLoggedIn, login, postOneUser }) => {
 const mapStateToProps = (state) => ({
     isLoggedIn: state.isLoggedIn,
 });
-const mapDispatchToProps = { login, postOneUser };
+const mapDispatchToProps = { login, postOneUser, postOnePost };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Add);

@@ -123,3 +123,16 @@ export function onePost(state = _onePostState, { type, payload }) {
         default: return state;
     }
 }
+
+const _postingPostState = {
+    isLoading: false,
+    posted: false
+}
+
+export function postingPost(state = _postingPostState, { type, payload }) {
+    switch (type) {
+        case POST_ONE_POST: return payload;
+        case POSTS_LOADING: return payload;
+        default: return state;
+    }
+}
