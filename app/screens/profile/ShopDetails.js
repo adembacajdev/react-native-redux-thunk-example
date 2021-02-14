@@ -1,17 +1,20 @@
 import React, { useCallback, useState } from 'react';
-import { View, ScrollView, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { View, ScrollView, Text, StyleSheet, TouchableOpacity, Alert, Image } from 'react-native';
 import { connect } from 'react-redux';
-import { BackHeader, Input, PickCity, PickerInput, PickDate } from '../../components';
+import { BackHeader, Input, LaunchCameraSheet } from '../../components';
 import { setCurrentRoute } from '../../store/actions/routeActions';
 import { useFocusEffect } from '@react-navigation/native';
 import { fonts } from '../../constants';
 import { useForm, Controller } from "react-hook-form";
-import moment from 'moment';
-import { updateOneUser } from '../../store/actions/users';
+import { updateOneUser, postProfilePicture } from '../../store/actions/users';
 import Storage from '../../services/Storage';
 import { Facebook, Instagram } from '../../assets/images';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 
 const ShopDetails = (props) => {
+    const [cameraSheet, toggleCameraSheet] = useState(false);
+    const [image, setImage] = useState(null);
+    const [showImage, setShowImage] = useState(null);
 
     const { control, handleSubmit, errors, setError, reset } = useForm();
     const onSubmit = (body) => {
@@ -26,14 +29,17 @@ const ShopDetails = (props) => {
     async function updateMyProfile(body) {
         const user_id = await Storage.getUserId();
         if (user_id) {
-            props.updateOneUser(user_id, body);
-            props.navigation.goBack();
+            if (props.myProfile?.data?.profile_picture !== image?.uri) {
+                props.updateOneUser(user_id, body, true, image);
+                props.navigation.goBack();
+            } else {
+                props.updateOneUser(user_id, body, false, null);
+                props.navigation.goBack();
+            }
         } else {
             Alert.alert('Error', 'No ID found!')
         }
     }
-
-    const _goBack = () => props.navigation.goBack();
 
     useFocusEffect(useCallback(() => {
         props.setCurrentRoute('Messages');
@@ -45,19 +51,57 @@ const ShopDetails = (props) => {
             instagram: props.myProfile?.data?.instagram,
             shop_description: props.myProfile?.data?.shop_description,
         })
+        if (
+            props.myProfile?.data?.profile_picture !== null
+            &&
+            props.myProfile?.data?.profile_picture !== undefined
+            &&
+            props.myProfile?.data?.profile_picture !== ''
+        ) setShowImage(props.myProfile?.data?.profile_picture);
         return () => {
             props.setCurrentRoute('')
         }
     }, []))
 
+    //oneline functions
+    const _goBack = () => props.navigation.goBack();
+    const _toggleCameraSheet = useCallback(() => { toggleCameraSheet(!cameraSheet) }, [cameraSheet]);
+
+    const _launchCamera = () => {
+        _toggleCameraSheet();
+        launchCamera({ mediaType: 'photo', includeBase64: false, maxWidth: 800, maxHeight: 600, rotation: 360 }, res => {
+            try {
+                if (!res.didCancel || !res.errorCode) {
+                    let file = { name: res.fileName, type: res.type, uri: Platform.OS === 'ios' ? res.uri.replace('file://', '') : res.uri }
+                    setImage(file);
+                    setShowImage(file.uri)
+                }
+            } catch (e) { console.log('error', e.message) }
+        });
+    }
+
+    const _launchGallery = () => {
+        _toggleCameraSheet();
+        launchImageLibrary({ mediaType: 'photo', includeBase64: true, maxWidth: 800, maxHeight: 600, rotation: 360 }, res => {
+            try {
+                if (!res.didCancel || !res.errorCode) {
+                    let file = { name: res.fileName, type: res.type, uri: Platform.OS === 'ios' ? res.uri.replace('file://', '') : res.uri }
+                    setImage(file);
+                    setShowImage(file.uri)
+                }
+            } catch (e) { console.log('error', e.message) }
+        });
+    }
+
     return (
         <>
             <BackHeader goBack={_goBack} title="Detajet  e dyqanit" rightButton rightPress={handleSubmit(onSubmit)} />
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.container}>
-                <TouchableOpacity style={styles.topRow}>
-                    <View style={styles.circle}>
+                <TouchableOpacity onPress={_toggleCameraSheet} style={styles.topRow}>
+                    {(showImage !== null && showImage !== undefined && showImage !== '') && <Image source={{ uri: showImage }} style={styles.avatar} />}
+                    {(showImage === null || showImage === undefined || showImage === '') && <View style={styles.circle}>
                         <Text style={styles.circleText}>{props.myProfile?.data?.shop_name[0]?.toUpperCase()}{props.myProfile?.data?.shop_name[1]?.toUpperCase()}</Text>
-                    </View>
+                    </View>}
                     <Text style={styles.editImageText}>Edito foton e profilit</Text>
                 </TouchableOpacity>
                 <>
@@ -175,6 +219,8 @@ const ShopDetails = (props) => {
                     />
                 </>
             </ScrollView>
+            {cameraSheet && <View onTouchStart={_toggleCameraSheet} style={styles.overLayer} />}
+            <LaunchCameraSheet _openCamera={_launchCamera} _openGallery={_launchGallery} isOpen={cameraSheet} toggle={_toggleCameraSheet} />
         </>
     )
 }
@@ -209,6 +255,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderColor: 'rgba(0, 0, 0, 0.25)'
+    },
+    avatar: {
+        width: 70,
+        height: 70,
+        borderRadius: 70 / 2,
+        borderColor: 'rgba(0, 0, 0, 0.25)',
+        borderWidth: 0.5
     },
     circleText: {
         fontFamily: fonts.REGULAR,

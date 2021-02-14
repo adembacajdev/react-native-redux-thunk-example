@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
-import { View, ScrollView, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { View, ScrollView, Text, StyleSheet, TouchableOpacity, Alert, Image } from 'react-native';
 import { connect } from 'react-redux';
-import { BackHeader, Input, PickCity, PickerInput, PickDate } from '../../components';
+import { BackHeader, Input, PickCity, PickerInput, PickDate, LaunchCameraSheet } from '../../components';
 import { setCurrentRoute } from '../../store/actions/routeActions';
 import { useFocusEffect } from '@react-navigation/native';
 import { fonts } from '../../constants';
@@ -10,8 +10,13 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
 import { updateOneUser } from '../../store/actions/users';
 import Storage from '../../services/Storage';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 
 const PersonalDetails = (props) => {
+    //Camera
+    const [cameraSheet, toggleCameraSheet] = useState(false);
+    const [image, setImage] = useState(null);
+    const [showImage, setShowImage] = useState(null);
     //City
     const [cityModal, toggleCityModal] = useState(false);
     const [selectedCity, selectCity] = useState([]);
@@ -35,14 +40,17 @@ const PersonalDetails = (props) => {
     async function updateMyProfile(body) {
         const user_id = await Storage.getUserId();
         if (user_id) {
-            props.updateOneUser(user_id, body);
-            props.navigation.goBack();
+            if (props.myProfile?.data?.profile_picture !== image?.uri) {
+                props.updateOneUser(user_id, body, true, image);
+                props.navigation.goBack();
+            } else {
+                props.updateOneUser(user_id, body, false, null);
+                props.navigation.goBack();
+            }
         } else {
             Alert.alert('Error', 'No ID found!')
         }
     }
-
-    const _goBack = () => props.navigation.goBack();
 
     useFocusEffect(useCallback(() => {
         props.setCurrentRoute('Messages');
@@ -55,16 +63,25 @@ const PersonalDetails = (props) => {
         selectDate(moment(props.myProfile?.data?.birthday).format('DD/MM/YYYY'));
         const city = props.myProfile?.data?.city ? props.allCities?.data.filter(item => item?._id === props.myProfile?.data?.city) : false
         city && selectCity(city[0])
+        if (
+            props.myProfile?.data?.profile_picture !== null
+            &&
+            props.myProfile?.data?.profile_picture !== undefined
+            &&
+            props.myProfile?.data?.profile_picture !== ''
+        ) setShowImage(props.myProfile?.data?.profile_picture);
         return () => {
             props.setCurrentRoute('')
         }
     }, []))
 
+    const _goBack = () => props.navigation.goBack();
     const _toggleCityModal = useCallback(() => { toggleCityModal(!cityModal) }, [cityModal]);
     const _toggleDateModal = useCallback(() => {
         toggleDateModal(!dateModal);
         showDatepicker();
     }, [dateModal]);
+    const _toggleCameraSheet = useCallback(() => { toggleCameraSheet(!cameraSheet) }, [cameraSheet]);
 
     //Birthday
     const onChange = (event, selectedDate) => {
@@ -80,9 +97,7 @@ const PersonalDetails = (props) => {
         setMode(currentMode);
     };
 
-    const showDatepicker = () => {
-        showMode('date');
-    };
+    const showDatepicker = () => showMode('date');
 
     const CalendarView = () => {
         return show ?
@@ -96,14 +111,43 @@ const PersonalDetails = (props) => {
             /> : null
     }
     //
+
+    //Camera
+    const _launchCamera = () => {
+        _toggleCameraSheet();
+        launchCamera({ mediaType: 'photo', includeBase64: false, maxWidth: 800, maxHeight: 600, rotation: 360 }, res => {
+            try {
+                if (!res.didCancel || !res.errorCode) {
+                    let file = { name: res.fileName, type: res.type, uri: Platform.OS === 'ios' ? res.uri.replace('file://', '') : res.uri }
+                    setImage(file);
+                    setShowImage(file.uri)
+                }
+            } catch (e) { console.log('error', e.message) }
+        });
+    }
+
+    const _launchGallery = () => {
+        _toggleCameraSheet();
+        launchImageLibrary({ mediaType: 'photo', includeBase64: true, maxWidth: 800, maxHeight: 600, rotation: 360 }, res => {
+            try {
+                if (!res.didCancel || !res.errorCode) {
+                    let file = { name: res.fileName, type: res.type, uri: Platform.OS === 'ios' ? res.uri.replace('file://', '') : res.uri }
+                    setImage(file);
+                    setShowImage(file.uri)
+                }
+            } catch (e) { console.log('error', e.message) }
+        });
+    }
+
     return (
         <>
             <BackHeader goBack={_goBack} title="Detajet personale" rightButton rightPress={handleSubmit(onSubmit)} />
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.container}>
-                <TouchableOpacity style={styles.topRow}>
-                    <View style={styles.circle}>
+                <TouchableOpacity onPress={_toggleCameraSheet} style={styles.topRow}>
+                    {(showImage !== null && showImage !== undefined && showImage !== '') && <Image source={{ uri: showImage }} style={styles.avatar} />}
+                    {(showImage === null || showImage === undefined || showImage === '') && <View style={styles.circle}>
                         <Text style={styles.circleText}>{props.myProfile?.data?.name[0]?.toUpperCase()}{props.myProfile?.data?.surname[0]?.toUpperCase()}</Text>
-                    </View>
+                    </View>}
                     <Text style={styles.editImageText}>Edito foton e profilit</Text>
                 </TouchableOpacity>
                 <>
@@ -176,6 +220,8 @@ const PersonalDetails = (props) => {
             <PickCity isOpen={cityModal} toggle={_toggleCityModal} selectedCity={selectedCity} selectCity={selectCity} />
             {dateModal && <View onTouchStart={_toggleDateModal} style={styles.overLayer} />}
             <PickDate children={<CalendarView />} isOpen={dateModal} toggle={_toggleCityModal} selectedDate={selectedDate} selectDate={selectDate} />
+            {cameraSheet && <View onTouchStart={_toggleCameraSheet} style={styles.overLayer} />}
+            <LaunchCameraSheet _openCamera={_launchCamera} _openGallery={_launchGallery} isOpen={cameraSheet} toggle={_toggleCameraSheet} />
         </>
     )
 }
@@ -231,5 +277,12 @@ const styles = StyleSheet.create({
         bottom: 0,
         height: '100%',
         backgroundColor: 'rgba(0, 0, 0, 0.2)'
-    }
+    },
+    avatar: {
+        width: 70,
+        height: 70,
+        borderRadius: 70 / 2,
+        borderColor: 'rgba(0, 0, 0, 0.25)',
+        borderWidth: 0.5
+    },
 })

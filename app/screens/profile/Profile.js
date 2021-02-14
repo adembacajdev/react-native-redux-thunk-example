@@ -42,7 +42,11 @@ const Profile = (props) => {
                     {data?.user_type === 0 && <>
                         <Text style={styles.title}>Profili personal</Text>
                         <View style={styles.topRow}>
-                            <Image source={dummyAvatar} style={styles.avatar} />
+                            {(data?.profile_picture !== null && data?.profile_picture !== undefined && data?.profile_picture !== '') && <Image source={{ uri: data.profile_picture }} style={styles.avatar} />}
+                            {(data?.profile_picture === null || data?.profile_picture === undefined || data?.profile_picture === '') &&
+                                <View style={styles.circle}>
+                                    <Text style={styles.circleText}>{data?.name[0]?.toUpperCase()}{data?.surname[0]?.toUpperCase()}</Text>
+                                </View>}
                             <View style={styles.topRowRight}>
                                 <Text style={styles.name}>{data?.name} {data?.surname}</Text>
                                 <Text style={styles.accountDescription}>Llogari individuale</Text>
@@ -79,7 +83,11 @@ const Profile = (props) => {
                     {data?.user_type === 1 && <>
                         <Text style={styles.title}>Profili i dyqanit</Text>
                         <View style={styles.topRow}>
-                            <Image source={dummyAvatar} style={styles.avatar} />
+                            {data?.profile_picture && <Image source={{ uri: data.profile_picture }} style={styles.avatar} />}
+                            {!data?.profile_picture &&
+                                <View style={styles.circle}>
+                                    <Text style={styles.circleText}>{data?.shop_name[0]?.toUpperCase()}{data?.shop_name[1]?.toUpperCase()}</Text>
+                                </View>}
                             <View style={styles.topRowRight}>
                                 <Text style={styles.name}>{data?.shop_name}</Text>
                                 <Text style={styles.accountDescription}>Llogari biznesore</Text>

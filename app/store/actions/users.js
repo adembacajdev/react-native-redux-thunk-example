@@ -1,5 +1,5 @@
 import {
-    USERS_LOADING, GET_ALL_USERS, GET_ONE_USER, POST_ONE_USER, UPDATE_ONE_USER, DELETE_ONE_USER, GET_MY_PROFILE
+    USERS_LOADING, GET_ALL_USERS, GET_ONE_USER, POST_ONE_USER, UPDATE_ONE_USER, DELETE_ONE_USER, GET_MY_PROFILE, UPDATE_PROFILE_PICTURE
 } from '../actionTypes';
 import axios from 'axios';
 
@@ -51,12 +51,25 @@ export const postOneUser = (body) => async (dispatch) => {
     }
 }
 
-export const updateOneUser = (userId, body) => async (dispatch) => {
+export const updateOneUser = (userId, body, changeImage, image) => async (dispatch) => {
     dispatch({ type: USERS_LOADING, payload: true });
     try {
         const { data } = await axios.put(`/users/${userId}`, body);
         if (data.success) {
             dispatch({ type: UPDATE_ONE_USER, payload: data.data })
+            if (changeImage) {
+                let imageBody = new FormData();
+                imageBody.append('file', image);
+                imageBody.append('user_id', userId);
+
+                const postImage = await axios.post(`/users/upload`, imageBody, { headers: { 'Content-Type': 'multipart/formdata' } })
+                if (postImage.data.success) {
+                    dispatch({ type: UPDATE_PROFILE_PICTURE, payload: image?.uri })
+                }
+            } else {
+                //
+                dispatch({ type: UPDATE_ONE_USER, payload: data.data })
+            }
         }
     } catch (e) {
         dispatch({ type: USERS_LOADING, payload: false });

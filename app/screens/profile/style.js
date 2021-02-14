@@ -64,7 +64,22 @@ const styles = StyleSheet.create({
         fontFamily: fonts.LIGHT,
         fontSize: 16,
         color: 'rgba(0, 0, 0, 0.4)'
-    }
+    },
+    circle: {
+        width: 70,
+        height: 70,
+        borderRadius: 70 / 2,
+        borderWidth: 0.5,
+        borderStyle: 'dashed',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderColor: 'rgba(0, 0, 0, 0.25)'
+    },
+    circleText: {
+        fontFamily: fonts.REGULAR,
+        fontSize: 35,
+        color: 'rgba(0, 0, 0, 0.25)'
+    },
 })
 
 export default styles;

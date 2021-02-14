@@ -1,5 +1,5 @@
 import {
-    USERS_LOADING, GET_ALL_USERS, GET_ONE_USER, POST_ONE_USER, UPDATE_ONE_USER, DELETE_ONE_USER, GET_MY_PROFILE
+    USERS_LOADING, GET_ALL_USERS, GET_ONE_USER, POST_ONE_USER, UPDATE_ONE_USER, DELETE_ONE_USER, GET_MY_PROFILE, UPDATE_PROFILE_PICTURE
 } from '../actionTypes';
 
 const _allUsersState = {
@@ -37,7 +37,8 @@ export function myProfile(state = _myProfileState, { type, payload }) {
     switch (type) {
         case USERS_LOADING: return { ...state, isLoading: payload };
         case GET_MY_PROFILE: return { isLoading: false, data: { ...payload } };
-        case UPDATE_ONE_USER: return { isLoading: false, data: { ...payload } }
+        case UPDATE_ONE_USER: return { isLoading: false, data: { ...payload } };
+        case UPDATE_PROFILE_PICTURE: return { isLoading: false, data: { ...state.data, profile_picture: payload } }
         default: return state;
     }
 }

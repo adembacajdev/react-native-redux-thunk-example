@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { View, Text, Modal, SafeAreaView, StyleSheet, ScrollView, TouchableOpacity, FlatList, Image, Alert, Platform } from 'react-native';
 import { fonts } from '../../constants';
 import { BackHeader, PickerInput, PickCategory, LaunchCameraSheet } from '../index';
@@ -8,7 +8,6 @@ import { useSelector } from 'react-redux';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { Trash } from '../../assets/images';
 import Storage from '../../services/Storage';
-import { useEffect } from 'react/cjs/react.development';
 
 export const AddPostModal = ({ isOpen, toggle, _post, _goHome }) => {
     const [images, setImages] = useState([]);
@@ -68,10 +67,16 @@ export const AddPostModal = ({ isOpen, toggle, _post, _goHome }) => {
     }
 
     useEffect(() => {
-        if(!postingPost?.isLoading && postingPost.posted){
+        if (!postingPost?.isLoading && postingPost.posted) {
             _goHome();
         }
     }, [postingPost])
+
+    useEffect(() => {
+        setImages([]);
+        selectSizes([]);
+        selectCategory({})
+    }, [isOpen])
 
     return (
         <Modal
