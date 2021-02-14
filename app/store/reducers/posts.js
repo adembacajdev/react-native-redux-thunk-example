@@ -13,8 +13,7 @@ const _allPostsState = {
 
 export function allPosts(state = _allPostsState, { type, payload }) {
     switch (type) {
-        case POSTS_LOADING: return { ...state, isLoading: payload };
-        case GET_ALL_POSTS: return { isLoading: false, data: payload };
+        case GET_ALL_POSTS: return payload;
         default: return state;
     }
 }
@@ -36,8 +35,7 @@ const _allPostsByCategoryState = {
 
 export function allPostsByCategory(state = _allPostsByCategoryState, { type, payload }) {
     switch (type) {
-        case POSTS_LOADING: return { ...state, isLoading: payload };
-        case GET_ALL_POSTS_BY_CATEGORY: return { isLoading: false, data: payload };
+        case GET_ALL_POSTS_BY_CATEGORY: return payload;
         default: return state;
     }
 }
@@ -49,8 +47,14 @@ const _allMyPostsState = {
 
 export function allMyPosts(state = _allMyPostsState, { type, payload }) {
     switch (type) {
-        case POSTS_LOADING: return { ...state, isLoading: payload };
-        case GET_ALL_MY_POSTS: return { isLoading: false, data: payload };
+        case GET_ALL_MY_POSTS: return payload;
+        case DELETE_ONE_POST:
+            if (payload?.post_id) {
+                let deleteProduct = state.data.filter(post => post?._id !== payload?.post_id);
+                return { isLoading: false, data: deleteProduct };
+            } else {
+                return { isLoading: payload.isLoading, data: state.data }
+            }
         default: return state;
     }
 }
@@ -72,8 +76,7 @@ const _discountPostsState = {
 
 export function discountPosts(state = _discountPostsState, { type, payload }) {
     switch (type) {
-        case POSTS_LOADING: return { ...state, isLoading: payload };
-        case GET_DISCOUNT_POSTS: return { isLoading: false, data: payload };
+        case GET_DISCOUNT_POSTS: return payload;
         default: return state;
     }
 }
@@ -92,8 +95,7 @@ const _lastPostsState = {
 
 export function lastPosts(state = _lastPostsState, { type, payload }) {
     switch (type) {
-        case POSTS_LOADING: return { ...state, isLoading: payload };
-        case GET_LAST_POSTS: return { isLoading: false, data: payload };
+        case GET_LAST_POSTS: return payload;
         default: return state;
     }
 }
@@ -105,8 +107,7 @@ const _rentPostsState = {
 
 export function rentPosts(state = _rentPostsState, { type, payload }) {
     switch (type) {
-        case POSTS_LOADING: return { ...state, isLoading: payload };
-        case GET_RENT_POSTS: return { isLoading: false, data: payload };
+        case GET_RENT_POSTS: return payload;
         default: return state;
     }
 }
@@ -118,8 +119,7 @@ const _onePostState = {
 
 export function onePost(state = _onePostState, { type, payload }) {
     switch (type) {
-        case POSTS_LOADING: return { ...state, isLoading: payload };
-        case GET_ONE_POST: return { isLoading: false, data: { ...payload } };
+        case GET_ONE_POST: return payload;
         default: return state;
     }
 }

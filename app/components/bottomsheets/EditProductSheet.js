@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { View, Text, StyleSheet, FlatList, LayoutAnimation, Platform, UIManager } from 'react-native';
 import { NativeButton } from '../index';
 import { fonts } from '../../constants';
+import { MyProductsContext } from '../../services/Contexts';
 
 if (Platform.OS === "android" && UIManager.setLayoutAnimationEnabledExperimental) UIManager.setLayoutAnimationEnabledExperimental(true);
 
-export const EditProductSheet = ({ isOpen, toggle }) => {
+export const EditProductSheet = ({ isOpen, toggle, _deleteProduct }) => {
+    const { setProductToDelete } = useContext(MyProductsContext);
     const [bottom, setBottom] = useState(-190);
 
     useEffect(() => {
@@ -14,14 +16,15 @@ export const EditProductSheet = ({ isOpen, toggle }) => {
             setBottom(0)
         } else {
             LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-            setBottom(-190)
+            setBottom(-190);
+            setProductToDelete('');
         }
     }, [isOpen])
 
     return (
         <View style={[styles.container, { bottom }]}>
             <NativeButton label="Edito" color="green" marginBottom={20} />
-            <NativeButton label="Fshij produktin" color="red" />
+            <NativeButton onPress={_deleteProduct} label="Fshij produktin" color="red" />
         </View>
     )
 }

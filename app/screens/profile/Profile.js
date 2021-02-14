@@ -2,18 +2,20 @@ import React, { useCallback, useEffect } from 'react';
 import { ScrollView, View, Text, Image, TouchableOpacity } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { connect } from 'react-redux';
-import { getMyprofile } from '../../store/actions/users';
 import Storage from '../../services/Storage';
 import { Loading, MainHeader, NativeButton } from '../../components';
 import styles from './style';
-import dummyAvatar from '../../assets/images/dummyAvatar.png';
 import { ItemRightArrow } from '../../assets/images';
 import Auth from '../../services/Auth';
+//Redux actions
+import { getAllCommentsPerUser } from '../../store/actions/comments';
+import { getMyprofile } from '../../store/actions/users';
+import { getAllMyPosts } from '../../store/actions/posts';
 
 const Profile = (props) => {
     const { isLoading, data } = props.myProfile;
     useFocusEffect(useCallback(() => {
-        getMyProfileAsync();
+        _getMyDependencies();
     }, []))
 
     useEffect(() => {
@@ -22,12 +24,15 @@ const Profile = (props) => {
         }
     }, [props.isLoggedIn]);
 
-    async function getMyProfileAsync() {
+    async function _getMyDependencies() {
         const userId = await Storage.getUserId();
         if (userId) {
-            props.getMyprofile(userId)
+            props.getMyprofile(userId);
+            props.getAllCommentsPerUser(userId);
+            props.getAllMyPosts(userId);
         }
     }
+
     const _openDrawer = () => props.navigation.toggleDrawer();
     const _openMessages = () => props.navigation.navigate('Messages');
 
@@ -64,7 +69,7 @@ const Profile = (props) => {
                         <TouchableOpacity onPress={() => props.navigation.navigate('MyComments')} style={styles.itemCard}>
                             <View style={styles.leftItemCard}>
                                 <Text style={styles.titleItem}>Komentet e mia</Text>
-                                <Text style={styles.subtitleItem}>4 komente</Text>
+                                <Text style={styles.subtitleItem}>{props?.allUserComments?.data.length} komente</Text>
                             </View>
                             <View style={styles.rightItemCard}>
                                 <ItemRightArrow />
@@ -73,7 +78,7 @@ const Profile = (props) => {
                         <TouchableOpacity onPress={() => props.navigation.navigate('MyProducts')} style={styles.itemCard}>
                             <View style={styles.leftItemCard}>
                                 <Text style={styles.titleItem}>Produktet</Text>
-                                <Text style={styles.subtitleItem}>27 produkte të regjistruara</Text>
+                                <Text style={styles.subtitleItem}>{props?.allMyPosts?.data.length} produkte të regjistruara</Text>
                             </View>
                             <View style={styles.rightItemCard}>
                                 <ItemRightArrow />
@@ -114,7 +119,7 @@ const Profile = (props) => {
                         <TouchableOpacity onPress={() => props.navigation.navigate('MyProducts')} style={styles.itemCard}>
                             <View style={styles.leftItemCard}>
                                 <Text style={styles.titleItem}>Produktet</Text>
-                                <Text style={styles.subtitleItem}>27 produkte të regjistruara</Text>
+                                <Text style={styles.subtitleItem}>{props?.allMyPosts?.data.length} produkte të regjistruara</Text>
                             </View>
                             <View style={styles.rightItemCard}>
                                 <ItemRightArrow />
@@ -131,9 +136,11 @@ const Profile = (props) => {
 
 const mapStateToProps = (state) => ({
     myProfile: state.myProfile,
-    isLoggedIn: state.isLoggedIn
+    isLoggedIn: state.isLoggedIn,
+    allUserComments: state.allUserComments,
+    allMyPosts: state.allMyPosts
 })
 
-const mapDispatchToProps = { getMyprofile };
+const mapDispatchToProps = { getMyprofile, getAllCommentsPerUser, getAllMyPosts };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity } from 'react-native';
 import { fonts } from '../../constants';
 import { EditProduct } from '../../assets/images';
 import { useSelector } from 'react-redux';
 import { Loading } from '../index';
+import { MyProductsContext } from '../../services/Contexts';
 
 export const MyProductsList = ({ _headerComponent, _toggleBottomSheet }) => {
-    const { data, isLoading } = useSelector(state => state.allPostsByCategory);
+    const { data, isLoading } = useSelector(state => state.allMyPosts);
     return (
         isLoading
             ?
@@ -21,7 +22,7 @@ export const MyProductsList = ({ _headerComponent, _toggleBottomSheet }) => {
                     renderItem={({ item }) => (
                         <Item _toggleBottomSheet={_toggleBottomSheet} {...item} />
                     )}
-                    keyExtractor={(item, index) => String(index)}
+                    keyExtractor={(item, index) => String(item?._id)}
                 />
             </View>
     )
@@ -87,18 +88,22 @@ const styles = StyleSheet.create({
     }
 })
 
-function Item({ title, price, icon, _toggleBottomSheet }) {
+function Item({ _id, title, images, price, for_rent, rent_price, _toggleBottomSheet }) {
+    const { setProductToDelete } = useContext(MyProductsContext);
     return (
         <View style={styles.card}>
             <View style={styles.left}>
-                <Image source={icon} style={{ width: 70, height: 65, marginRight: 10 }} />
+                <Image source={{ uri: images[0]?.photo }} style={{ width: 70, height: 65, marginRight: 10, borderRadius: 5 }} />
                 <View style={styles.texts}>
                     <Text style={styles.title}>{title}</Text>
                     <Text style={styles.price}>${price}</Text>
                 </View>
             </View>
             <View style={styles.right}>
-                <TouchableOpacity onPress={_toggleBottomSheet} style={styles.circle}>
+                <TouchableOpacity onPress={() => {
+                    setProductToDelete(_id)
+                    _toggleBottomSheet();
+                }} style={styles.circle}>
                     <EditProduct />
                 </TouchableOpacity>
             </View>

@@ -5,12 +5,16 @@ import { BackHeader, MyProductsList, EditProductSheet } from '../../components';
 import { fonts } from '../../constants';
 import { useFocusEffect } from '@react-navigation/native';
 import { setCurrentRoute } from '../../store/actions/routeActions';
+import { MyProductsContext } from '../../services/Contexts';
+import { deleteOnePost } from '../../store/actions/posts';
 
 const MyProducts = (props) => {
     const [bottomSheet, toggleBottomSheet] = useState(false);
+    const [productToDelete, setProductToDelete] = useState('');
 
-    const _goBack = () => props.navigation.goBack();
-    const _toggleBottomSheet = useCallback(() => { toggleBottomSheet(!bottomSheet) }, [bottomSheet])
+    const _goBack = () => props.navigation.goBack(),
+        _toggleBottomSheet = useCallback(() => { toggleBottomSheet(!bottomSheet) }, [bottomSheet]),
+        _addNewPost = () => props.navigation.navigate('Add');
 
     useFocusEffect(useCallback(() => {
         props.setCurrentRoute('Messages');
@@ -18,20 +22,29 @@ const MyProducts = (props) => {
             props.setCurrentRoute('')
         }
     }, []))
+
+    const _deleteProduct = useCallback(() => {
+        if (productToDelete !== '') {
+            _toggleBottomSheet();
+            props.deleteOnePost(productToDelete)
+        }
+    }, [productToDelete])
     return (
         <>
-            <BackHeader goBack={_goBack} title="Produktet e mia" rightButton rightLabel="Shto" />
-            <View style={styles.container}>
-                <MyProductsList _toggleBottomSheet={_toggleBottomSheet} />
-            </View>
-            {bottomSheet && <View onTouchStart={_toggleBottomSheet} style={styles.overLayer} />}
-            <EditProductSheet isOpen={bottomSheet} toggle={_toggleBottomSheet} />
+            <MyProductsContext.Provider value={{ productToDelete, setProductToDelete }}>
+                <BackHeader goBack={_goBack} title="Produktet e mia" rightButton rightLabel="Shto" rightPress={_addNewPost} />
+                <View style={styles.container}>
+                    <MyProductsList _toggleBottomSheet={_toggleBottomSheet} />
+                </View>
+                {bottomSheet && <View onTouchStart={_toggleBottomSheet} style={styles.overLayer} />}
+                <EditProductSheet _deleteProduct={_deleteProduct} isOpen={bottomSheet} toggle={_toggleBottomSheet} />
+            </MyProductsContext.Provider>
         </>
     )
 }
 
 const mapStateToProps = null
-const mapDispatchToProps = { setCurrentRoute }
+const mapDispatchToProps = { setCurrentRoute, deleteOnePost }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyProducts);
 
