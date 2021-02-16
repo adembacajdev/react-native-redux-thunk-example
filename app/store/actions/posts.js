@@ -111,12 +111,34 @@ export const postOnePost = (user_id, images, _body) => async (dispatch) => {
     }
 }
 
-export const updateOnePost = (postId, body) => async (dispatch) => {
+export const updateOnePost = (postId, images, body, navigation) => async (dispatch) => {
+    let newImages = images.filter(item => item.isNew === true);
+    let oldImages = images.filter(item => !item.isNew);
     dispatch({ type: UPDATE_ONE_POST, payload: { isLoading: true, data: {} } })
+    let newBody = { ...body, images: oldImages }
     try {
-        const { data } = await axios.put(`/posts/${postId}`, body);
+        const { data } = await axios.put(`/posts/${postId}`, newBody);
         if (data.success) {
-            dispatch({ type: UPDATE_ONE_POST, payload: { isLoading: false, data: data.data } })
+            if (newImages.length > 0) {
+                let newBody = new FormData();
+                newBody.append('post_id', postId)
+                newImages.forEach(image => {
+                    newBody.append('images', image)
+                })
+                const postImage = await axios.patch(`/posts/update-images`, newBody, { headers: { 'Content-Type': 'multipart/formdata' } })
+                console.log('postImage', postImage)
+                if (postImage.data.success) {
+                    dispatch({ type: POST_ONE_POST, payload: { isLoading: false, posted: true, data: data.data } })
+                    setTimeout(() => {
+                        dispatch({ type: POST_ONE_POST, payload: { isLoading: false, posted: false, data: data.data } })
+                    }, 1000)
+                }
+            } else {
+                dispatch({ type: POST_ONE_POST, payload: { isLoading: false, posted: true, data: data.data } })
+                setTimeout(() => {
+                    dispatch({ type: POST_ONE_POST, payload: { isLoading: false, posted: false, data: data.data } })
+                }, 1000)
+            }
         }
     } catch (e) {
         dispatch({ type: UPDATE_ONE_POST, payload: { isLoading: false, data: {} } })

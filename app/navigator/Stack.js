@@ -15,7 +15,7 @@ import MyComments from '../screens/profile/MyComments';
 import MyProducts from '../screens/profile/MyProducts';
 import Login from '../screens/login/Login';
 import Signup from '../screens/signup/Signup';
-
+import EditProduct from '../screens/profile/EditProduct';
 
 const Stack = createNativeStackNavigator();
 
@@ -29,6 +29,7 @@ function AppNavigator() {
                 <Stack.Screen name="PersonalDetails" component={PersonalDetails} />
                 <Stack.Screen name="MyComments" component={MyComments} />
                 <Stack.Screen name="MyProducts" component={MyProducts} />
+                <Stack.Screen name="EditProduct" component={EditProduct} />
                 <Stack.Screen name="ShopDetails" component={ShopDetails} />
                 <Stack.Screen name="ShopAddress" component={ShopAddress} />
                 {!status && <Stack.Screen name="Login" component={Login} />}

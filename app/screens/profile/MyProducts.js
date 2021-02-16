@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { BackHeader, MyProductsList, EditProductSheet } from '../../components';
 import { fonts } from '../../constants';
@@ -12,22 +12,39 @@ const MyProducts = (props) => {
     const [bottomSheet, toggleBottomSheet] = useState(false);
     const [productToDelete, setProductToDelete] = useState('');
 
-    const _goBack = () => props.navigation.goBack(),
+    const _goBack = () => {
+        props.navigation.goBack()
+        props.setCurrentRoute('')
+    },
         _toggleBottomSheet = useCallback(() => { toggleBottomSheet(!bottomSheet) }, [bottomSheet]),
         _addNewPost = () => props.navigation.navigate('Add');
 
     useFocusEffect(useCallback(() => {
         props.setCurrentRoute('Messages');
-        return () => {
-            props.setCurrentRoute('')
-        }
     }, []))
 
     const _deleteProduct = useCallback(() => {
         if (productToDelete !== '') {
             _toggleBottomSheet();
-            props.deleteOnePost(productToDelete)
+            Alert.alert(
+                'Konfirmim',
+                'A jeni i sigurt qe doni te fshini produktin?',
+                [
+                    { text: 'Po', onPress: () => props.deleteOnePost(productToDelete) },
+                    {
+                        text: 'Mbyll',
+                        onPress: () => console.log('Cancel Pressed'),
+                        style: 'cancel'
+                    },
+                ],
+                { cancelable: false }
+            );
         }
+    }, [productToDelete]);
+
+    const _editProduct = useCallback(() => {
+        _toggleBottomSheet();
+        props.navigation.navigate('EditProduct', { productId: productToDelete });
     }, [productToDelete])
     return (
         <>
@@ -37,7 +54,7 @@ const MyProducts = (props) => {
                     <MyProductsList _toggleBottomSheet={_toggleBottomSheet} />
                 </View>
                 {bottomSheet && <View onTouchStart={_toggleBottomSheet} style={styles.overLayer} />}
-                <EditProductSheet _deleteProduct={_deleteProduct} isOpen={bottomSheet} toggle={_toggleBottomSheet} />
+                <EditProductSheet _editProduct={_editProduct} _deleteProduct={_deleteProduct} isOpen={bottomSheet} toggle={_toggleBottomSheet} />
             </MyProductsContext.Provider>
         </>
     )

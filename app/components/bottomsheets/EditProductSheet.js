@@ -6,7 +6,7 @@ import { MyProductsContext } from '../../services/Contexts';
 
 if (Platform.OS === "android" && UIManager.setLayoutAnimationEnabledExperimental) UIManager.setLayoutAnimationEnabledExperimental(true);
 
-export const EditProductSheet = ({ isOpen, toggle, _deleteProduct }) => {
+export const EditProductSheet = ({ isOpen, toggle, _deleteProduct, _editProduct }) => {
     const { setProductToDelete } = useContext(MyProductsContext);
     const [bottom, setBottom] = useState(-190);
 
@@ -23,7 +23,7 @@ export const EditProductSheet = ({ isOpen, toggle, _deleteProduct }) => {
 
     return (
         <View style={[styles.container, { bottom }]}>
-            <NativeButton label="Edito" color="green" marginBottom={20} />
+            <NativeButton onPress={_editProduct} label="Edito" color="green" marginBottom={20} />
             <NativeButton onPress={_deleteProduct} label="Fshij produktin" color="red" />
         </View>
     )
