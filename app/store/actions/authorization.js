@@ -6,6 +6,7 @@ export const login = (body) => async (dispatch) => {
     dispatch({ type: LOGIN, payload: { isLoading: true, status: false } })
     try {
         const { data } = await axios.post(`/auth/login`, body);
+        console.log('login', data)
         if (data.success) {
             let user_type = JSON.stringify(data?.data?.user_type);
             dispatch({ type: LOGIN, payload: { isLoading: false, status: true } })

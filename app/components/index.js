@@ -17,6 +17,7 @@ export * from './sliders/HomeCardSlider';
 //grids
 export * from './grids/LastPosts';
 export * from './grids/CategoryGridList';
+export * from './grids/RentList';
 
 //lists
 export * from './lists/Discounts';
@@ -25,7 +26,9 @@ export * from './lists/MessagesList';
 export * from './lists/CategoryList'
 export * from './lists/FavouritesList';
 export * from './lists/MyComments';
-export * from './lists/MyProductsList'
+export * from './lists/MyProductsList';
+export * from './lists/ShopsList';
+export * from './lists/AllPostsList'
 
 //inputs
 export * from './inputs/Input';

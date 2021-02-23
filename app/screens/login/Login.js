@@ -16,7 +16,10 @@ const Login = (props) => {
     const _goToSignUp = () => { props.navigation.navigate('Signup') };
 
     useFocusEffect(useCallback(() => {
-        props.setCurrentRoute('Messages');
+        props.setCurrentRoute('Login');
+        return () => {
+            props.setCurrentRoute('');
+        }
     }, []))
 
     return (

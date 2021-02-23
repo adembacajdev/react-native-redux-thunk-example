@@ -128,15 +128,15 @@ export const updateOnePost = (postId, images, body, navigation) => async (dispat
                 const postImage = await axios.patch(`/posts/update-images`, newBody, { headers: { 'Content-Type': 'multipart/formdata' } })
                 console.log('postImage', postImage)
                 if (postImage.data.success) {
-                    dispatch({ type: POST_ONE_POST, payload: { isLoading: false, posted: true, data: data.data } })
+                    dispatch({ type: UPDATE_ONE_POST, payload: { isLoading: false, posted: true, data: data.data } })
                     setTimeout(() => {
-                        dispatch({ type: POST_ONE_POST, payload: { isLoading: false, posted: false, data: data.data } })
+                        dispatch({ type: UPDATE_ONE_POST, payload: { isLoading: false, posted: false, data: data.data } })
                     }, 1000)
                 }
             } else {
-                dispatch({ type: POST_ONE_POST, payload: { isLoading: false, posted: true, data: data.data } })
+                dispatch({ type: UPDATE_ONE_POST, payload: { isLoading: false, posted: true, data: data.data } })
                 setTimeout(() => {
-                    dispatch({ type: POST_ONE_POST, payload: { isLoading: false, posted: false, data: data.data } })
+                    dispatch({ type: UPDATE_ONE_POST, payload: { isLoading: false, posted: false, data: data.data } })
                 }, 1000)
             }
         }

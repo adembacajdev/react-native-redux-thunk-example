@@ -81,3 +81,6 @@ export const UPDATE_ONE_USER = 'UPDATE_ONE_USER';
 export const DELETE_ONE_USER = 'DELETE_ONE_USER';
 export const GET_MY_PROFILE = 'GET_MY_PROFILE'
 export const UPDATE_PROFILE_PICTURE = 'UPDATE_PROFILE_PICTURE';
+
+//ShopsLists
+export const GET_ALL_SHOPS = 'GET_ALL_SHOPS';

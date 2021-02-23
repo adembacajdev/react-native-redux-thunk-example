@@ -35,6 +35,7 @@ export const EditProduct = (props) => {
             }
             if (route.params.productId) {
                 props.updateOnePost(route.params.productId, images, _body, navigation);
+                navigation.goBack();
             }
         },
 
@@ -345,7 +346,7 @@ export const EditProduct = (props) => {
                     rules={{ required: true }}
                     defaultValue=""
                 />}
-                <NativeButton isLoading={postingPost?.isLoading} onPress={handleSubmit(onSubmit)} label="Shto" color="green" />
+                <NativeButton isLoading={postingPost?.isLoading} onPress={handleSubmit(onSubmit)} label="Ruaj" color="green" />
             </ScrollView>
             {categoryModal && <View onTouchStart={_toggleCategoryModal} style={styles.overLayer} />}
             <PickCategory isOpen={categoryModal} toggle={_toggleCategoryModal} selectedCategory={selectedCategory} selectCategory={selectCategory} />

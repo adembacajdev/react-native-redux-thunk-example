@@ -43,7 +43,7 @@ export const AddPostModal = ({ isOpen, toggle, _post, _goHome }) => {
     const _launchCamera = () => {
         _toggleCameraSheet();
         launchCamera({ mediaType: 'photo', includeBase64: false, maxWidth: 800, maxHeight: 600, rotation: 360 }, res => {
-            if (!res.didCancel || !res.errorCode) {
+            if (!res.didCancel && !res.errorCode) {
                 let file = { name: res.fileName, type: res.type, uri: Platform.OS === 'ios' ? res.uri.replace('file://', '') : res.uri }
                 let newArrayImages = images;
                 newArrayImages.push(file);
@@ -56,7 +56,7 @@ export const AddPostModal = ({ isOpen, toggle, _post, _goHome }) => {
     const _launchGallery = () => {
         _toggleCameraSheet();
         launchImageLibrary({ mediaType: 'photo', includeBase64: true, maxWidth: 800, maxHeight: 600, rotation: 360 }, res => {
-            if (!res.didCancel || !res.error) {
+            if (!res.didCancel && !res.error) {
                 let file = { name: res.fileName, type: res.type, uri: Platform.OS === 'ios' ? res.uri.replace('file://', '') : res.uri }
                 let newArrayImages = images;
                 newArrayImages.push(file);

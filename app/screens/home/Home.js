@@ -1,11 +1,22 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { View, Text, ScrollView } from 'react-native';
-import { MainHeader, HomeSlider, HomeCardSlider, LastPosts, Discounts } from '../../components';
+import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import {
+    MainHeader,
+    HomeSlider,
+    HomeCardSlider,
+    LastPosts,
+    Discounts,
+    ShopsList,
+    RentList,
+    AllPostsList
+} from '../../components';
 import styles from './style';
 import { useFocusEffect } from '@react-navigation/native';
 import { connect } from 'react-redux';
 import { getAllSliders } from '../../store/actions/sliders';
 import { setCurrentRoute } from '../../store/actions/routeActions';
+import { getAllShops } from '../../store/actions/shops';
+import { getAllPosts } from '../../store/actions/posts';
 
 const Home = (props) => {
     const { navigation, allSliders, getAllSliders } = props;
@@ -13,6 +24,8 @@ const Home = (props) => {
 
     useFocusEffect(useCallback(() => {
         props.setCurrentRoute('')
+        props.getAllShops();
+        props.getAllPosts();
         // getAllSliders();
         // getLastPosts();
         // getDiscountPosts();
@@ -30,10 +43,95 @@ const Home = (props) => {
             <ScrollView contentContainerStyle={styles.container}>
                 <HomeSlider />
                 <HomeCardSlider category={category} setCategory={setCategory} />
-                <Text style={styles.sectionTitle}>Të fundit</Text>
-                <LastPosts />
-                <Text style={[styles.sectionTitle, { marginTop: 10 }]}>Në zbritje</Text>
-                <Discounts />
+                {category === 'none' && <>
+                    <View style={styles.textsRow}>
+                        <View style={styles.leftText}>
+                            <Text style={styles.sectionTitle}>Të fundit</Text>
+                        </View>
+                        <View style={styles.rightText}>
+                            <TouchableOpacity>
+                                <Text style={styles.link}>Më shumë</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    <LastPosts />
+                    <View style={[styles.textsRow, { marginTop: 10 }]}>
+                        <View style={styles.leftText}>
+                            <Text style={styles.sectionTitle}>Në zbritje</Text>
+                        </View>
+                        <View style={styles.rightText}>
+                            <TouchableOpacity>
+                                <Text style={styles.link}>Më shumë</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    <Discounts />
+                </>}
+                {category === 'tegjitha' && <>
+                    <View style={styles.textsRow}>
+                        <View style={styles.leftText}>
+                            <Text style={styles.sectionTitle}>Të gjitha</Text>
+                        </View>
+                        <View style={styles.rightText}>
+                            <TouchableOpacity>
+                                <Text style={styles.link}>Më shumë</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    <AllPostsList />
+                </>}
+                {category === 'dyqanet' && <>
+                    <View style={styles.textsRow}>
+                        <View style={styles.leftText}>
+                            <Text style={styles.sectionTitle}>Lista e dyqaneve</Text>
+                        </View>
+                        <View style={styles.rightText}>
+                            <TouchableOpacity>
+                                <Text style={styles.link}>Më shumë</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    <ShopsList />
+                </>}
+                {category === 'new' && <>
+                    <View style={styles.textsRow}>
+                        <View style={styles.leftText}>
+                            <Text style={styles.sectionTitle}>Të fundit</Text>
+                        </View>
+                        <View style={styles.rightText}>
+                            <TouchableOpacity>
+                                <Text style={styles.link}>Më shumë</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    <LastPosts />
+                </>}
+                {category === 'rent' && <>
+                    <View style={styles.textsRow}>
+                        <View style={styles.leftText}>
+                            <Text style={styles.sectionTitle}>Me qera</Text>
+                        </View>
+                        <View style={styles.rightText}>
+                            <TouchableOpacity>
+                                <Text style={styles.link}>Më shumë</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    <RentList />
+                </>}
+                {category === 'discount' && <>
+                    <View style={styles.textsRow}>
+                        <View style={styles.leftText}>
+                            <Text style={styles.sectionTitle}>Në zbritje</Text>
+                        </View>
+                        <View style={styles.rightText}>
+                            <TouchableOpacity>
+                                <Text style={styles.link}>Më shumë</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    <Discounts />
+                </>}
             </ScrollView>
         </>
     )
@@ -46,6 +144,6 @@ const mapStateToProps = (state) => ({
     isLoggedIn: state.isLoggedIn
 })
 
-const mapDispatchToProps = { getAllSliders, setCurrentRoute }
+const mapDispatchToProps = { getAllSliders, setCurrentRoute, getAllShops, getAllPosts }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

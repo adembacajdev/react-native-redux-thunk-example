@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Zara } from '../../assets/images';
 import { fonts } from '../../constants';
@@ -7,9 +7,16 @@ import { useSelector } from 'react-redux';
 import { ComponentLoading } from '../index';
 
 export const HomeSlider = () => {
+    const viewPagerRef = useRef(null);
     const [currentPage, setCurrentPage] = useState(0);
     const { data, isLoading } = useSelector(state => state.allSliders);
-
+    // setInterval(() => {
+    //     if (currentPage === (data.length - 1)) {
+    //         viewPagerRef.current.setPage(0)
+    //     } else {
+    //         viewPagerRef.current.setPage(currentPage + 1)
+    //     }
+    // }, 2000)
     return (
         isLoading
             ?
@@ -18,7 +25,7 @@ export const HomeSlider = () => {
             data.length > 0
                 ?
                 <View style={styles.container}>
-                    <ViewPager onPageSelected={(e) => setCurrentPage(e.nativeEvent.position)} initialPage={currentPage} style={{ width: '100%', height: 100 }}>
+                    <ViewPager ref={viewPagerRef} onPageSelected={(e) => setCurrentPage(e.nativeEvent.position)} style={{ width: '100%', height: 100 }}>
                         {data.map((item, index) => {
                             return (
                                 <View key={index} style={styles.card}>

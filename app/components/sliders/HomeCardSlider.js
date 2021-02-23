@@ -10,15 +10,23 @@ export const HomeCardSlider = ({ category, setCategory }) => {
     const scrollviewRef = useRef(null);
 
     const _openAll = useCallback(() => {
-        scrollviewRef.current.scrollTo({ x: 0, y: 0, animated: true })
-        setCategory('tegjitha');
+        if (category === 'tegjitha') {
+            setCategory('none')
+        } else {
+            scrollviewRef.current.scrollTo({ x: 0, y: 0, animated: true })
+            setCategory('tegjitha');
+        }
     }, [category]);
-    const _openDyqanet = useCallback(() => { setCategory('dyqanet') }, [category]);
-    const _openNew = useCallback(() => { setCategory('new') }, [category]);
-    const _openRent = useCallback(() => { setCategory('rent') }, [category]);
+    const _openDyqanet = useCallback(() => { setCategory(category === 'dyqanet' ? 'none' : 'dyqanet') }, [category]);
+    const _openNew = useCallback(() => { setCategory(category === 'new' ? 'none' : 'new') }, [category]);
+    const _openRent = useCallback(() => { setCategory(category === 'rent' ? 'none' : 'rent') }, [category]);
     const _openDiscount = useCallback(() => {
-        scrollviewRef.current.scrollToEnd({ animated: true });
-        setCategory('discount')
+        if (category === 'discount') {
+            setCategory('none')
+        } else {
+            scrollviewRef.current.scrollToEnd({ animated: true });
+            setCategory('discount')
+        }
     }, [category]);
 
     return (

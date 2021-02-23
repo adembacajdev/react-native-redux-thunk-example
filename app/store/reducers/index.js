@@ -10,6 +10,7 @@ import { allFavourites, oneFavourite } from './favourites';
 import { allPosts, allMyPosts, onePost, discountPosts, lastPosts, rentPosts, allPostsByCategory, postingPost } from './posts';
 import { allSizes, oneSize } from './sizes';
 import { allUsers, oneUser, myProfile, postingUser } from './users';
+import { allShops } from './shops';
 
 export default combineReducers({
     //Route State
@@ -34,4 +35,6 @@ export default combineReducers({
     allSizes, oneSize,
     //Users
     allUsers, oneUser, myProfile, postingUser,
+    //Shops
+    allShops
 });
