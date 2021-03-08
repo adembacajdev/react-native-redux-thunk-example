@@ -5,6 +5,7 @@ import DummyDressImage from '../../assets/images/dummyDressImage.png';
 import { OffHeart, OnHeart } from '../../assets/images';
 import { useSelector } from 'react-redux';
 import { ComponentLoading } from '../index';
+import { useNavigation } from '@react-navigation/native';
 
 export const Discounts = () => {
     const { data, isLoading } = useSelector(state => state.discountPosts);
@@ -85,9 +86,15 @@ const styles = StyleSheet.create({
 })
 
 function Item({ _id, title, price, images }) {
+    const navigation = useNavigation();
+    //State
     const [isFavourite, toggleFavourite] = useState(false);
+
+    //Functions
+    const _openItem = () => navigation.navigate('Item', { post_id: _id });
+    
     return (
-        <View style={styles.card}>
+        <TouchableOpacity onPress={_openItem} activeOpacity={0.8} style={styles.card}>
             <View style={styles.left}>
                 {(Array.isArray(images) && images.length > 0) && <Image source={{ uri: images[0].photo }} style={{ width: 70, height: 65, marginRight: 10, borderRadius: 3 }} />}
                 <View style={styles.texts}>
@@ -97,9 +104,9 @@ function Item({ _id, title, price, images }) {
             </View>
             <View style={styles.right}>
                 <TouchableOpacity onPress={() => toggleFavourite(!isFavourite)} style={styles.circle}>
-                    {isFavourite ? <OnHeart /> : <OffHeart />}
+                    {isFavourite ? <OnHeart style={{width: 15, height: 15}} /> : <OffHeart style={{width: 15, height: 15}} />}
                 </TouchableOpacity>
             </View>
-        </View>
+        </TouchableOpacity>
     )
 }

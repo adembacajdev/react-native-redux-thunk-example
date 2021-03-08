@@ -6,6 +6,7 @@ import { OffHeart, OnHeart, ItemRightArrow } from '../../assets/images';
 import { useSelector } from 'react-redux';
 import { ComponentLoading } from '../index';
 import { RightArrow } from '../../assets/images/ShopsList';
+import { useNavigation } from '@react-navigation/native';
 
 export const ShopsList = () => {
     const { data, isLoading } = useSelector(state => state.allShops);
@@ -87,9 +88,15 @@ const styles = StyleSheet.create({
 })
 
 function Item({ _id, shop_name, shop_description, user_type, name, surname, city, email, phone_number, profile_picture }) {
+    const navigation = useNavigation();
+    //State
     const [isFavourite, toggleFavourite] = useState(false);
+
+    //Functions
+    const _openShop = () => navigation.navigate('Shop', { shop_id: _id });
+
     return (
-        <View style={styles.card}>
+        <TouchableOpacity onPress={_openShop} activeOpacity={0.8} style={styles.card}>
             <View style={styles.left}>
                 <Image source={{ uri: profile_picture }} style={{ width: 70, height: 65, marginRight: 10, borderRadius: 10 }} />
                 <View style={styles.texts}>
@@ -102,6 +109,6 @@ function Item({ _id, shop_name, shop_description, user_type, name, surname, city
                     <RightArrow />
                 </TouchableOpacity>
             </View>
-        </View>
+        </TouchableOpacity>
     )
 }

@@ -101,7 +101,7 @@ function Item() {
             </View>
             <View style={styles.right}>
                 <TouchableOpacity onPress={() => toggleFavourite(!isFavourite)} style={styles.circle}>
-                    {isFavourite ? <OnHeart /> : <OffHeart />}
+                    {isFavourite ? <OnHeart style={{width: 15, height: 15}} /> : <OffHeart style={{width: 15, height: 15}} />}
                 </TouchableOpacity>
             </View>
         </View>

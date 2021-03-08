@@ -44,6 +44,7 @@ const App = ({ drawerStatus, currentRoute, getAllCategoryPosts, getAllSizes, get
   useEffect(() => {
     if (drawerStatus) setBottomColor('white');
     else if (!drawerStatus && currentRoute === 'Messages') setBottomColor('white');
+    else if (!drawerStatus && currentRoute === 'Item') setBottomColor('white');
     else if (!drawerStatus && currentRoute === 'Login') {setBottomColor('#F2F2F2');}
     else setBottomColor('#D0808F');
   }, [currentRoute, drawerStatus])

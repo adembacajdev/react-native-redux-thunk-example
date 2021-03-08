@@ -16,6 +16,7 @@ import MyProducts from '../screens/profile/MyProducts';
 import Login from '../screens/login/Login';
 import Signup from '../screens/signup/Signup';
 import EditProduct from '../screens/profile/EditProduct';
+import Item from '../screens/item/Item';
 
 const Stack = createNativeStackNavigator();
 
@@ -32,6 +33,7 @@ function AppNavigator() {
                 <Stack.Screen name="EditProduct" component={EditProduct} />
                 <Stack.Screen name="ShopDetails" component={ShopDetails} />
                 <Stack.Screen name="ShopAddress" component={ShopAddress} />
+                <Stack.Screen name="Item" component={Item} />
                 {!status && <Stack.Screen name="Login" component={Login} />}
                 {!status && <Stack.Screen name="Signup" component={Signup} />}
             </Stack.Navigator>
