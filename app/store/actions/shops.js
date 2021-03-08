@@ -8,7 +8,7 @@ export const getAllShops = () => async (dispatch) => {
         if (data.success) {
             dispatch({ type: GET_ALL_SHOPS, payload: { isLoading: false, data: data.data } })
         }
-    } catch (e) { 
+    } catch (e) {
         dispatch({ type: GET_ALL_SHOPS, payload: { isLoading: false, data: [] } })
     }
 }

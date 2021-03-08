@@ -16,19 +16,20 @@ import { connect } from 'react-redux';
 import { getAllSliders } from '../../store/actions/sliders';
 import { setCurrentRoute } from '../../store/actions/routeActions';
 import { getAllShops } from '../../store/actions/shops';
-import { getAllPosts } from '../../store/actions/posts';
+import { getAllPosts, getLastPosts, getRentPosts, getDiscountPosts } from '../../store/actions/posts';
 
 const Home = (props) => {
-    const { navigation, allSliders, getAllSliders } = props;
+    const { navigation } = props;
     const [category, setCategory] = useState('none');
 
     useFocusEffect(useCallback(() => {
         props.setCurrentRoute('')
         props.getAllShops();
         props.getAllPosts();
+        props.getRentPosts();
         // getAllSliders();
-        // getLastPosts();
-        // getDiscountPosts();
+        props.getLastPosts();
+        props.getDiscountPosts();
     }, []))
 
     useEffect(() => {
@@ -144,6 +145,8 @@ const mapStateToProps = (state) => ({
     isLoggedIn: state.isLoggedIn
 })
 
-const mapDispatchToProps = { getAllSliders, setCurrentRoute, getAllShops, getAllPosts }
+const mapDispatchToProps = {
+    getAllSliders, setCurrentRoute, getAllShops, getAllPosts, getLastPosts, getRentPosts, getDiscountPosts
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

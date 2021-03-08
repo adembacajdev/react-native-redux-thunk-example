@@ -23,7 +23,7 @@ export const RentList = () => {
                     )}
                     horizontal={false}
                     numColumns={2}
-                    keyExtractor={(item, index) => String(index)}
+                    keyExtractor={(item, index) => String(item._id)}
                 />
             </View>
     )
@@ -85,15 +85,15 @@ const styles = StyleSheet.create({
     }
 })
 
-function Item({ title, price, liked, icon }) {
+function Item({ _id, title, price, images, rent_price }) {
     const [isFavourite, toggleFavoruite] = useState(false);
     return (
         <View style={styles.card}>
-            <Image source={icon} style={{ width: '100%' }} />
+            {(Array.isArray(images) && images.length > 0) && <Image source={{ uri: images[0].photo }} style={{ width: '100%', height: 160, borderRadius: 10 }} />}
             <View style={styles.bottomCard}>
                 <View style={styles.leftBottomCard}>
                     <Text style={styles.title}>{title}</Text>
-                    <Text style={styles.price}>${price}</Text>
+                    <Text style={styles.price}>${rent_price}</Text>
                 </View>
                 <View style={styles.rightBottomCard}>
                     <TouchableOpacity onPress={() => toggleFavoruite(!isFavourite)} style={styles.circle}>

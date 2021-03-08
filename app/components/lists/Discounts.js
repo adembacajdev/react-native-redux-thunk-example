@@ -20,7 +20,7 @@ export const Discounts = () => {
                     renderItem={({ item }) => (
                         <Item {...item} />
                     )}
-                    keyExtractor={(item, index) => String(index)}
+                    keyExtractor={(item, index) => String(item._id)}
                 />
             </View>
     )
@@ -84,12 +84,12 @@ const styles = StyleSheet.create({
     }
 })
 
-function Item({ title, price, icon, liked }) {
+function Item({ _id, title, price, images }) {
     const [isFavourite, toggleFavourite] = useState(false);
     return (
         <View style={styles.card}>
             <View style={styles.left}>
-                <Image source={icon} style={{ width: 70, height: 65, marginRight: 10 }} />
+                {(Array.isArray(images) && images.length > 0) && <Image source={{ uri: images[0].photo }} style={{ width: 70, height: 65, marginRight: 10, borderRadius: 3 }} />}
                 <View style={styles.texts}>
                     <Text style={styles.title}>{title}</Text>
                     <Text style={styles.price}>${price}</Text>

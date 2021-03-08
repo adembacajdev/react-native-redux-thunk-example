@@ -61,17 +61,7 @@ export function allMyPosts(state = _allMyPostsState, { type, payload }) {
 
 const _discountPostsState = {
     isLoading: false,
-    data: [
-        {
-            title: 'Short Wedding Dress', price: '149.99', liked: false, icon: DummyDressImage,
-        },
-        {
-            title: 'Short Wedding Dress', price: '149.99', liked: false, icon: DummyDressImage,
-        },
-        {
-            title: 'Short Wedding Dress', price: '149.99', liked: false, icon: DummyDressImage,
-        }
-    ]
+    data: []
 }
 
 export function discountPosts(state = _discountPostsState, { type, payload }) {
@@ -83,14 +73,7 @@ export function discountPosts(state = _discountPostsState, { type, payload }) {
 
 const _lastPostsState = {
     isLoading: false,
-    data: [
-        {
-            title: 'Short Wedding Dress', price: '149.99', liked: false, icon: DummyDressImage,
-        },
-        {
-            title: 'Short Wedding Dress', price: '149.99', liked: false, icon: DummyDressImage,
-        }
-    ]
+    data: []
 }
 
 export function lastPosts(state = _lastPostsState, { type, payload }) {
