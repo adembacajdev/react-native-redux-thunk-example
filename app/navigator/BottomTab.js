@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { Image } from 'react-native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import {
     OnHome, OffHome, OffFavourites, OnFavourites, OffProfile, OnProfile, OffSearch, OnSearch, AddIcon
@@ -16,6 +15,7 @@ import Favourites from '../screens/favourites/Favourites';
 import Search from '../screens/search/Search';
 import Profile from '../screens/profile/Profile';
 import Add from '../screens/add/Add';
+import More from '../screens/more/More';
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -25,6 +25,7 @@ function HomeStacks() {
         <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="Category" component={Category} />
+            <Stack.Screen name="More" component={More} />
         </Stack.Navigator>
     )
 }

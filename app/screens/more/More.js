@@ -1,13 +1,13 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import styles from './style';
-import { MainHeader, CategoryGridList, CategoryList } from '../../components';
+import { MainHeader, MoreList, MoreGridList } from '../../components';
 import { CategoryGridIcon, CategoryMenuIcon } from '../../assets/images';
 import { categories as menu } from '../../constants';
 import { useDispatch } from 'react-redux';
 import { getAllPostsByCategory } from '../../store/actions/posts';
 
-const Category = ({ navigation, route }) => {
+const More = ({ navigation, route }) => {
     const dispatch = useDispatch();
 
     const [listView, setListView] = useState(false);
@@ -27,7 +27,7 @@ const Category = ({ navigation, route }) => {
                 {
                     listView
                         ?
-                        <CategoryList
+                        <MoreList
                             _headerComponent={() => (
                                 <View style={styles.topRow}>
                                     <View style={styles.topLeftRow}>
@@ -43,7 +43,7 @@ const Category = ({ navigation, route }) => {
                             )}
                         />
                         :
-                        <CategoryGridList
+                        <MoreGridList
                             _headerComponent={() => (
                                 <View style={styles.topRow}>
                                     <View style={styles.topLeftRow}>
@@ -64,4 +64,4 @@ const Category = ({ navigation, route }) => {
     )
 }
 
-export default Category;
+export default More;

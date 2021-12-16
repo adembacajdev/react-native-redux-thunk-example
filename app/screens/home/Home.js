@@ -55,7 +55,7 @@ const Home = (props) => {
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <LastPosts />
+                    {<LastPosts />}
                     <View style={[styles.textsRow, { marginTop: 10 }]}>
                         <View style={styles.leftText}>
                             <Text style={styles.sectionTitle}>Në zbritje</Text>
