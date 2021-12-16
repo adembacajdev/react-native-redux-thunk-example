@@ -38,7 +38,7 @@ export const LeftDrawerComponent = ({ navigation }) => {
                 menu.map((item, index) => {
                     return (
                         <TouchableOpacity key={index} onPress={() => {
-                            navigation.navigate('Category', { title: item.title });
+                            navigation.navigate('Category', { title: item.title, categoryId: item.value });
                             navigation.closeDrawer();
                         }} style={styles.item}>
                             <View style={styles.leftItem}>

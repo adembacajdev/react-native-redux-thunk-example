@@ -20,17 +20,7 @@ export function allPosts(state = _allPostsState, { type, payload }) {
 
 const _allPostsByCategoryState = {
     isLoading: false,
-    data: [
-        {
-            title: 'Short Wedding Dress', price: '149.99', liked: false, icon: DummyDressImage,
-        },
-        {
-            title: 'Short Wedding Dress', price: '149.99', liked: false, icon: DummyDressImage,
-        },
-        {
-            title: 'Short Wedding Dress', price: '149.99', liked: false, icon: DummyDressImage,
-        }
-    ]
+    data: []
 }
 
 export function allPostsByCategory(state = _allPostsByCategoryState, { type, payload }) {

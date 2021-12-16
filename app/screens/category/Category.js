@@ -1,16 +1,26 @@
-import React, { useState } from 'react';
-import { View, ScrollView, Text, TouchableOpacity } from 'react-native';
+import React, { useState, useCallback, useEffect } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
 import styles from './style';
 import { MainHeader, CategoryGridList, CategoryList } from '../../components';
 import { CategoryGridIcon, CategoryMenuIcon } from '../../assets/images';
-import { useCallback, useEffect } from 'react/cjs/react.development';
 import { categories as menu } from '../../constants';
+import { useSelector, useDispatch } from 'react-redux';
+import { useFocusEffect } from '@react-navigation/native';
+import { getAllPostsByCategory } from '../../store/actions/posts';
 
 const Category = ({ navigation, route }) => {
+    const dispatch = useDispatch();
+    const { isLoading, data } = useSelector(state => state.allPostsByCategory)
+
     const [listView, setListView] = useState(false);
+
     const _openDrawer = () => navigation.openDrawer();
     const _openMessages = () => navigation.navigate('Messages')
     const _toggleListView = useCallback(() => { setListView(!listView) }, [listView]);
+
+    useEffect(() => {
+        dispatch(getAllPostsByCategory(route?.params?.categoryId))
+    }, [route?.params?.categoryId]);
 
     return (
         <>

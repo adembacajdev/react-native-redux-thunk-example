@@ -2,8 +2,12 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity } from 'react-native';
 import { fonts } from '../../constants';
 import { OffHeart, OnHeart } from '../../assets/images';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Loading } from '../index';
+import { useNavigation } from '@react-navigation/native';
+import useFavourite from '../../hooks/useFavourite';
+import Storage from '../../services/Storage';
+import { deleteOneFavourites, postOneFavourite } from '../../store/actions/favourites';
 
 export const CategoryGridList = ({ _headerComponent }) => {
     const { data, isLoading } = useSelector(state => state.allPostsByCategory);
@@ -104,11 +108,29 @@ const styles = StyleSheet.create({
     }
 })
 
-function Item({ title, price, icon, discount, discount_from, discount_to }) {
-    const [isFavourite, toggleFavourite] = useState(false);
+function Item({ _id, title, images, discount, discount_from, discount_to, price }) {
+    const navigation = useNavigation();
+    const dispatch = useDispatch();
+    const { isFavourite } = useFavourite(_id);
+
+    //Functions
+    const _openItem = () => navigation.navigate('Item', { post_id: _id });
+
+    const _onFavouriteClick = async () => {
+        const user_id = await Storage.getUserId();
+        if (user_id) {
+            if (!isFavourite) {
+                dispatch(postOneFavourite({ user_id, post_id: _id }));
+            } else {
+                dispatch(deleteOneFavourites(_id));
+            }
+        } else {
+            navigation.navigate('Login')
+        }
+    }
     return (
-        <View style={styles.card}>
-            <Image source={icon} style={{ width: '100%' }} />
+        <TouchableOpacity onPress={_openItem} activeOpacity={0.8} style={styles.card}>
+            {(Array.isArray(images) && images.length > 0) && <Image source={{ uri: images[0]?.photo }} style={{ width: '100%', height: 160, borderRadius: 10 }} />}
             <View style={styles.bottomCard}>
                 <View style={styles.leftBottomCard}>
                     <Text style={styles.title}>{title}</Text>
@@ -124,11 +146,11 @@ function Item({ title, price, icon, discount, discount_from, discount_to }) {
                     }
                 </View>
                 <View style={styles.rightBottomCard}>
-                    <TouchableOpacity onPress={() => toggleFavourite(!isFavourite)} style={styles.circle}>
-                        {isFavourite ? <OnHeart style={{width: 15, height: 15}} /> : <OffHeart style={{width: 15, height: 15}} />}
+                    <TouchableOpacity onPress={_onFavouriteClick} style={styles.circle}>
+                        {isFavourite ? <OnHeart style={{ width: 15, height: 15 }} /> : <OffHeart style={{ width: 15, height: 15 }} />}
                     </TouchableOpacity>
                 </View>
             </View>
-        </View>
+        </TouchableOpacity>
     )
 }
