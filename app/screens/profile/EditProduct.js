@@ -5,10 +5,9 @@ import {
     BackHeader, PickerInput, PickCategory, LaunchCameraSheet, NativeButton, Input, PickerButton, EditProductSheet
 } from '../../components';
 import { useForm, Controller } from "react-hook-form";
-import { useSelector, connect } from 'react-redux';
+import { connect } from 'react-redux';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { Trash } from '../../assets/images';
-import Storage from '../../services/Storage';
 import { useFocusEffect } from '@react-navigation/native';
 import { setCurrentRoute } from '../../store/actions/routeActions';
 import { getOnePosts, updateOnePost } from '../../store/actions/posts';
@@ -101,13 +100,14 @@ export const EditProduct = (props) => {
         } = props.onePost.data;
         setImages(images);
         refreshImagesFlatlist(!imagesFlatlist);
+        setForRent(for_rent);
         reset({
             title,
             description,
             price: String(price),
             discount,
             for_rent,
-            rent_price,
+            rent_price: String(rent_price),
             discount_from: String(discount_from || ""),
             discount_to: String(discount_to || "")
         });
@@ -310,7 +310,7 @@ export const EditProduct = (props) => {
                     )}
                     name="discount"
                     rules={{ required: false }}
-                    defaultValue=""
+                    defaultValue={false}
                 />
                 {Boolean(watch('discount')) && <Controller
                     control={control}
