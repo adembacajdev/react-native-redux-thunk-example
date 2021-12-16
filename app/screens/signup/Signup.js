@@ -31,7 +31,7 @@ const Signup = (props) => {
             const _body = {
                 ...body,
                 user_type: topTab,
-                city: selectedCity?._id,
+                city: selectedCity?.value,
                 birthday: date,
             }
             props.postOneUser(_body);
@@ -160,7 +160,7 @@ const Signup = (props) => {
                                 defaultValue=""
                             />
                             <PickerInput
-                                value={selectedCity?.city_name ?? false}
+                                value={selectedCity?.label ?? false}
                                 onPress={_toggleCityModal}
                                 label="Qyteti"
                                 placeholder="Qyteti juaj këtu"
@@ -303,7 +303,7 @@ const Signup = (props) => {
                                 <Instagram style={{ marginLeft: 10, marginBottom: -12 }} />
                             </View>
                             <PickerInput
-                                value={selectedCity?.city_name ?? false}
+                                value={selectedCity?.label ?? false}
                                 onPress={_toggleCityModal}
                                 label="Qyteti"
                                 placeholder="Qyteti juaj këtu"

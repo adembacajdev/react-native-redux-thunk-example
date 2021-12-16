@@ -1,19 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, LayoutAnimation, Platform, UIManager } from 'react-native';
 import { PickerButton } from '../index';
-import { fonts } from '../../constants';
-import { useSelector } from 'react-redux';
+import { categories, fonts } from '../../constants';
 
 if (Platform.OS === "android" && UIManager.setLayoutAnimationEnabledExperimental) UIManager.setLayoutAnimationEnabledExperimental(true);
 
 export const PickCategory = ({ isOpen, selectedCategory, selectCategory, toggle }) => {
-    const [categories, setCategories] = useState([]);
     const [bottom, setBottom] = useState(-550);
-    const { isLoading, data } = useSelector(state => state.allCategories);
-
-    useEffect(() => {
-        setCategories(data);
-    }, [data, isLoading]);
 
     useEffect(() => {
         if (isOpen) {
@@ -34,16 +27,16 @@ export const PickCategory = ({ isOpen, selectedCategory, selectCategory, toggle 
                 showsVerticalScrollIndicator={false}
                 data={categories}
                 renderItem={({ item }) => {
-                    let isSelected = item?._id === selectedCategory?._id;
+                    let isSelected = item?.value === selectedCategory?.value;
                     const _selectCategory = () => {
                         selectCategory(item);
                         toggle();
                     }
                     return (
-                        <PickerButton onPress={_selectCategory} isSelected={isSelected} color="brown" width="100%" label={item?.category_name} marginBottom={20} />
+                        <PickerButton onPress={_selectCategory} isSelected={isSelected} color="brown" width="100%" label={item?.title} marginBottom={20} />
                     )
                 }}
-                keyExtractor={(item, index) => String(item?._id)}
+                keyExtractor={(item, index) => String(item?.value)}
             />
         </View>
     )

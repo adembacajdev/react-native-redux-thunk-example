@@ -4,7 +4,7 @@ import styles from './style';
 import { MainHeader, CategoryGridList, CategoryList } from '../../components';
 import { CategoryGridIcon, CategoryMenuIcon } from '../../assets/images';
 import { useCallback, useEffect } from 'react/cjs/react.development';
-import { leftDrawerMenu as menu } from '../../constants';
+import { categories as menu } from '../../constants';
 
 const Category = ({ navigation, route }) => {
     const [listView, setListView] = useState(false);

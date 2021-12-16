@@ -1,17 +1,20 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { View, Text, ScrollView, StyleSheet, Image, FlatList, TouchableOpacity } from 'react-native';
 import { BackHeader, Loading, NativeButton } from '../../components';
 import { connect } from 'react-redux';
 import { setCurrentRoute } from '../../store/actions/routeActions';
 import { useFocusEffect } from '@react-navigation/native';
 import { getOnePosts } from '../../store/actions/posts';
-import ViewPager from '@react-native-community/viewpager';
-import { fonts } from '../../constants';
+import PagerView from 'react-native-pager-view';
+import { fonts, sizes } from '../../constants';
 import { OffHeart, OnHeart } from '../../assets/images/Home';
+import useFavourite from '../../hooks/useFavourite';
+import Storage from '../../services/Storage';
+import { postOneFavourite, deleteOneFavourites } from '../../store/actions/favourites';
 
 const Item = (props) => {
     const [currentPage, setCurrentPage] = useState(0)
-    const { navigation, setCurrentRoute, route, onePost, allSizes } = props;
+    const { navigation, setCurrentRoute, route, onePost, postOneFavourite, deleteOneFavourites } = props;
     const { isLoading, data } = onePost;
     const _goBack = () => navigation.goBack();
 
@@ -25,23 +28,40 @@ const Item = (props) => {
 
     const _onPageSelected = useCallback((e) => { setCurrentPage(e.nativeEvent.position) }, [currentPage]);
 
-    const { _id, images, title, description, sizes, for_rent, price } = data;
+    const { _id, images, title, description, for_rent, price } = data;
+
+    const { isFavourite } = useFavourite(route?.params?.post_id);
+    const _onFavouriteClick = async () => {
+        const user_id = await Storage.getUserId();
+        if (user_id) {
+            if (!isFavourite) {
+                postOneFavourite({ user_id, post_id: _id });
+            } else {
+                deleteOneFavourites(_id);
+            }
+        } else {
+            navigation.navigate('Login')
+        }
+    }
+
     return (
         isLoading
             ?
             <Loading />
             :
             <>
-                <BackHeader title="Mesazhet" goBack={_goBack} />
+                <BackHeader title={title} goBack={_goBack} />
                 <ScrollView contentContainerStyle={styles.scrollView}>
                     {Array.isArray(images) && images.length > 0
                         &&
                         <>
-                            <ViewPager onPageSelected={_onPageSelected} initialPage={currentPage} style={{ width: '100%', height: 383 }}>
+                            <PagerView onPageSelected={_onPageSelected} initialPage={currentPage} style={{ width: '100%', height: 383 }}>
                                 {images.map((item, index) => {
-                                    return <Image key={item?._id} source={{ uri: item?.photo }} style={styles.image} />
+                                    return (
+                                        <View><Image key={item?._id} source={{ uri: item?.photo }} style={styles.image} /></View>
+                                    )
                                 })}
-                            </ViewPager>
+                            </PagerView>
                             <View style={styles.lines}>
                                 {images.map((item, index) => {
                                     return <View key={item?._id} style={styles[index === currentPage ? 'activeLine' : 'inactiveLine']} />
@@ -55,9 +75,9 @@ const Item = (props) => {
                         <Text style={styles.label}>Madhësitë në dispozicion</Text>
                         <FlatList
                             style={{ marginBottom: 10 }}
-                            data={allSizes?.data}
+                            data={sizes}
                             renderItem={({ item }) => {
-                                const sizeExist = Array.isArray(sizes) ? sizes.filter(size => size === item._id) : [];
+                                const sizeExist = Array.isArray(data?.sizes) ? data?.sizes.filter(size => size === item.value) : [];
                                 const isSelected = sizeExist.length > 0;
                                 return (
                                     <View style={[styles.sizeContainer, {
@@ -65,13 +85,13 @@ const Item = (props) => {
                                         borderColor: '#625261',
                                         backgroundColor: isSelected ? '#625261' : 'white'
                                     }]}>
-                                        <Text style={[styles.sizeText, { color: isSelected ? 'white' : '#625261' }]}>{item?.size_name}</Text>
+                                        <Text style={[styles.sizeText, { color: isSelected ? 'white' : '#625261' }]}>{item?.label}</Text>
                                     </View>
                                 )
                             }}
                             horizontal={false}
                             numColumns={5}
-                            keyExtractor={(item, index) => String(item._id)}
+                            keyExtractor={(item, index) => String(item.value)}
                         />
 
                         <Text style={styles.label}>Me qera?</Text>
@@ -101,8 +121,8 @@ const Item = (props) => {
                         </View>
 
                         <View style={[styles.row, { marginTop: 25 }]}>
-                            <TouchableOpacity style={styles.heartButton}>
-                                <OffHeart style={{ width: 25, height: 25 }} />
+                            <TouchableOpacity onPress={_onFavouriteClick} style={styles.heartButton}>
+                                {isFavourite ? <OnHeart style={{ width: 25, height: 25 }} /> : <OffHeart style={{ width: 25, height: 25 }} />}
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.contactButton}>
                                 <Text style={styles.buttonText}>Kontakto</Text>
@@ -115,10 +135,9 @@ const Item = (props) => {
 }
 
 export const mapStateToProps = (state) => ({
-    onePost: state.onePost,
-    allSizes: state.allSizes
+    onePost: state.onePost
 });
-export const mapDispatchToProps = { setCurrentRoute, getOnePosts };
+export const mapDispatchToProps = { setCurrentRoute, getOnePosts, postOneFavourite, deleteOneFavourites };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Item);
 

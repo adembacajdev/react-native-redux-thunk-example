@@ -30,7 +30,7 @@ export const SignupModal = ({ isOpen, toggle, _goToLogin, _postOneUser }) => {
             const _body = {
                 ...body,
                 user_type: topTab,
-                city: selectedCity?._id,
+                city: selectedCity?.value,
                 birthday: date,
             }
             _postOneUser(_body);
@@ -165,7 +165,7 @@ export const SignupModal = ({ isOpen, toggle, _goToLogin, _postOneUser }) => {
                                     defaultValue=""
                                 />
                                 <PickerInput
-                                    value={selectedCity?.city_name ?? false}
+                                    value={selectedCity?.label ?? false}
                                     onPress={_toggleCityModal}
                                     label="Qyteti"
                                     placeholder="Qyteti juaj këtu"
@@ -308,7 +308,7 @@ export const SignupModal = ({ isOpen, toggle, _goToLogin, _postOneUser }) => {
                                     <Instagram style={{ marginLeft: 10, marginBottom: -12 }} />
                                 </View>
                                 <PickerInput
-                                    value={selectedCity?.city_name ?? false}
+                                    value={selectedCity?.label ?? false}
                                     onPress={_toggleCityModal}
                                     label="Qyteti"
                                     placeholder="Qyteti juaj këtu"

@@ -4,13 +4,10 @@ import {
     DrawerBack, DrawerItemArrow
 } from '../../assets/images';
 import { fonts } from '../../constants';
-import { leftDrawerMenu as menu } from '../../constants';
+import { categories as menu } from '../../constants';
 import { NativeButton } from '../index';
 import Auth from '../../services/Auth';
-import store from '../../store'; import {
-    DrawerContentScrollView,
-    DrawerItemList,
-} from '@react-navigation/drawer';
+import store from '../../store';
 
 export const LeftDrawerComponent = ({ navigation }) => {
     const _closeDrawer = () => navigation.closeDrawer();

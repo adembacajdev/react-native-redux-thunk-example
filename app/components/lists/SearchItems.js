@@ -3,20 +3,19 @@ import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity } from 'react
 import { fonts } from '../../constants';
 import DummyDressImage from '../../assets/images/dummyDressImage.png';
 import { SearchArrow } from '../../assets/images';
-import { useSelector } from 'react-redux';
 
-export const SearchItems = ({ _headerComponent }) => {
-    const searchPosts = useSelector(state => state.searchPosts);
+export const SearchItems = ({ _headerComponent, data, extraData }) => {
     return (
         <FlatList
             style={styles.flatlist}
             ListHeaderComponent={_headerComponent}
             contentContainerStyle={{ paddingVertical: 10, paddingHorizontal: 5 }}
-            data={searchPosts?.data}
+            data={data}
+            extraData={extraData}
             renderItem={({ item }) => (
                 <View style={styles.card}>
                     <View style={styles.left}>
-                        <Image source={item.icon} style={{ width: 70, height: 65, marginRight: 10 }} />
+                        <Image source={{ uri: item?.images[0]?.photo }} style={{ width: 70, height: 65, marginRight: 10, borderRadius: 5 }} />
                         <View style={styles.texts}>
                             <Text style={styles.title}>{item.title}</Text>
                             <Text style={styles.price}>${item.price}</Text>
@@ -41,7 +40,7 @@ const styles = StyleSheet.create({
     flatlist: {
         flex: 1,
         paddingHorizontal: 10,
-        paddingVertical: 20
+        paddingBottom: 20
     },
     card: {
         width: '100%',

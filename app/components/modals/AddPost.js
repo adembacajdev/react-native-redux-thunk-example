@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { View, Text, Modal, SafeAreaView, StyleSheet, ScrollView, TouchableOpacity, FlatList, Image, Alert, Platform } from 'react-native';
-import { fonts } from '../../constants';
+import { fonts, sizes } from '../../constants';
 import { BackHeader, PickerInput, PickCategory, LaunchCameraSheet } from '../index';
 import { NativeButton, Input, PickerButton } from '../index';
 import { useForm, Controller } from "react-hook-form";
@@ -20,7 +20,6 @@ export const AddPostModal = ({ isOpen, toggle, _post, _goHome }) => {
     const [selectedCategory, selectCategory] = useState({});
 
     //Selectors
-    const allSizes = useSelector(state => state.allSizes);
     const postingPost = useSelector(state => state.postingPost);
 
     const { control, handleSubmit, errors, setError, reset } = useForm();
@@ -28,8 +27,8 @@ export const AddPostModal = ({ isOpen, toggle, _post, _goHome }) => {
         let _body = {
             ...body,
             for_rent: forRent,
-            category: selectedCategory?._id,
-            sizes: selectedSizes.map(size => size?._id),
+            category: selectedCategory?.value,
+            sizes: selectedSizes.map(size => size?.value),
         }
         let user_id = await Storage.getUserId();
         if (user_id) {
@@ -139,17 +138,17 @@ export const AddPostModal = ({ isOpen, toggle, _post, _goHome }) => {
                         <FlatList
                             style={{ marginLeft: -10 }}
                             showsVerticalScrollIndicator={false}
-                            data={allSizes?.data}
+                            data={sizes}
                             renderItem={({ item, index }) => {
                                 var isSelected = false;
-                                let sizeExist = selectedSizes.filter(size => size?._id === item?._id);
+                                let sizeExist = selectedSizes.filter(size => size?.value === item?.value);
                                 if (sizeExist.length > 0) isSelected = true;
                                 else isSelected = false;
 
                                 const _selectSize = () => {
-                                    let sizeExist = selectedSizes.filter(size => size?._id === item?._id);
+                                    let sizeExist = selectedSizes.filter(size => size?.value === item?.value);
                                     if (sizeExist.length > 0) {
-                                        let newArray = selectedSizes.filter(size => size?._id !== item?._id);
+                                        let newArray = selectedSizes.filter(size => size?.value !== item?.value);
                                         selectSizes(newArray)
                                     } else {
                                         let newArrayList = [...selectedSizes, item];
@@ -161,7 +160,7 @@ export const AddPostModal = ({ isOpen, toggle, _post, _goHome }) => {
                                         isSelected={isSelected}
                                         marginLeft={10}
                                         marginBottom={10}
-                                        label={item?.size_name}
+                                        label={item?.label}
                                         width={30}
                                         height={20}
                                         color="brown"
@@ -172,7 +171,7 @@ export const AddPostModal = ({ isOpen, toggle, _post, _goHome }) => {
                             }}
                             horizontal={false}
                             numColumns={7}
-                            keyExtractor={(item, index) => String(item?._id)}
+                            keyExtractor={(item, index) => String(item?.value)}
                         />
                     </View>
                     <View style={styles.inputContainer}>
@@ -219,7 +218,7 @@ export const AddPostModal = ({ isOpen, toggle, _post, _goHome }) => {
                         defaultValue=""
                     />}
                     <PickerInput
-                        value={selectedCategory?.category_name ?? false}
+                        value={selectedCategory?.title ?? false}
                         onPress={_toggleCategoryModal}
                         label="Kategoria"
                         placeholder="Kategoria e produktit tuaj këtu"

@@ -15,19 +15,13 @@ import { useEffect, useState } from 'react/cjs/react.development';
 import { LOGIN } from './app/store/actionTypes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import { getAllCategoryPosts } from './app/store/actions/category';
-import { getAllSizes } from './app/store/actions/sizes';
-import { getAllCities } from './app/store/actions/cities';
+import { getAllFavourites } from './app/store/actions/favourites';
 
-const App = ({ drawerStatus, currentRoute, getAllCategoryPosts, getAllSizes, getAllCities }) => {
+const App = ({ drawerStatus, currentRoute, isLoggedIn, getAllFavourites }) => {
   const [bottomColor, setBottomColor] = useState('')
   const dispatch = useDispatch();
   useEffect(() => {
     checkAuth();
-    //GET categories, sizes and cities
-    getAllCategoryPosts();
-    getAllSizes();
-    getAllCities();
   }, []);
 
   async function checkAuth() {
@@ -45,9 +39,16 @@ const App = ({ drawerStatus, currentRoute, getAllCategoryPosts, getAllSizes, get
     if (drawerStatus) setBottomColor('white');
     else if (!drawerStatus && currentRoute === 'Messages') setBottomColor('white');
     else if (!drawerStatus && currentRoute === 'Item') setBottomColor('white');
-    else if (!drawerStatus && currentRoute === 'Login') {setBottomColor('#F2F2F2');}
+    else if (!drawerStatus && currentRoute === 'Login') { setBottomColor('#F2F2F2'); }
     else setBottomColor('#D0808F');
-  }, [currentRoute, drawerStatus])
+  }, [currentRoute, drawerStatus]);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      getAllFavourites();
+    }
+  }, [isLoggedIn])
+
   return (
     <>
       <StatusBar barStyle="dark-content" backgroundColor="white" />
@@ -61,8 +62,9 @@ const App = ({ drawerStatus, currentRoute, getAllCategoryPosts, getAllSizes, get
 
 const mapStateToProps = (state) => ({
   drawerStatus: state.drawerStatus,
-  currentRoute: state.currentRoute
+  currentRoute: state.currentRoute,
+  isLoggedIn: state.isLoggedIn
 });
-const mapDispatchToProps = { getAllCategoryPosts, getAllSizes, getAllCities };
+const mapDispatchToProps = { getAllFavourites };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

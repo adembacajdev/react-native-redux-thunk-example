@@ -14,13 +14,12 @@ import { getAllMyPosts } from '../../store/actions/posts';
 
 const Profile = (props) => {
     const { isLoading, data } = props.myProfile;
-    useFocusEffect(useCallback(() => {
-        _getMyDependencies();
-    }, []))
 
     useEffect(() => {
         if (!props.isLoggedIn.status) {
             props.navigation.navigate('Login')
+        } else {
+            _getMyDependencies();
         }
     }, [props.isLoggedIn]);
 

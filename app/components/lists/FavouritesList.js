@@ -3,11 +3,30 @@ import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity } from 'react
 import { fonts } from '../../constants';
 import DummyDressImage from '../../assets/images/dummyDressImage.png';
 import { OffHeart, OnHeart } from '../../assets/images';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Loading } from '../index';
+import { useEffect } from 'react/cjs/react.development';
+import { useNavigation } from '@react-navigation/native';
+import { postOneFavourite, deleteOneFavourites } from '../../store/actions/favourites';
+import Storage from '../../services/Storage';
+import useFavourite from '../../hooks/useFavourite';
 
 export const FavouritesList = ({ _headerComponent }) => {
-    const { isLoading, data } = useSelector(state => state.allFavourites)
+    const { isLoading, data } = useSelector(state => state.allFavourites);
+    const allPosts = useSelector(state => state.allPosts);
+
+    const [listData, setListData] = useState([]);
+    const [flatlist, refreshFlatlist] = useState(false);
+
+    useEffect(() => {
+        let arrayList = [];
+        for (let fav of data) {
+            const filterItem = allPosts?.data?.filter(item => item?._id === fav?.post_id);
+            if (filterItem.length > 0) arrayList.push(filterItem[0]);
+        }
+        setListData(arrayList);
+        refreshFlatlist(!flatlist);
+    }, [data])
     return (
         isLoading
             ?
@@ -18,7 +37,8 @@ export const FavouritesList = ({ _headerComponent }) => {
                     style={styles.flatlist}
                     showsVerticalScrollIndicator={false}
                     ListHeaderComponent={_headerComponent}
-                    data={data}
+                    data={listData}
+                    extraData={flatlist}
                     renderItem={({ item }) => (
                         <Item {...item} />
                     )}
@@ -88,22 +108,41 @@ const styles = StyleSheet.create({
     }
 })
 
-function Item() {
-    const [isFavourite, toggleFavourite] = useState(false);
+function Item({ _id, title, description, images, price }) {
+    const dispatch = useDispatch();
+    const navigation = useNavigation();
+    const { isFavourite } = useFavourite(_id);
+
+    //Functions
+    const _openItem = () => navigation.navigate('Item', { post_id: _id });
+
+    const _onFavouriteClick = async () => {
+        const user_id = await Storage.getUserId();
+        if (user_id) {
+            if (!isFavourite) {
+                dispatch(postOneFavourite({ user_id, post_id: _id }));
+            } else {
+                dispatch(deleteOneFavourites(_id));
+            }
+        } else {
+            navigation.navigate('Login')
+        }
+    }
+
     return (
-        <View style={styles.card}>
+        <TouchableOpacity onPress={_openItem} activeOpacity={0.8} style={styles.card}>
             <View style={styles.left}>
-                <Image source={DummyDressImage} style={{ width: 70, height: 65, marginRight: 10 }} />
+                {(Array.isArray(images) && images.length > 0) && <Image source={{ uri: images[0]?.photo }} style={{ width: 70, height: 65, marginRight: 10, borderRadius: 3 }} />}
                 <View style={styles.texts}>
-                    <Text style={styles.title}>Short Wedding Dress</Text>
-                    <Text style={styles.price}>$149.99</Text>
+                    <Text style={styles.title}>{title}</Text>
+                    <Text style={styles.price}>${price}</Text>
                 </View>
             </View>
             <View style={styles.right}>
-                <TouchableOpacity onPress={() => toggleFavourite(!isFavourite)} style={styles.circle}>
-                    {isFavourite ? <OnHeart style={{width: 15, height: 15}} /> : <OffHeart style={{width: 15, height: 15}} />}
+                <TouchableOpacity onPress={_onFavouriteClick} style={styles.circle}>
+                    {isFavourite ? <OnHeart style={{ width: 15, height: 15 }} /> : <OffHeart style={{ width: 15, height: 15 }} />}
                 </TouchableOpacity>
             </View>
-        </View>
+        </TouchableOpacity>
     )
 }

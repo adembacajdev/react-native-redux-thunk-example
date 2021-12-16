@@ -5,23 +5,17 @@ import DummyDressImage from '../../assets/images/dummyDressImage.png';
 
 const _allFavouritesState = {
     isLoading: false,
-    data: [
-        {
-            title: 'Short Wedding Dress', price: '149.99', liked: false, icon: DummyDressImage,
-        },
-        {
-            title: 'Short Wedding Dress', price: '149.99', liked: false, icon: DummyDressImage,
-        },
-        {
-            title: 'Short Wedding Dress', price: '149.99', liked: false, icon: DummyDressImage,
-        }
-    ]
+    data: []
 }
 
 export function allFavourites(state = _allFavouritesState, { type, payload }) {
     switch (type) {
         case FAVOURITES_LOADING: return { ...state, isLoading: payload };
         case GET_ALL_FAVOURITES: return { isLoading: false, data: payload };
+        case POST_ONE_FAVOURITE: return { isLoading: false, data: [...state.data, payload] };
+        case DELETE_ONE_FAVOURITE:
+            let removeFavourite = state.data.filter(item => item?.post_id !== payload);
+            return { isLoading: false, data: removeFavourite }
         default: return state;
     }
 }

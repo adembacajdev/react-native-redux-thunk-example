@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { BackHeader, Input, PickCity, PickerInput } from '../../components';
 import { setCurrentRoute } from '../../store/actions/routeActions';
 import { useFocusEffect } from '@react-navigation/native';
-import { fonts } from '../../constants';
+import { cities, fonts } from '../../constants';
 import { useForm, Controller } from "react-hook-form";
 import { updateOneUser } from '../../store/actions/users';
 import Storage from '../../services/Storage';
@@ -18,7 +18,7 @@ const ShopAddress = (props) => {
     const onSubmit = (body) => {
         const _body = {
             ...body,
-            city: selectedCity?._id,
+            city: selectedCity?.value,
         }
         updateMyProfile(_body);
     }
@@ -41,7 +41,7 @@ const ShopAddress = (props) => {
         reset({
             shop_address: props.myProfile?.data?.shop_address,
         })
-        const city = props.myProfile?.data?.city ? props.allCities?.data.filter(item => item?._id === props.myProfile?.data?.city) : false
+        const city = props.myProfile?.data?.city ? cities.filter(item => item?.value === props.myProfile?.data?.city) : false
         city && selectCity(city[0])
         return () => {
             props.setCurrentRoute('')
@@ -71,7 +71,7 @@ const ShopAddress = (props) => {
                         defaultValue=""
                     />
                     <PickerInput
-                        value={selectedCity?.city_name ?? false}
+                        value={selectedCity?.label ?? false}
                         onPress={_toggleCityModal}
                         label="Qyteti"
                         placeholder="Qyteti juaj këtu"
@@ -85,8 +85,7 @@ const ShopAddress = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-    myProfile: state.myProfile,
-    allCities: state.allCities
+    myProfile: state.myProfile
 });
 
 const mapDispatchToProps = { setCurrentRoute, updateOneUser };

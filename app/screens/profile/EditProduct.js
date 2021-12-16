@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { View, Text, Modal, SafeAreaView, StyleSheet, ScrollView, TouchableOpacity, FlatList, Image, Switch, Platform } from 'react-native';
-import { fonts } from '../../constants';
+import { categories, fonts, sizes } from '../../constants';
 import {
     BackHeader, PickerInput, PickCategory, LaunchCameraSheet, NativeButton, Input, PickerButton, EditProductSheet
 } from '../../components';
@@ -14,7 +14,7 @@ import { setCurrentRoute } from '../../store/actions/routeActions';
 import { getOnePosts, updateOnePost } from '../../store/actions/posts';
 
 export const EditProduct = (props) => {
-    const { route, navigation, postingPost, allSizes, allCategories } = props,
+    const { route, navigation, postingPost } = props,
         [images, setImages] = useState([]),
         [imagesFlatlist, refreshImagesFlatlist] = useState([]),
         [cameraSheet, toggleCameraSheet] = useState(false),
@@ -30,8 +30,8 @@ export const EditProduct = (props) => {
             let _body = {
                 ...body,
                 for_rent: forRent,
-                category: selectedCategory?._id,
-                sizes: selectedSizes.map(size => size?._id),
+                category: selectedCategory?.value,
+                sizes: selectedSizes.map(size => size?.value),
             }
             if (route.params.productId) {
                 props.updateOnePost(route.params.productId, images, _body, navigation);
@@ -97,7 +97,7 @@ export const EditProduct = (props) => {
 
     useEffect(() => {
         const {
-            images, title, description, category, user_id, sizes, price, discount, discount_from, discount_to, for_rent, rent_price,
+            images, title, description, category, user_id, price, discount, discount_from, discount_to, for_rent, rent_price,
         } = props.onePost.data;
         setImages(images);
         refreshImagesFlatlist(!imagesFlatlist);
@@ -111,10 +111,10 @@ export const EditProduct = (props) => {
             discount_from: String(discount_from),
             discount_to: String(discount_to)
         });
-        selectCategory(allCategories.data.filter(item => item?._id === category)[0]);
+        selectCategory(categories.filter(item => item?.value === category)[0]);
         let newSetSizes = [];
-        sizes && sizes.forEach(size => {
-            let sizeExist = allSizes.data.filter(item => item?._id === size);
+        Array.isArray(data?.sizes) && data?.sizes.forEach(size => {
+            let sizeExist = sizes.filter(item => item?.value === size);
             if (sizeExist.length > 0) newSetSizes.push(sizeExist[0]);
         })
         selectSizes(newSetSizes);
@@ -174,17 +174,17 @@ export const EditProduct = (props) => {
                     <FlatList
                         style={{ marginLeft: -10 }}
                         showsVerticalScrollIndicator={false}
-                        data={allSizes?.data}
+                        data={sizes}
                         renderItem={({ item, index }) => {
                             var isSelected = false;
-                            let sizeExist = selectedSizes.filter(size => size?._id === item?._id);
+                            let sizeExist = selectedSizes.filter(size => size?.value === item?.value);
                             if (sizeExist.length > 0) isSelected = true;
                             else isSelected = false;
 
                             const _selectSize = () => {
-                                let sizeExist = selectedSizes.filter(size => size?._id === item?._id);
+                                let sizeExist = selectedSizes.filter(size => size?.value === item?.value);
                                 if (sizeExist.length > 0) {
-                                    let newArray = selectedSizes.filter(size => size?._id !== item?._id);
+                                    let newArray = selectedSizes.filter(size => size?.value !== item?.value);
                                     selectSizes(newArray)
                                 } else {
                                     let newArrayList = [...selectedSizes, item];
@@ -196,7 +196,7 @@ export const EditProduct = (props) => {
                                     isSelected={isSelected}
                                     marginLeft={10}
                                     marginBottom={10}
-                                    label={item?.size_name}
+                                    label={item?.label}
                                     width={30}
                                     height={20}
                                     color="brown"
@@ -207,7 +207,7 @@ export const EditProduct = (props) => {
                         }}
                         horizontal={false}
                         numColumns={7}
-                        keyExtractor={(item, index) => String(item?._id)}
+                        keyExtractor={(item, index) => String(item?.value)}
                     />
                 </View>
                 <View style={styles.inputContainer}>
@@ -254,7 +254,7 @@ export const EditProduct = (props) => {
                     defaultValue=""
                 />}
                 <PickerInput
-                    value={selectedCategory?.category_name ?? false}
+                    value={selectedCategory?.title ?? false}
                     onPress={_toggleCategoryModal}
                     label="Kategoria"
                     placeholder="Kategoria e produktit tuaj këtu"
@@ -358,9 +358,7 @@ export const EditProduct = (props) => {
 
 const mapStateToProps = (state) => ({
     onePost: state.onePost,
-    postingPost: state.postingPost,
-    allSizes: state.allSizes,
-    allCategories: state.allCategories
+    postingPost: state.postingPost
 });
 const mapDispatchToProps = { setCurrentRoute, getOnePosts, updateOnePost };
 

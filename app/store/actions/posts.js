@@ -53,14 +53,14 @@ export const getOnePosts = (postId) => async (dispatch) => {
 }
 
 export const getDiscountPosts = () => async (dispatch) => {
-    dispatch({ type: GET_DISCOUNT_POSTS, payload: { isLoading: true, data: {} } })
+    dispatch({ type: GET_DISCOUNT_POSTS, payload: { isLoading: true, data: [] } })
     try {
         const { data } = await axios.get(`/posts/discounts`);
         if (data.success) {
             dispatch({ type: GET_DISCOUNT_POSTS, payload: { isLoading: false, data: data.data } })
         }
     } catch (e) {
-        dispatch({ type: GET_DISCOUNT_POSTS, payload: { isLoading: false, data: {} } })
+        dispatch({ type: GET_DISCOUNT_POSTS, payload: { isLoading: false, data: [] } })
     }
 }
 
@@ -126,7 +126,6 @@ export const updateOnePost = (postId, images, body, navigation) => async (dispat
                     newBody.append('images', image)
                 })
                 const postImage = await axios.patch(`/posts/update-images`, newBody, { headers: { 'Content-Type': 'multipart/formdata' } })
-                console.log('postImage', postImage)
                 if (postImage.data.success) {
                     dispatch({ type: UPDATE_ONE_POST, payload: { isLoading: false, posted: true, data: data.data } })
                     setTimeout(() => {

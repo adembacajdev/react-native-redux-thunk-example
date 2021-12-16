@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { BackHeader, Input, PickCity, PickerInput, PickDate, LaunchCameraSheet } from '../../components';
 import { setCurrentRoute } from '../../store/actions/routeActions';
 import { useFocusEffect } from '@react-navigation/native';
-import { fonts } from '../../constants';
+import { cities, fonts } from '../../constants';
 import { useForm, Controller } from "react-hook-form";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
@@ -31,7 +31,7 @@ const PersonalDetails = (props) => {
         const _body = {
             ...body,
             user_type: props.myProfile?.data?.user_type,
-            city: selectedCity?._id,
+            city: selectedCity?.value,
             birthday: date,
         }
         updateMyProfile(_body);
@@ -61,7 +61,7 @@ const PersonalDetails = (props) => {
         })
         setDate(props.myProfile?.data?.birthday);
         selectDate(moment(props.myProfile?.data?.birthday).format('DD/MM/YYYY'));
-        const city = props.myProfile?.data?.city ? props.allCities?.data.filter(item => item?._id === props.myProfile?.data?.city) : false
+        const city = props.myProfile?.data?.city ? cities.filter(item => item?.value === props.myProfile?.data?.city) : false
         city && selectCity(city[0])
         if (
             props.myProfile?.data?.profile_picture !== null
@@ -203,7 +203,7 @@ const PersonalDetails = (props) => {
                         defaultValue=""
                     />
                     <PickerInput
-                        value={selectedCity?.city_name ?? false}
+                        value={selectedCity?.label ?? false}
                         onPress={_toggleCityModal}
                         label="Qyteti"
                         placeholder="Qyteti juaj këtu"
@@ -228,7 +228,6 @@ const PersonalDetails = (props) => {
 
 const mapStateToProps = (state) => ({
     myProfile: state.myProfile,
-    allCities: state.allCities
 });
 
 const mapDispatchToProps = { setCurrentRoute, updateOneUser };

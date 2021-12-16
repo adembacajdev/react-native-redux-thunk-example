@@ -2,6 +2,7 @@ import {
     USERS_LOADING, GET_ALL_USERS, GET_ONE_USER, POST_ONE_USER, UPDATE_ONE_USER, DELETE_ONE_USER, GET_MY_PROFILE, UPDATE_PROFILE_PICTURE
 } from '../actionTypes';
 import axios from 'axios';
+import { Alert } from 'react-native';
 
 export const getAllUsers = () => async (dispatch) => {
     dispatch({ type: USERS_LOADING, payload: true });
@@ -45,6 +46,9 @@ export const postOneUser = (body) => async (dispatch) => {
         const { data } = await axios.post(`/users`, body);
         if (data.success) {
             dispatch({ type: POST_ONE_USER, payload: { isLoading: false, data: data.data, posted: true } })
+        }else{
+            Alert.alert('Error', data?.message)
+            dispatch({ type: USERS_LOADING, payload: { isLoading: false, data: {}, posted: false } });
         }
     } catch (e) {
         dispatch({ type: USERS_LOADING, payload: { isLoading: false, data: {}, posted: false } });

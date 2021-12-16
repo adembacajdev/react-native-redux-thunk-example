@@ -2,18 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, LayoutAnimation, Platform, UIManager } from 'react-native';
 import { PickerButton } from '../index';
 import { fonts } from '../../constants';
-import { useSelector } from 'react-redux';
+import { cities } from '../../constants/cities';
 
 if (Platform.OS === "android" && UIManager.setLayoutAnimationEnabledExperimental) UIManager.setLayoutAnimationEnabledExperimental(true);
 
 export const PickCity = ({ isOpen, selectedCity, selectCity, toggle }) => {
-    const [cities, setCities] = useState([]);
     const [bottom, setBottom] = useState(-550);
-    const { isLoading, data } = useSelector(state => state.allCities);
-
-    useEffect(() => {
-        setCities(data);
-    }, [data, isLoading]);
 
     useEffect(() => {
         if (isOpen) {
@@ -34,16 +28,16 @@ export const PickCity = ({ isOpen, selectedCity, selectCity, toggle }) => {
                 showsVerticalScrollIndicator={false}
                 data={cities}
                 renderItem={({ item }) => {
-                    let isSelected = item?._id === selectedCity?._id;
+                    let isSelected = item?.value === selectedCity?.value;
                     const _selectCity = () => {
                         selectCity(item);
                         toggle();
                     }
                     return (
-                        <PickerButton onPress={_selectCity} isSelected={isSelected} color="brown" width="100%" label={item?.city_name} marginBottom={20} />
+                        <PickerButton onPress={_selectCity} isSelected={isSelected} color="brown" width="100%" label={item?.label} marginBottom={20} />
                     )
                 }}
-                keyExtractor={(item, index) => String(item?._id)}
+                keyExtractor={(item, index) => String(item?.value)}
             />
         </View>
     )

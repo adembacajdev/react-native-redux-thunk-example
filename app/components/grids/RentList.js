@@ -3,12 +3,15 @@ import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity } from 'react
 import { fonts } from '../../constants';
 import DummyDressImage from '../../assets/images/dummyDressImage.png';
 import { OffHeart, OnHeart } from '../../assets/images';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ComponentLoading } from '../index';
 import { useNavigation } from '@react-navigation/native';
+import useFavourite from '../../hooks/useFavourite';
+import Storage from '../../services/Storage';
+import { deleteOneFavourites, postOneFavourite } from '../../store/actions/favourites';
 
 export const RentList = () => {
-    const { data, isLoading } = useSelector(state => state.lastPosts);
+    const { data, isLoading } = useSelector(state => state.rentPosts);
     return (
         isLoading
             ?
@@ -88,12 +91,24 @@ const styles = StyleSheet.create({
 
 function Item({ _id, title, price, images, rent_price }) {
     const navigation = useNavigation();
-    //State
-    const [isFavourite, toggleFavoruite] = useState(false);
+    const dispatch = useDispatch();
+    const { isFavourite } = useFavourite(_id);
 
     //Functions
     const _openItem = () => navigation.navigate('Item', { post_id: _id });
 
+    const _onFavouriteClick = async () => {
+        const user_id = await Storage.getUserId();
+        if (user_id) {
+            if (!isFavourite) {
+                dispatch(postOneFavourite({ user_id, post_id: _id }));
+            } else {
+                dispatch(deleteOneFavourites(_id));
+            }
+        } else {
+            navigation.navigate('Login')
+        }
+    }
     return (
         <TouchableOpacity onPress={_openItem} activeOpacity={0.8} style={styles.card}>
             {(Array.isArray(images) && images.length > 0) && <Image source={{ uri: images[0].photo }} style={{ width: '100%', height: 160, borderRadius: 10 }} />}
@@ -103,7 +118,7 @@ function Item({ _id, title, price, images, rent_price }) {
                     <Text style={styles.price}>${rent_price}</Text>
                 </View>
                 <View style={styles.rightBottomCard}>
-                    <TouchableOpacity onPress={() => toggleFavoruite(!isFavourite)} style={styles.circle}>
+                    <TouchableOpacity onPress={_onFavouriteClick} style={styles.circle}>
                         {isFavourite ? <OnHeart style={{width: 15, height: 15}} /> : <OffHeart style={{width: 15, height: 15}} />}
                     </TouchableOpacity>
                 </View>

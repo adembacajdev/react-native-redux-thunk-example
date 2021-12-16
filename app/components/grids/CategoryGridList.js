@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
 })
 
 function Item({ title, price, icon, liked }) {
-    const [isFavourite, toggleFavoruite] = useState(false);
+    const [isFavourite, toggleFavourite] = useState(false);
     return (
         <View style={styles.card}>
             <Image source={icon} style={{ width: '100%' }} />
@@ -99,7 +99,7 @@ function Item({ title, price, icon, liked }) {
                     <Text style={styles.price}>${price}</Text>
                 </View>
                 <View style={styles.rightBottomCard}>
-                    <TouchableOpacity onPress={() => toggleFavoruite(!isFavourite)} style={styles.circle}>
+                    <TouchableOpacity onPress={() => toggleFavourite(!isFavourite)} style={styles.circle}>
                         {isFavourite ? <OnHeart style={{width: 15, height: 15}} /> : <OffHeart style={{width: 15, height: 15}} />}
                     </TouchableOpacity>
                 </View>

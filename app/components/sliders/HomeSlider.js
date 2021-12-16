@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Zara } from '../../assets/images';
 import { fonts } from '../../constants';
-import ViewPager from '@react-native-community/viewpager';
+import PagerView from 'react-native-pager-view';
 import { useSelector } from 'react-redux';
 import { ComponentLoading } from '../index';
 
@@ -25,7 +25,7 @@ export const HomeSlider = () => {
             data.length > 0
                 ?
                 <View style={styles.container}>
-                    <ViewPager ref={viewPagerRef} onPageSelected={(e) => setCurrentPage(e.nativeEvent.position)} style={{ width: '100%', height: 100 }}>
+                    <PagerView ref={viewPagerRef} onPageSelected={(e) => setCurrentPage(e.nativeEvent.position)} style={{ width: '100%', height: 100 }}>
                         {data.map((item, index) => {
                             return (
                                 <View key={index} style={styles.card}>
@@ -37,7 +37,7 @@ export const HomeSlider = () => {
                                 </View>
                             )
                         })}
-                    </ViewPager>
+                    </PagerView>
                     <View style={styles.lines}>
                         {data.map((item, index) => {
                             return <View key={index} style={styles[index === currentPage ? 'activeLine' : 'inactiveLine']} />
