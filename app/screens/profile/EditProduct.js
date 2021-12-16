@@ -97,7 +97,7 @@ export const EditProduct = (props) => {
 
     useEffect(() => {
         const {
-            images, title, description, category, user_id, price, discount, discount_from, discount_to, for_rent, rent_price,
+            images, title, description, category, user_id, price, discount, discount_from, discount_to, for_rent, rent_price, sizes: itemSizes
         } = props.onePost.data;
         setImages(images);
         refreshImagesFlatlist(!imagesFlatlist);
@@ -108,12 +108,12 @@ export const EditProduct = (props) => {
             discount,
             for_rent,
             rent_price,
-            discount_from: String(discount_from),
-            discount_to: String(discount_to)
+            discount_from: String(discount_from || ""),
+            discount_to: String(discount_to || "")
         });
         selectCategory(categories.filter(item => item?.value === category)[0]);
         let newSetSizes = [];
-        Array.isArray(data?.sizes) && data?.sizes.forEach(size => {
+        Array.isArray(itemSizes) && itemSizes.forEach(size => {
             let sizeExist = sizes.filter(item => item?.value === size);
             if (sizeExist.length > 0) newSetSizes.push(sizeExist[0]);
         })

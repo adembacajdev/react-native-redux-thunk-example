@@ -105,10 +105,26 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'space-around',
         height: '100%'
+    },
+    price_from: {
+        fontSize: 15,
+        fontFamily: fonts.LIGHT,
+        color: '#625261',
+        textDecorationLine: "line-through"
+    },
+    price_to: {
+        fontSize: 15,
+        fontFamily: fonts.LIGHT,
+        color: '#625261',
+        fontWeight: 'bold',
+        marginLeft: 10
+    },
+    row_discount: {
+        flexDirection: 'row'
     }
 })
 
-function Item({ _id, title, description, images, price }) {
+function Item({ _id, title, discount, discount_from, discount_to, images, price }) {
     const dispatch = useDispatch();
     const navigation = useNavigation();
     const { isFavourite } = useFavourite(_id);
@@ -135,7 +151,16 @@ function Item({ _id, title, description, images, price }) {
                 {(Array.isArray(images) && images.length > 0) && <Image source={{ uri: images[0]?.photo }} style={{ width: 70, height: 65, marginRight: 10, borderRadius: 3 }} />}
                 <View style={styles.texts}>
                     <Text style={styles.title}>{title}</Text>
-                    <Text style={styles.price}>${price}</Text>
+                    {
+                        !discount
+                            ?
+                            <Text style={styles.price}>${price}</Text>
+                            :
+                            <View style={styles.row_discount}>
+                                <Text style={styles.price_from}>${discount_from}</Text>
+                                <Text style={styles.price_to}>${discount_to}</Text>
+                            </View>
+                    }
                 </View>
             </View>
             <View style={styles.right}>

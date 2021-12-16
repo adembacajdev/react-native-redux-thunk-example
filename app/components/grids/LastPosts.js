@@ -86,10 +86,26 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontFamily: fonts.LIGHT,
         color: '#625261'
+    },
+    price_from: {
+        fontSize: 15,
+        fontFamily: fonts.LIGHT,
+        color: '#625261',
+        textDecorationLine: "line-through"
+    },
+    price_to: {
+        fontSize: 15,
+        fontFamily: fonts.LIGHT,
+        color: '#625261',
+        fontWeight: 'bold',
+        marginLeft: 10
+    },
+    row_discount: {
+        flexDirection: 'row'
     }
 })
 
-function Item({ _id, title, images, description, price }) {
+function Item({ _id, title, images, discount, discount_from, discount_to, price }) {
     const navigation = useNavigation();
     const dispatch = useDispatch();
     const { isFavourite } = useFavourite(_id);
@@ -115,7 +131,16 @@ function Item({ _id, title, images, description, price }) {
             <View style={styles.bottomCard}>
                 <View style={styles.leftBottomCard}>
                     <Text style={styles.title}>{title}</Text>
-                    <Text style={styles.price}>${price}</Text>
+                    {
+                        !discount
+                            ?
+                            <Text style={styles.price}>${price}</Text>
+                            :
+                            <View style={styles.row_discount}>
+                                <Text style={styles.price_from}>${discount_from}</Text>
+                                <Text style={styles.price_to}>${discount_to}</Text>
+                            </View>
+                    }
                 </View>
                 <View style={styles.rightBottomCard}>
                     <TouchableOpacity onPress={_onFavouriteClick} style={styles.circle}>

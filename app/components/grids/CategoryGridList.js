@@ -85,10 +85,26 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontFamily: fonts.LIGHT,
         color: '#625261'
+    },
+    price_from: {
+        fontSize: 15,
+        fontFamily: fonts.LIGHT,
+        color: '#625261',
+        textDecorationLine: "line-through"
+    },
+    price_to: {
+        fontSize: 15,
+        fontFamily: fonts.LIGHT,
+        color: '#625261',
+        fontWeight: 'bold',
+        marginLeft: 10
+    },
+    row_discount: {
+        flexDirection: 'row'
     }
 })
 
-function Item({ title, price, icon, liked }) {
+function Item({ title, price, icon, discount, discount_from, discount_to }) {
     const [isFavourite, toggleFavourite] = useState(false);
     return (
         <View style={styles.card}>
@@ -96,7 +112,16 @@ function Item({ title, price, icon, liked }) {
             <View style={styles.bottomCard}>
                 <View style={styles.leftBottomCard}>
                     <Text style={styles.title}>{title}</Text>
-                    <Text style={styles.price}>${price}</Text>
+                    {
+                        !discount
+                            ?
+                            <Text style={styles.price}>${price}</Text>
+                            :
+                            <View style={styles.row_discount}>
+                                <Text style={styles.price_from}>${discount_from}</Text>
+                                <Text style={styles.price_to}>${discount_to}</Text>
+                            </View>
+                    }
                 </View>
                 <View style={styles.rightBottomCard}>
                     <TouchableOpacity onPress={() => toggleFavourite(!isFavourite)} style={styles.circle}>

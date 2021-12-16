@@ -85,10 +85,26 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'space-around',
         height: '100%'
+    },
+    price_from: {
+        fontSize: 15,
+        fontFamily: fonts.LIGHT,
+        color: '#625261',
+        textDecorationLine: "line-through"
+    },
+    price_to: {
+        fontSize: 15,
+        fontFamily: fonts.LIGHT,
+        color: '#625261',
+        fontWeight: 'bold',
+        marginLeft: 10
+    },
+    row_discount: {
+        flexDirection: 'row'
     }
 })
 
-function Item({ _id, title, images, price, for_rent, rent_price, _toggleBottomSheet }) {
+function Item({ _id, title, images, price, discount, discount_from, discount_to, _toggleBottomSheet }) {
     const { setProductToDelete } = useContext(MyProductsContext);
     return (
         <View style={styles.card}>
@@ -96,7 +112,16 @@ function Item({ _id, title, images, price, for_rent, rent_price, _toggleBottomSh
                 <Image source={{ uri: images[0]?.photo }} style={{ width: 70, height: 65, marginRight: 10, borderRadius: 5 }} />
                 <View style={styles.texts}>
                     <Text style={styles.title}>{title}</Text>
-                    <Text style={styles.price}>${price}</Text>
+                    {
+                        !discount
+                            ?
+                            <Text style={styles.price}>${price}</Text>
+                            :
+                            <View style={styles.row_discount}>
+                                <Text style={styles.price_from}>${discount_from}</Text>
+                                <Text style={styles.price_to}>${discount_to}</Text>
+                            </View>
+                    }
                 </View>
             </View>
             <View style={styles.right}>
