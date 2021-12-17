@@ -50,7 +50,9 @@ const Home = (props) => {
                             <Text style={styles.sectionTitle}>Të fundit</Text>
                         </View>
                         <View style={styles.rightText}>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={() => {
+                                navigation.navigate('More', { title: "Të fundit", categoryId: "latest" });
+                            }}>
                                 <Text style={styles.link}>Më shumë</Text>
                             </TouchableOpacity>
                         </View>
@@ -61,7 +63,9 @@ const Home = (props) => {
                             <Text style={styles.sectionTitle}>Në zbritje</Text>
                         </View>
                         <View style={styles.rightText}>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={() => {
+                                navigation.navigate('More', { title: "Në zbritje", categoryId: "discount" });
+                            }}>
                                 <Text style={styles.link}>Më shumë</Text>
                             </TouchableOpacity>
                         </View>
@@ -74,7 +78,9 @@ const Home = (props) => {
                             <Text style={styles.sectionTitle}>Të gjitha</Text>
                         </View>
                         <View style={styles.rightText}>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={() => {
+                                navigation.navigate('More', { title: "Të gjitha", categoryId: "allPosts" });
+                            }}>
                                 <Text style={styles.link}>Më shumë</Text>
                             </TouchableOpacity>
                         </View>
@@ -87,7 +93,9 @@ const Home = (props) => {
                             <Text style={styles.sectionTitle}>Lista e dyqaneve</Text>
                         </View>
                         <View style={styles.rightText}>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={() => {
+                                navigation.navigate('More', { title: "Lista e dyqaneve", categoryId: "listOfStores" });
+                            }}>
                                 <Text style={styles.link}>Më shumë</Text>
                             </TouchableOpacity>
                         </View>
@@ -97,10 +105,12 @@ const Home = (props) => {
                 {category === 'new' && <>
                     <View style={styles.textsRow}>
                         <View style={styles.leftText}>
-                            <Text style={styles.sectionTitle}>Të fundit</Text>
+                            <Text style={styles.sectionTitle}>Arritjet e reja</Text>
                         </View>
                         <View style={styles.rightText}>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={() => {
+                                navigation.navigate('More', { title: "Arritjet e reja", categoryId: "latest" });
+                            }}>
                                 <Text style={styles.link}>Më shumë</Text>
                             </TouchableOpacity>
                         </View>
@@ -113,7 +123,9 @@ const Home = (props) => {
                             <Text style={styles.sectionTitle}>Me qera</Text>
                         </View>
                         <View style={styles.rightText}>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={() => {
+                                navigation.navigate('More', { title: "Me qera", categoryId: "rent" });
+                            }}>
                                 <Text style={styles.link}>Më shumë</Text>
                             </TouchableOpacity>
                         </View>
@@ -126,7 +138,9 @@ const Home = (props) => {
                             <Text style={styles.sectionTitle}>Në zbritje</Text>
                         </View>
                         <View style={styles.rightText}>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={() => {
+                                navigation.navigate('More', { title: "Në zbritje", categoryId: "discount" });
+                            }}>
                                 <Text style={styles.link}>Më shumë</Text>
                             </TouchableOpacity>
                         </View>

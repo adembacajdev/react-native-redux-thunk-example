@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity } from 'react-native';
 import { fonts } from '../../constants';
 import { OffHeart, OnHeart } from '../../assets/images';
@@ -9,10 +9,42 @@ import useFavourite from '../../hooks/useFavourite';
 import Storage from '../../services/Storage';
 import { deleteOneFavourites, postOneFavourite } from '../../store/actions/favourites';
 
-export const MoreGridList = ({ _headerComponent }) => {
-    const { data, isLoading } = useSelector(state => state.allPostsByCategory);
+export const MoreGridList = ({ _headerComponent, category }) => {
+    const [flatlist, refreshFlatlist] = useState(false);
+
+    const { data: allPosts, isLoading: allLoading } = useSelector(state => state.allPosts);
+    const { data: lastPosts, isLoading: lastLoading } = useSelector(state => state.lastPosts);
+    const { data: discountPosts, isLoading: discountLoading } = useSelector(state => state.discountPosts);
+    const { data: rentPosts, isLoading: rentLoading } = useSelector(state => state.rentPosts);
+
+    const _getDataByCategory = () => {
+        switch (category) {
+            case "latest": return lastPosts;
+            case "discount": return discountPosts;
+            case "allPosts": return allPosts;
+            case "listOfStores": return [];
+            case "rent": return rentPosts;
+            default: return allPosts;
+        }
+    }
+
+    const _getLoadingState = () => {
+        switch (category) {
+            case "latest": return lastLoading;
+            case "discount": return discountLoading;
+            case "allPosts": return allLoading;
+            case "listOfStores": return false
+            case "rent": return rentLoading;
+            default: return allLoading;
+        }
+    }
+
+    useEffect(() => {
+        refreshFlatlist(!flatlist);
+    }, [allPosts, lastPosts, discountPosts, rentPosts]);
+
     return (
-        isLoading
+        _getLoadingState()
             ?
             <Loading />
             :
@@ -22,7 +54,8 @@ export const MoreGridList = ({ _headerComponent }) => {
                     showsVerticalScrollIndicator={false}
                     ListHeaderComponent={_headerComponent}
                     columnWrapperStyle={{ justifyContent: 'space-between' }}
-                    data={data}
+                    data={_getDataByCategory()}
+                    extraData={flatlist}
                     renderItem={({ item }) => (
                         <Item {...item} />
                     )}

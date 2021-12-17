@@ -118,6 +118,7 @@ export const updateOnePost = (postId, images, body, navigation) => async (dispat
     let newBody = { ...body, images: oldImages }
     try {
         const { data } = await axios.put(`/posts/${postId}`, newBody);
+        console.log({data, body})
         if (data.success) {
             if (newImages.length > 0) {
                 let newBody = new FormData();
